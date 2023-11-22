@@ -28,34 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            readDBButton = new Button();
+            movies = new DataGridView();
+            Movie = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             SuspendLayout();
             // 
-            // label1
+            // readDBButton
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(294, 167);
-            label1.Name = "label1";
-            label1.Size = new Size(173, 15);
-            label1.TabIndex = 0;
-            label1.Text = "CMPT 291 Group 3 Project Filler";
-            label1.Click += label1_Click;
+            readDBButton.Location = new Point(308, 273);
+            readDBButton.Name = "readDBButton";
+            readDBButton.Size = new Size(138, 23);
+            readDBButton.TabIndex = 1;
+            readDBButton.Text = "Read Database";
+            readDBButton.UseVisualStyleBackColor = true;
+            readDBButton.Click += button1_Click;
+            // 
+            // movies
+            // 
+            movies.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            movies.Columns.AddRange(new DataGridViewColumn[] { Movie });
+            movies.Location = new Point(48, 21);
+            movies.Name = "movies";
+            movies.RowTemplate.Height = 25;
+            movies.Size = new Size(712, 208);
+            movies.TabIndex = 2;
+            movies.CellContentClick += movies_CellContentClick;
+            // 
+            // Movie
+            // 
+            Movie.HeaderText = "Movie Title";
+            Movie.Name = "Movie";
+            Movie.Width = 200;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label1);
+            Controls.Add(movies);
+            Controls.Add(readDBButton);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)movies).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
+        private Button readDBButton;
+        private DataGridView movies;
+        private DataGridViewTextBoxColumn Movie;
     }
 }
