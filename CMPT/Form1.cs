@@ -28,6 +28,7 @@ namespace CMPT
                 myConnection.Open(); //Open connection
                 myCommand = new SqlCommand();
                 myCommand.Connection = myConnection;
+
             }
             catch (Exception e)
             {
@@ -36,11 +37,16 @@ namespace CMPT
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Login()
         {
-
+            LoginScreen loginScreen = new LoginScreen(myCommand.Connection);
+            loginScreen.Show();
         }
 
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            Login();
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -63,11 +69,6 @@ namespace CMPT
             {
                 MessageBox.Show(e3.ToString(), "Error");
             }
-        }
-
-        private void movies_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
