@@ -32,6 +32,15 @@ namespace CMPT
             InitializeComponent();
         }
 
+        /**
+         * Calculates the hash value of a given string
+         * 
+         * Param:
+         *      password: A string whose hash value is to be calculated
+         * 
+         * Returns:
+         *      Returns a 64 character Sha256 hash string
+         */
         static string ComputeSha256Hash(string password)
         {
             // Create a SHA256
@@ -55,6 +64,9 @@ namespace CMPT
             ValidateLogin();
         }
 
+        /**
+         * Calls the ValidateLogin function if the enter key is pressed
+         */
         private void passwordText_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -63,6 +75,9 @@ namespace CMPT
             }
         }
 
+        /**
+         * Validates the values in the User ID and Password text fields with the data in the Login table
+         */
         private void ValidateLogin()
         {
             string userID = "\'" + userId.Text + "\'";

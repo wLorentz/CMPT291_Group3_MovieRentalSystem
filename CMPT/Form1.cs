@@ -37,12 +37,19 @@ namespace CMPT
             }
         }
 
+        /**
+         * Opens the login screen
+         */
         private void Login()
         {
             LoginScreen loginScreen = new LoginScreen(myCommand.Connection);
             loginScreen.Show();
         }
 
+        /**
+         * Ensures the login screen is only opened once the form is loaded. This prevents the main screen from 
+         * covering the login screen in case the login screen is displayed before the main screen gets displayed
+         */
         private void Form1_Shown(object sender, EventArgs e)
         {
             Login();
