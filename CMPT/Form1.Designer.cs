@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            readDBButton = new Button();
             movies = new DataGridView();
+
             movieIDs = new DataGridViewTextBoxColumn();
             movieTitles = new DataGridViewTextBoxColumn();
             movieGenres = new DataGridViewTextBoxColumn();
@@ -42,13 +42,25 @@
             updateMoviesbutton = new Button();
             searchMoviebutton = new Button();
             searchMoviebox = new TextBox();
+
             ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             first_tab.SuspendLayout();
             allMovies.SuspendLayout();
             SuspendLayout();
             // 
+            // movies
+            // 
+            movies.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            movies.Columns.AddRange(new DataGridViewColumn[] { Movie });
+            movies.Location = new Point(25, 20);
+            movies.Name = "movies";
+            movies.RowTemplate.Height = 25;
+            movies.Size = new Size(763, 181);
+            movies.TabIndex = 0;
+            // 
             // readDBButton
             // 
+
             readDBButton.Location = new Point(0, 0);
             readDBButton.Name = "readDBButton";
             readDBButton.Size = new Size(75, 23);
@@ -69,6 +81,7 @@
             movies.TabIndex = 2;
             // 
             // movieIDs
+
             // 
             movieIDs.HeaderText = "Movie ID";
             movieIDs.MinimumWidth = 6;
@@ -169,13 +182,15 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+
             ClientSize = new Size(1337, 472);
             Controls.Add(first_tab);
             Controls.Add(readDBButton);
             Margin = new Padding(3, 4, 3, 4);
+
             Name = "Form1";
             Text = "Form1";
-            Load += Form1_Load;
+            Shown += Form1_Shown;
             ((System.ComponentModel.ISupportInitialize)movies).EndInit();
             first_tab.ResumeLayout(false);
             allMovies.ResumeLayout(false);
@@ -184,8 +199,9 @@
         }
 
         #endregion
-        private Button readDBButton;
+
         private DataGridView movies;
+
         private TabControl first_tab;
         private TabPage allMovies;
         private Button searchMoviebutton;
@@ -198,5 +214,6 @@
         private DataGridViewTextBoxColumn movieCopies;
         private DataGridViewTextBoxColumn movieRatings;
         private Button movieDeletebutton;
+
     }
 }
