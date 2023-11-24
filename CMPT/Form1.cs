@@ -19,7 +19,7 @@ namespace CMPT
                  "password = admin;" + // password 
                  "server = localhost;" + //IP for the server
                  "Trusted_Connection = yes;" +
-                 "database = 291_Proj; " + //Database to connect to ***Change this to whatever your DB is named***
+                 "database = CMPT291_MovieRentalSystem; " + //Database to connect to ***Change this to whatever your DB is named***
                  "connection timeout = 30"); //timeout in seconds
 
             //SqlConnection myConnection = new SqlConnection(connectionString); //Timeout in seconds
@@ -175,7 +175,7 @@ namespace CMPT
 
         private void movieDeletebutton_Click(object sender, EventArgs e)
         {
-            
+
             try
             {
                 //Gets the current row index the user is clicked on
@@ -186,6 +186,7 @@ namespace CMPT
                 myCommand.CommandText = "DELETE FROM Movies where movieID=" + movieID;
                 //MessageBox.Show(myCommand.CommandText);
                 myReader = myCommand.ExecuteReader();
+
                 MessageBox.Show("Deleted movie with movie ID: " + movieID);
 
 
@@ -195,6 +196,55 @@ namespace CMPT
             {
                 MessageBox.Show("Invalid row to be deleted. Please pick another row.");
             }
+        }
+
+        private void runReport_Click(object sender, EventArgs e)
+        {
+            reportOutputText.Clear();
+
+            String report = reports.GetItemText(reports.SelectedItem);
+            string output = "";
+
+            MessageBox.Show(report);
+
+            switch (report)
+            {
+                case "Report 1":
+
+                    myCommand.CommandText = "select * from Movies";
+                    myReader = myCommand.ExecuteReader();
+
+                    while (myReader.Read())
+                    {
+                        output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
+                        output += "\n";
+                    }
+
+                    reportOutputText.Text = output;
+                    myReader.Close();
+                    break;
+
+                case "Report 2":
+
+                    myReader.Close();
+                    break;
+
+                case "Report 3":
+
+                    myReader.Close();
+                    break;
+
+                case "Report 4":
+
+                    myReader.Close();
+                    break;
+
+                case "Report 5":
+
+                    myReader.Close();
+                    break;
+            }
+
         }
     }
 }
