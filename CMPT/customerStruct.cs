@@ -8,7 +8,7 @@ namespace CMPT
 {
     public struct CustomerStruct
     {
-        public string accountNo;
+        public int accountNo;
         public string firstName;
         public string lastName;
         public string streetNo;
@@ -21,7 +21,7 @@ namespace CMPT
         public string creditCard;
         public string rating;
 
-        public CustomerStruct(string accountNo) 
+        public CustomerStruct(int accountNo) 
         {
             this.accountNo = accountNo;
         }

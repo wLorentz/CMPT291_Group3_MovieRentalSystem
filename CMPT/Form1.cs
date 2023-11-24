@@ -7,38 +7,38 @@ namespace CMPT
 {
     public partial class Form1 : Form
     {
-        public SqlConnection myConnection;
-        public SqlCommand myCommand;
-        public SqlDataReader myReader;
+        private Database database;
 
         private Customer[] customers;
+        private Movie[] movieList;
 
         public Form1()
         {
             InitializeComponent();
 
             /*Starting the connection*/
-            SqlConnection myConnection = new SqlConnection("user id = admin;" + // Username  ***Need to update your users in SQL SERVER MANAGEMENT and then adjust this to your username***
-                 "password = admin;" + // password 
-                 "server = localhost;" + //IP for the server
-                 "Trusted_Connection = yes;" +
-                 "database = CMPT291_MovieRentalSystem; " + //Database to connect to ***Change this to whatever your DB is named***
-                 "connection timeout = 30"); //timeout in seconds
+            //SqlConnection myConnection = new SqlConnection("user id = admin;" + // Username  ***Need to update your users in SQL SERVER MANAGEMENT and then adjust this to your username***
+            //     "password = admin;" + // password 
+            //     "server = localhost;" + //IP for the server
+            //     "Trusted_Connection = yes;" +
+            //     "database = CMPT291_MovieRentalSystem; " + //Database to connect to ***Change this to whatever your DB is named***
+            //     "connection timeout = 30"); //timeout in seconds
 
             //SqlConnection myConnection = new SqlConnection(connectionString); //Timeout in seconds
-
             try
             {
-                myConnection.Open(); //Open connection
-                myCommand = new SqlCommand();
-                myCommand.Connection = myConnection;
-
+                database = new("admin", "admin", "CMPT291_MovieRentalSystem");
             }
-            catch (Exception e)
+            catch (Exception e1)
             {
-                MessageBox.Show(e.ToString(), "Error");
+                MessageBox.Show(e1.ToString(), "Error");
                 this.Close();
             }
+        }
+
+        public Database GetDatabase()
+        {
+            return this.database;
         }
 
         /**
@@ -47,74 +47,70 @@ namespace CMPT
         private void Login()
         {
             this.Hide();
-            LoginScreen loginScreen = new LoginScreen(myCommand.Connection, this);
+            LoginScreen loginScreen = new LoginScreen(this);
             loginScreen.Show();
         }
 
         public void SuccessfulLogin(string userID)
         {
             this.Show();
-            //Displays all movies upon loading of the forms
-            myCommand.CommandText = "select * from Movies";
-            try
-            {
-                //MessageBox.Show(myCommand.CommandText);
-                myReader = myCommand.ExecuteReader();
 
-                movies.Rows.Clear();
-                while (myReader.Read())
-                {
-                    movies.Rows.Add(myReader["movieID"].ToString(), myReader["movieName"].ToString(), myReader["genre"].ToString(), myReader["price"].ToString(), myReader["copies"].ToString(), myReader["rating"].ToString());
-                }
+            getMovies();
 
-                myReader.Close();
-                movies.Rows.Add();
-            }
-            catch (Exception e3)
-            {
-                MessageBox.Show(e3.ToString(), "Error");
-            }
-
-            getCustomerList();
+            populateCustomerDropdown();
         }
 
-        private void getCustomerList()
+        public void getMovies()
         {
-            myCommand.CommandText = "select * from Customer";
-
-            var customerList = new List<Customer>();
             try
             {
-                myReader = myCommand.ExecuteReader();
+                movieList = database.getAllMovies();
+                movies.Rows.Clear();
 
-                while (myReader.Read())
+                foreach (Movie movie in movieList)
                 {
-                    CustomerStruct customerStruct = new CustomerStruct(myReader["accountNo"].ToString());
-
-                    customerStruct.firstName = myReader["firstName"].ToString();
-                    customerStruct.lastName = myReader["lastName"].ToString();
-                    customerStruct.phoneNumber = myReader["phoneNumber"].ToString();
-                    customerStruct.email = myReader["email"].ToString();
-                    customerStruct.streetNo = myReader["streetNo"].ToString();
-                    customerStruct.streetName = myReader["streetName"].ToString();
-                    customerStruct.aptNo = myReader["aptNo"].ToString();
-                    // customerStruct.city = myReader["city"].ToString();
-                    customerStruct.creditCard = myReader["creditCard"].ToString();
-                    customerStruct.rating = myReader["rating"].ToString();
-
-                    Customer customer = new(customerStruct);
-                    customerList.Add(customer);
-                    customerDropdown.Items.Add(customer.AccountNo);
+                    movies.Rows.Add(movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
                 }
-
-                this.customers = customerList.ToArray();
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show(e.Message, "Error");
             }
+        }
 
-            
+        public Customer[] getCustomerList()
+        {
+            if (customers == null)
+            {
+                try
+                {
+                    customers = database.GetAllCustomers();
+                    return customers;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Error");
+                    Customer[] emptyCustomerList = new List<Customer>().ToArray();
+
+                    return emptyCustomerList;
+                }
+            }
+            else
+            {
+                return customers;
+            }
+        }
+
+        private void populateCustomerDropdown()
+        {
+            customerDropdown.Items.Clear();
+
+            Customer[] customerList = getCustomerList();
+
+            foreach (Customer customer in customerList)
+            {
+                customerDropdown.Items.Add(customer.AccountNo);
+            }
         }
 
         /**
@@ -128,171 +124,128 @@ namespace CMPT
 
         private void searchMoviebutton_Click(object sender, EventArgs e)
         {
-            myCommand.CommandText = "select * from Movies";
             //Finding the movie using the pattern search
             if (!(string.IsNullOrEmpty(searchMoviebox.Text)))
             {
-                myCommand.CommandText += " where movieName LIKE '%" + searchMoviebox.Text + "%'";
-            }
-
-            try
-            {
-                //MessageBox.Show(myCommand.CommandText);
-                //Displays the movies
-                myReader = myCommand.ExecuteReader();
+                Movie[] movieArray = database.GetMovies(searchMoviebox.Text);
 
                 movies.Rows.Clear();
-                while (myReader.Read())
-                {
-                    movies.Rows.Add(myReader["movieID"].ToString(), myReader["movieName"].ToString(), myReader["genre"].ToString(), myReader["price"].ToString(), myReader["copies"].ToString(), myReader["rating"].ToString());
-                }
 
-                myReader.Close();
-                movies.Rows.Add();
-            }
-            catch (Exception e3)
-            {
-                MessageBox.Show(e3.ToString(), "Error");
+                foreach (Movie movie in movieArray)
+                {
+                    movies.Rows.Add(movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
+                }
             }
         }
 
         private void updateMoviesbutton_Click(object sender, EventArgs e)
         {
             //Loops through the rows and updates all of the movies
-            for (int item = 0; item <= movies.Rows.Count - 2; item++)
-            {
-                string movieID = movies.Rows[item].Cells[0].Value.ToString();
-                string movieName = movies.Rows[item].Cells[1].Value.ToString();
-                string movieGenre = movies.Rows[item].Cells[2].Value.ToString();
-                string moviePrice = movies.Rows[item].Cells[3].Value.ToString();
-                string movieCopies = movies.Rows[item].Cells[4].Value.ToString();
-                string movieRating = movies.Rows[item].Cells[5].Value.ToString();
-                myCommand.CommandText = "Update Movies SET movieName='" + movieName + "',genre='" + movieGenre + "',price=" + moviePrice + ",copies=" + movieCopies + ",rating=" + movieRating + " where movieID=" + movieID + ";";
-                try
-                {
-                    //MessageBox.Show(myCommand.CommandText);
-                    myReader = myCommand.ExecuteReader();
+            database.SaveMovies(movieList);
 
-                    myReader.Close();
+            //}
+            ////Instead of updating, this is for adding a new movie
+            ////Getting the last row index, which is where the user will input the new movies' information
+            //int lastRowidx = movies.Rows.Count - 1;
+            ////Check if its not null
+            //if (!((movies.Rows[lastRowidx].Cells[0].Value == null)))
+            //{
+            //    //Try to get all of the needed information, if some are null it will go to the catch
+            //    try
+            //    {
+            //        string movieID = movies.Rows[lastRowidx].Cells[0].Value.ToString();
+            //        string movieName = movies.Rows[lastRowidx].Cells[1].Value.ToString();
+            //        string movieGenre = movies.Rows[lastRowidx].Cells[2].Value.ToString();
+            //        string moviePrice = movies.Rows[lastRowidx].Cells[3].Value.ToString();
+            //        string movieCopies = movies.Rows[lastRowidx].Cells[4].Value.ToString();
+            //        string movieRating = movies.Rows[lastRowidx].Cells[5].Value.ToString();
+            //        myCommand.CommandText = "insert into Movies values(" + movieID + ", '" + movieName + "','" + movieGenre + "'," + moviePrice + "," + movieCopies + "," + movieRating + ");";
+            //        //Tries to add the movie. Will fail if ID is not unique or the data type is not compatible
+            //        try
+            //        {
+            //            MessageBox.Show(myCommand.CommandText);
+            //            myReader = myCommand.ExecuteReader();
 
-                }
-                catch (Exception e3)
-                {
-                    MessageBox.Show(e3.ToString(), "Error");
-                }
-
-            }
-            //Instead of updating, this is for adding a new movie
-            //Getting the last row index, which is where the user will input the new movies' information
-            int lastRowidx = movies.Rows.Count - 1;
-            //Check if its not null
-            if (!((movies.Rows[lastRowidx].Cells[0].Value == null)))
-            {
-                //Try to get all of the needed information, if some are null it will go to the catch
-                try
-                {
-                    string movieID = movies.Rows[lastRowidx].Cells[0].Value.ToString();
-                    string movieName = movies.Rows[lastRowidx].Cells[1].Value.ToString();
-                    string movieGenre = movies.Rows[lastRowidx].Cells[2].Value.ToString();
-                    string moviePrice = movies.Rows[lastRowidx].Cells[3].Value.ToString();
-                    string movieCopies = movies.Rows[lastRowidx].Cells[4].Value.ToString();
-                    string movieRating = movies.Rows[lastRowidx].Cells[5].Value.ToString();
-                    myCommand.CommandText = "insert into Movies values(" + movieID + ", '" + movieName + "','" + movieGenre + "'," + moviePrice + "," + movieCopies + "," + movieRating + ");";
-                    //Tries to add the movie. Will fail if ID is not unique or the data type is not compatible
-                    try
-                    {
-                        MessageBox.Show(myCommand.CommandText);
-                        myReader = myCommand.ExecuteReader();
-
-                        myReader.Close();
-                        movies.Rows.Add();
+            //            myReader.Close();
+            //            movies.Rows.Add();
 
 
-                    }
-                    catch (Exception e5)
-                    {
-                        MessageBox.Show("Movie ID already used (Must be unique) or wrong data type entered", "Error");
-                    }
-                }
-                catch (Exception e6)
-                {
-                    MessageBox.Show("Not all cells filled", "Error");
-                }
-            }
+            //        }
+            //        catch (Exception e5)
+            //        {
+            //            MessageBox.Show("Movie ID already used (Must be unique) or wrong data type entered", "Error");
+            //        }
+            //    }
+            //    catch (Exception e6)
+            //    {
+            //        MessageBox.Show("Not all cells filled", "Error");
+            //    }
+            //}
         }
 
         private void movieDeletebutton_Click(object sender, EventArgs e)
         {
+            int rowIdx = movies.CurrentCell.RowIndex;
+
+            string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
 
             try
             {
-                //Gets the current row index the user is clicked on
-                int rowIdx = movies.CurrentCell.RowIndex;
-                //Gets the movieID from the row
-                string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
-                //SQL to delete
-                myCommand.CommandText = "DELETE FROM Movies where movieID=" + movieID;
-                //MessageBox.Show(myCommand.CommandText);
-                myReader = myCommand.ExecuteReader();
-
-                MessageBox.Show("Deleted movie with movie ID: " + movieID);
-
+                database.DeleteMovie(movieID);
                 movies.Rows.RemoveAt(rowIdx);
-
-                myReader.Close();
             }
-            catch (Exception e3)
+            catch (Exception ex)
             {
-                MessageBox.Show("Invalid row to be deleted. Please pick another row.");
+                MessageBox.Show(ex.Message, "Error");
             }
         }
 
         private void runReport_Click(object sender, EventArgs e)
         {
-            reportOutputText.Clear();
+            //reportOutputText.Clear();
 
-            String report = reports.GetItemText(reports.SelectedItem);
-            string output = "";
+            //String report = reports.GetItemText(reports.SelectedItem);
+            //string output = "";
 
-            MessageBox.Show(report);
+            //MessageBox.Show(report);
 
-            switch (report)
-            {
-                case "Report 1":
+            //switch (report)
+            //{
+            //    case "Report 1":
 
-                    myCommand.CommandText = "select * from Movies";
-                    myReader = myCommand.ExecuteReader();
+            //        myCommand.CommandText = "select * from Movies";
+            //        myReader = myCommand.ExecuteReader();
 
-                    while (myReader.Read())
-                    {
-                        output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
-                        output += "\n";
-                    }
+            //        while (myReader.Read())
+            //        {
+            //            output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
+            //            output += "\n";
+            //        }
 
-                    reportOutputText.Text = output;
-                    myReader.Close();
-                    break;
+            //        reportOutputText.Text = output;
+            //        myReader.Close();
+            //        break;
 
-                case "Report 2":
+            //    case "Report 2":
 
-                    myReader.Close();
-                    break;
+            //        myReader.Close();
+            //        break;
 
-                case "Report 3":
+            //    case "Report 3":
 
-                    myReader.Close();
-                    break;
+            //        myReader.Close();
+            //        break;
 
-                case "Report 4":
+            //    case "Report 4":
 
-                    myReader.Close();
-                    break;
+            //        myReader.Close();
+            //        break;
 
-                case "Report 5":
+            //    case "Report 5":
 
-                    myReader.Close();
-                    break;
-            }
+            //        myReader.Close();
+            //        break;
+            //}
 
         }
 
@@ -309,24 +262,63 @@ namespace CMPT
 
         private void customerDropdown_KeyUp(object sender, KeyEventArgs e)
         {
-            if(customers.Length == 0)
+            if (customers.Length == 0)
             {
                 this.getCustomerList();
             }
 
             string str = customerDropdown.Text;
 
-            foreach (var customer in customers)
-            {
-                if (customer.AccountNo == str)
-                {
-                    editCustomerButton.Visible = true;
-                }
-                else
-                {
-                    editCustomerButton.Visible = false;
-                }
+            if (customerDropdown.Items.Contains(str)) {
+                editCustomerButton.Visible = true;
             }
+            else
+            {
+                editCustomerButton.Visible = false;
+            }
+        }
+
+        private void addCustomerButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int newAccountNumber = database.GetLatestAccountNumber() + 1;
+                ModifyCustomerForm addCustomerForm = new(this, true, newAccountNumber);
+                addCustomerForm.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void AddCustomer(Customer customer)
+        {
+            try
+            {
+                database.AddCustomer(customer);
+                customerDropdown.Items.Add(customer.AccountNo);
+                customers.Append(customer);
+
+                customerDropdown.SelectedIndex = customerDropdown.Items.Count - 1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void saveCustomer(Customer customer)
+        {
+            database.SaveCustomer(customer);
+        }
+
+        private void editCustomerButton_Click(object sender, EventArgs e)
+        {            string str = customerDropdown.Text;
+            int.TryParse(customerDropdown.Text, out int accountNumber);
+
+            ModifyCustomerForm addCustomerForm = new(this, false, accountNumber);
+            addCustomerForm.Show();
         }
     }
 }

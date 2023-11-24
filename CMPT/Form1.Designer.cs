@@ -221,6 +221,7 @@
             editCustomerButton.Text = "Edit";
             editCustomerButton.UseVisualStyleBackColor = true;
             editCustomerButton.Visible = false;
+            editCustomerButton.Click += editCustomerButton_Click;
             // 
             // addCustomerButton
             // 
@@ -230,6 +231,7 @@
             addCustomerButton.TabIndex = 2;
             addCustomerButton.Text = "Add";
             addCustomerButton.UseVisualStyleBackColor = true;
+            addCustomerButton.Click += addCustomerButton_Click;
             // 
             // label1
             // 
