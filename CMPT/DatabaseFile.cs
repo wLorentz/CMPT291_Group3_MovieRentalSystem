@@ -10,13 +10,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace CMPT
 {
-    public class Database
+    public class DatabaseFile
     {
         public SqlConnection myConnection;
         public SqlCommand myCommand;
         public SqlDataReader myReader;
 
-        public Database(string userName, string password, string database)
+        public DatabaseFile(string userName, string password, string database)
         {
             string connectionString = "user id = " + userName + ";" + // Username  
                 "password = " + password + ";" +// password 
