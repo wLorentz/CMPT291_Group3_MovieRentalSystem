@@ -15,7 +15,7 @@ namespace CMPT
     public partial class LoginScreen : Form
     {
         private Form1 mainForm;
-        private Database database;
+        private DatabaseFile database;
 
         /**
          * Constructor for the LoginScreen class

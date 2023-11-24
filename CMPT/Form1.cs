@@ -7,7 +7,7 @@ namespace CMPT
 {
     public partial class Form1 : Form
     {
-        private Database database;
+        private DatabaseFile database;
 
         private Customer[] customers;
         private Movie[] movieList;
@@ -36,7 +36,7 @@ namespace CMPT
             }
         }
 
-        public Database GetDatabase()
+        public DatabaseFile GetDatabase()
         {
             return this.database;
         }
