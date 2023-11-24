@@ -43,10 +43,14 @@ namespace CMPT
          */
         private void Login()
         {
-
-            LoginScreen loginScreen = new LoginScreen(myCommand.Connection);
+            this.Hide();
+            LoginScreen loginScreen = new LoginScreen(myCommand.Connection, this);
             loginScreen.Show();
+        }
 
+        public void SuccessfulLogin(string userID)
+        {
+            this.Show();
             //Displays all movies upon loading of the forms
             myCommand.CommandText = "select * from Movies";
             try
@@ -189,6 +193,7 @@ namespace CMPT
 
                 MessageBox.Show("Deleted movie with movie ID: " + movieID);
 
+                movies.Rows.RemoveAt(rowIdx);
 
                 myReader.Close();
             }

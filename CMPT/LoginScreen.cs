@@ -16,8 +16,9 @@ namespace CMPT
     {
         private SqlDataReader sqlDataReader;
         private SqlCommand sqlCommand;
+        private Form1 mainForm;
 
-        public LoginScreen(SqlConnection connection)
+        public LoginScreen(SqlConnection connection, Form1 mainForm)
         {
             try
             {
@@ -28,6 +29,8 @@ namespace CMPT
             {
                 MessageBox.Show(e.ToString(), "Error");
             }
+
+            this.mainForm = mainForm;
 
             InitializeComponent();
         }
@@ -80,12 +83,12 @@ namespace CMPT
          */
         private void ValidateLogin()
         {
-            string userID = "\'" + userId.Text + "\'";
+            string userID = userId.Text;
             string password = passwordText.Text;
             string salt = "";
             string passHash = "";
 
-            sqlCommand.CommandText = "select passHash, salt from Login where userID = " + userID;
+            sqlCommand.CommandText = "select passHash, salt from Login where userID = " + "\'" + userID + "\'";
 
             try
             {
@@ -114,6 +117,7 @@ namespace CMPT
                 var result = MessageBox.Show("Success!", "Successful Login", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
+                    this.mainForm.SuccessfulLogin(userID);
                     this.Close();
                 }
             }
