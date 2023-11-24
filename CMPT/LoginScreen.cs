@@ -18,6 +18,13 @@ namespace CMPT
         private SqlCommand sqlCommand;
         private Form1 mainForm;
 
+        /**
+         * Constructor for the LoginScreen class
+         * 
+         * Parameters:
+         *      connect:    an SqlConnection to the database to be used
+         *      mainFrom:   The main form from which the login screen from is opened
+         */
         public LoginScreen(SqlConnection connection, Form1 mainForm)
         {
             try

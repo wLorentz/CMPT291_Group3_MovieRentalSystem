@@ -1,5 +1,6 @@
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CMPT
@@ -9,6 +10,8 @@ namespace CMPT
         public SqlConnection myConnection;
         public SqlCommand myCommand;
         public SqlDataReader myReader;
+
+        private Customer[] customers;
 
         public Form1()
         {
@@ -71,6 +74,47 @@ namespace CMPT
             {
                 MessageBox.Show(e3.ToString(), "Error");
             }
+
+            getCustomerList();
+        }
+
+        private void getCustomerList()
+        {
+            myCommand.CommandText = "select * from Customer";
+
+            var customerList = new List<Customer>();
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                while (myReader.Read())
+                {
+                    CustomerStruct customerStruct = new CustomerStruct(myReader["accountNo"].ToString());
+
+                    customerStruct.firstName = myReader["firstName"].ToString();
+                    customerStruct.lastName = myReader["lastName"].ToString();
+                    customerStruct.phoneNumber = myReader["phoneNumber"].ToString();
+                    customerStruct.email = myReader["email"].ToString();
+                    customerStruct.streetNo = myReader["streetNo"].ToString();
+                    customerStruct.streetName = myReader["streetName"].ToString();
+                    customerStruct.aptNo = myReader["aptNo"].ToString();
+                    // customerStruct.city = myReader["city"].ToString();
+                    customerStruct.creditCard = myReader["creditCard"].ToString();
+                    customerStruct.rating = myReader["rating"].ToString();
+
+                    Customer customer = new(customerStruct);
+                    customerList.Add(customer);
+                    customerDropdown.Items.Add(customer.AccountNo);
+                }
+
+                this.customers = customerList.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+            
         }
 
         /**
@@ -250,6 +294,39 @@ namespace CMPT
                     break;
             }
 
+        }
+
+        private void customerDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            editCustomerButton.Visible = false;
+
+            if (customerDropdown.SelectedIndex != -1)
+            {
+                editCustomerButton.Visible = true;
+            }
+
+        }
+
+        private void customerDropdown_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(customers.Length == 0)
+            {
+                this.getCustomerList();
+            }
+
+            string str = customerDropdown.Text;
+
+            foreach (var customer in customers)
+            {
+                if (customer.AccountNo == str)
+                {
+                    editCustomerButton.Visible = true;
+                }
+                else
+                {
+                    editCustomerButton.Visible = false;
+                }
+            }
         }
     }
 }
