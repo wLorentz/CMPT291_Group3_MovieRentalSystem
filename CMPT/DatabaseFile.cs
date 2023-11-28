@@ -78,13 +78,13 @@ namespace CMPT
 
                 while (myReader.Read())
                 {
-                    MovieStruct movieStruct = new(myReader["movieID"].ToString());
+                    MovieStruct movieStruct = new(myReader[(int)MovieEnum.movieID].ToString());
 
-                    movieStruct.price = myReader["price"].ToString();
-                    movieStruct.genre = myReader["genre"].ToString();
-                    movieStruct.rating = myReader["rating"].ToString();
-                    movieStruct.copies = myReader["copies"].ToString();
-                    movieStruct.name = myReader["movieName"].ToString();
+                    movieStruct.price = myReader[(int)MovieEnum.price].ToString();
+                    movieStruct.genre = myReader[(int)MovieEnum.genre].ToString();
+                    movieStruct.rating = myReader[(int)MovieEnum.rating].ToString();
+                    movieStruct.copies = myReader[(int)MovieEnum.copies].ToString();
+                    movieStruct.name = myReader[(int)MovieEnum.movieName].ToString();
 
                     movieList.Add(new Movie(movieStruct));
                 }
