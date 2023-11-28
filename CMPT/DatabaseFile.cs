@@ -176,18 +176,18 @@ namespace CMPT
 
                 while (myReader.Read())
                 {
-                    CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader["accountNo"].ToString()));
+                    CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader[(int)CustomerEnum.accountNo].ToString()));
 
-                    customerStruct.firstName = myReader["firstName"].ToString();
-                    customerStruct.lastName = myReader["lastName"].ToString();
-                    customerStruct.phoneNumber = myReader["phoneNumber"].ToString();
-                    customerStruct.email = myReader["email"].ToString();
-                    customerStruct.streetNo = myReader["streetNo"].ToString();
-                    customerStruct.streetName = myReader["streetName"].ToString();
-                    customerStruct.aptNo = myReader["aptNo"].ToString();
-                    customerStruct.city = myReader["city"].ToString();
-                    customerStruct.creditCard = myReader["creditCard"].ToString();
-                    customerStruct.rating = myReader["rating"].ToString();
+                    customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
+                    customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
+                    customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
+                    customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
+                    customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
+                    customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                    customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
+                    customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
                     Customer customer = new(customerStruct);
                     customerList.Add(customer);
@@ -214,18 +214,18 @@ namespace CMPT
 
                 while (myReader.Read())
                 {
-                    CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader["accountNo"].ToString()));
+                    CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader[(int)CustomerEnum.accountNo].ToString()));
 
-                    customerStruct.firstName = myReader["firstName"].ToString();
-                    customerStruct.lastName = myReader["lastName"].ToString();
-                    customerStruct.phoneNumber = myReader["phoneNumber"].ToString();
-                    customerStruct.email = myReader["email"].ToString();
-                    customerStruct.streetNo = myReader["streetNo"].ToString();
-                    customerStruct.streetName = myReader["streetName"].ToString();
-                    customerStruct.aptNo = myReader["aptNo"].ToString();
-                    customerStruct.city = myReader["city"].ToString();
-                    customerStruct.creditCard = myReader["creditCard"].ToString();
-                    customerStruct.rating = myReader["rating"].ToString();
+                    customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
+                    customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
+                    customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
+                    customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
+                    customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
+                    customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                    customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
+                    customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
                     Customer customer = new(customerStruct);
                     customerList.Add(customer);
@@ -300,16 +300,16 @@ namespace CMPT
 
                 CustomerStruct customerStruct = new(accountNo);
 
-                customerStruct.firstName = myReader["firstName"].ToString();
-                customerStruct.lastName = myReader["lastName"].ToString();
-                customerStruct.phoneNumber = myReader["phoneNumber"].ToString();
-                customerStruct.email = myReader["email"].ToString();
-                customerStruct.streetNo = myReader["streetNo"].ToString();
-                customerStruct.streetName = myReader["streetName"].ToString();
-                customerStruct.aptNo = myReader["aptNo"].ToString();
-                customerStruct.city = myReader["city"].ToString();
-                customerStruct.creditCard = myReader["creditCard"].ToString();
-                customerStruct.rating = myReader["rating"].ToString();
+                customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
+                customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
+                customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
+                customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
+                customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
+                customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
+                customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
+                customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
                 customer = new Customer(customerStruct);
 
