@@ -36,18 +36,30 @@
             movieCopies = new DataGridViewTextBoxColumn();
             movieRatings = new DataGridViewTextBoxColumn();
             first_tab = new TabControl();
+            rentals = new TabPage();
+            button1 = new Button();
+            dueDatePicker = new DateTimePicker();
+            label4 = new Label();
+            retalDatePicker = new DateTimePicker();
+            label3 = new Label();
+            label2 = new Label();
+            movieDropdown = new ComboBox();
+            editCustomerButton = new Button();
+            addCustomerButton = new Button();
+            label1 = new Label();
+            customerDropdown = new ComboBox();
             allMovies = new TabPage();
             movieDeletebutton = new Button();
             updateMoviesbutton = new Button();
             searchMoviebutton = new Button();
             searchMoviebox = new TextBox();
-            manageQueue = new TabPage();
             runReports = new TabPage();
             runReport = new Button();
             reports = new ListBox();
             reportOutputText = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             first_tab.SuspendLayout();
+            rentals.SuspendLayout();
             allMovies.SuspendLayout();
             runReports.SuspendLayout();
             SuspendLayout();
@@ -103,15 +115,145 @@
             // 
             // first_tab
             // 
+            first_tab.Controls.Add(rentals);
             first_tab.Controls.Add(allMovies);
-            first_tab.Controls.Add(manageQueue);
             first_tab.Controls.Add(runReports);
             first_tab.Location = new Point(0, 0);
             first_tab.Margin = new Padding(3, 2, 3, 2);
             first_tab.Name = "first_tab";
             first_tab.SelectedIndex = 0;
-            first_tab.Size = new Size(1159, 355);
+            first_tab.Size = new Size(1159, 397);
             first_tab.TabIndex = 3;
+            // 
+            // rentals
+            // 
+            rentals.Controls.Add(button1);
+            rentals.Controls.Add(dueDatePicker);
+            rentals.Controls.Add(label4);
+            rentals.Controls.Add(retalDatePicker);
+            rentals.Controls.Add(label3);
+            rentals.Controls.Add(label2);
+            rentals.Controls.Add(movieDropdown);
+            rentals.Controls.Add(editCustomerButton);
+            rentals.Controls.Add(addCustomerButton);
+            rentals.Controls.Add(label1);
+            rentals.Controls.Add(customerDropdown);
+            rentals.Location = new Point(4, 24);
+            rentals.Name = "rentals";
+            rentals.Size = new Size(1151, 369);
+            rentals.TabIndex = 1;
+            rentals.Text = "Rentals";
+            rentals.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            button1.Location = new Point(8, 276);
+            button1.Name = "button1";
+            button1.Size = new Size(116, 62);
+            button1.TabIndex = 10;
+            button1.Text = "Create Rental";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // dueDatePicker
+            // 
+            dueDatePicker.CalendarFont = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dueDatePicker.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            dueDatePicker.Location = new Point(130, 182);
+            dueDatePicker.Name = "dueDatePicker";
+            dueDatePicker.Size = new Size(200, 33);
+            dueDatePicker.TabIndex = 9;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(8, 188);
+            label4.Name = "label4";
+            label4.Size = new Size(90, 25);
+            label4.TabIndex = 8;
+            label4.Text = "Due Date";
+            // 
+            // retalDatePicker
+            // 
+            retalDatePicker.CalendarFont = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            retalDatePicker.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            retalDatePicker.Location = new Point(130, 124);
+            retalDatePicker.Name = "retalDatePicker";
+            retalDatePicker.Size = new Size(200, 33);
+            retalDatePicker.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label3.Location = new Point(8, 130);
+            label3.Name = "label3";
+            label3.Size = new Size(108, 25);
+            label3.TabIndex = 6;
+            label3.Text = "Rental Date";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(8, 73);
+            label2.Name = "label2";
+            label2.Size = new Size(64, 25);
+            label2.TabIndex = 5;
+            label2.Text = "Movie";
+            // 
+            // movieDropdown
+            // 
+            movieDropdown.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            movieDropdown.FormattingEnabled = true;
+            movieDropdown.Location = new Point(130, 70);
+            movieDropdown.Name = "movieDropdown";
+            movieDropdown.Size = new Size(225, 33);
+            movieDropdown.TabIndex = 4;
+            // 
+            // editCustomerButton
+            // 
+            editCustomerButton.Location = new Point(410, 18);
+            editCustomerButton.Name = "editCustomerButton";
+            editCustomerButton.Size = new Size(43, 25);
+            editCustomerButton.TabIndex = 3;
+            editCustomerButton.Text = "Edit";
+            editCustomerButton.UseVisualStyleBackColor = true;
+            editCustomerButton.Visible = false;
+            editCustomerButton.Click += editCustomerButton_Click;
+            // 
+            // addCustomerButton
+            // 
+            addCustomerButton.Location = new Point(361, 18);
+            addCustomerButton.Name = "addCustomerButton";
+            addCustomerButton.Size = new Size(43, 25);
+            addCustomerButton.TabIndex = 2;
+            addCustomerButton.Text = "Add";
+            addCustomerButton.UseVisualStyleBackColor = true;
+            addCustomerButton.Click += addCustomerButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label1.Location = new Point(8, 18);
+            label1.Name = "label1";
+            label1.Size = new Size(116, 25);
+            label1.TabIndex = 1;
+            label1.Text = "Customer ID";
+            // 
+            // customerDropdown
+            // 
+            customerDropdown.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            customerDropdown.FormattingEnabled = true;
+            customerDropdown.Items.AddRange(new object[] { "Customer1" });
+            customerDropdown.Location = new Point(130, 15);
+            customerDropdown.Name = "customerDropdown";
+            customerDropdown.Size = new Size(225, 33);
+            customerDropdown.TabIndex = 0;
+            customerDropdown.SelectedIndexChanged += customerDropdown_SelectedIndexChanged;
+            customerDropdown.KeyUp += customerDropdown_KeyUp;
             // 
             // allMovies
             // 
@@ -124,7 +266,7 @@
             allMovies.Margin = new Padding(3, 2, 3, 2);
             allMovies.Name = "allMovies";
             allMovies.Padding = new Padding(3, 2, 3, 2);
-            allMovies.Size = new Size(1151, 327);
+            allMovies.Size = new Size(1151, 369);
             allMovies.TabIndex = 0;
             allMovies.Text = "Movies";
             allMovies.UseVisualStyleBackColor = true;
@@ -170,15 +312,6 @@
             searchMoviebox.Size = new Size(110, 23);
             searchMoviebox.TabIndex = 3;
             // 
-            // manageQueue
-            // 
-            manageQueue.Location = new Point(4, 24);
-            manageQueue.Name = "manageQueue";
-            manageQueue.Size = new Size(1151, 327);
-            manageQueue.TabIndex = 1;
-            manageQueue.Text = "Manage Queue";
-            manageQueue.UseVisualStyleBackColor = true;
-            // 
             // runReports
             // 
             runReports.Controls.Add(runReport);
@@ -186,7 +319,7 @@
             runReports.Controls.Add(reportOutputText);
             runReports.Location = new Point(4, 24);
             runReports.Name = "runReports";
-            runReports.Size = new Size(1151, 327);
+            runReports.Size = new Size(1151, 369);
             runReports.TabIndex = 2;
             runReports.Text = "Reports";
             runReports.UseVisualStyleBackColor = true;
@@ -223,13 +356,15 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1170, 354);
+            ClientSize = new Size(1170, 404);
             Controls.Add(first_tab);
             Name = "Form1";
             Text = "Form1";
             Shown += Form1_Shown;
             ((System.ComponentModel.ISupportInitialize)movies).EndInit();
             first_tab.ResumeLayout(false);
+            rentals.ResumeLayout(false);
+            rentals.PerformLayout();
             allMovies.ResumeLayout(false);
             allMovies.PerformLayout();
             runReports.ResumeLayout(false);
@@ -252,10 +387,21 @@
         private DataGridViewTextBoxColumn movieCopies;
         private DataGridViewTextBoxColumn movieRatings;
         private Button movieDeletebutton;
-        private TabPage manageQueue;
+        private TabPage rentals;
         private TabPage runReports;
         private RichTextBox reportOutputText;
         private ListBox reports;
         private Button runReport;
+        private Label label2;
+        private ComboBox movieDropdown;
+        private Button editCustomerButton;
+        private Button addCustomerButton;
+        private Label label1;
+        private ComboBox customerDropdown;
+        private DateTimePicker dueDatePicker;
+        private Label label4;
+        private DateTimePicker retalDatePicker;
+        private Label label3;
+        private Button button1;
     }
 }

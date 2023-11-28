@@ -14,23 +14,20 @@ namespace CMPT
 {
     public partial class LoginScreen : Form
     {
-        private SqlDataReader sqlDataReader;
-        private SqlCommand sqlCommand;
         private Form1 mainForm;
+        private DatabaseFile database;
 
-        public LoginScreen(SqlConnection connection, Form1 mainForm)
+        /**
+         * Constructor for the LoginScreen class
+         * 
+         * Parameters:
+         *      connect:    an SqlConnection to the database to be used
+         *      mainFrom:   The main form from which the login screen from is opened
+         */
+        public LoginScreen(Form1 mainForm)
         {
-            try
-            {
-                sqlCommand = new SqlCommand();
-                sqlCommand.Connection = connection;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString(), "Error");
-            }
-
             this.mainForm = mainForm;
+            //this.database = database;
 
             InitializeComponent();
         }
@@ -88,23 +85,28 @@ namespace CMPT
             string salt = "";
             string passHash = "";
 
-            sqlCommand.CommandText = "select passHash, salt from Login where userID = " + "\'" + userID + "\'";
+            string[] loginInfo = mainForm.GetDatabase().getLoginInfo(userID);
 
-            try
-            {
-                sqlDataReader = sqlCommand.ExecuteReader();
+            salt = loginInfo[0];
+            passHash = loginInfo[1];
 
-                sqlDataReader.Read();
+            //sqlCommand.CommandText = "select passHash, salt from Login where userID = " + "\'" + userID + "\'";
 
-                salt = sqlDataReader["salt"].ToString().Trim();
-                passHash = sqlDataReader["passHash"].ToString().Trim();
+            //try
+            //{
+            //    sqlDataReader = sqlCommand.ExecuteReader();
 
-                sqlDataReader.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
-            }
+            //    sqlDataReader.Read();
+
+            //    salt = sqlDataReader["salt"].ToString().Trim();
+            //    passHash = sqlDataReader["passHash"].ToString().Trim();
+
+            //    sqlDataReader.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString(), "Error");
+            //}
 
             string hashedPass = ComputeSha256Hash(password + salt);
 
