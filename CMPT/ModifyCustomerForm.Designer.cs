@@ -327,6 +327,7 @@
             Controls.Add(accountNumberText);
             Controls.Add(label1);
             Name = "ModifyCustomerForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Add Customer";
             Load += AddCustomerForm_Load;
             ResumeLayout(false);

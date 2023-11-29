@@ -10,22 +10,13 @@ namespace CMPT
     {
         private DatabaseFile database;
 
-        private Customer[] customers;
-        private Movie[] movieList;
+        //private Customer[] customers;
+        //private Movie[] movieList;
 
         public Form1()
         {
             InitializeComponent();
 
-            /*Starting the connection*/
-            //SqlConnection myConnection = new SqlConnection("user id = admin;" + // Username  ***Need to update your users in SQL SERVER MANAGEMENT and then adjust this to your username***
-            //     "password = admin;" + // password 
-            //     "server = localhost;" + //IP for the server
-            //     "Trusted_Connection = yes;" +
-            //     "database = CMPT291_MovieRentalSystem; " + //Database to connect to ***Change this to whatever your DB is named***
-            //     "connection timeout = 30"); //timeout in seconds
-
-            //SqlConnection myConnection = new SqlConnection(connectionString); //Timeout in seconds
             try
             {
                 database = new("admin", "admin", "CMPT291_MovieRentalSystem");
@@ -56,61 +47,87 @@ namespace CMPT
         {
             this.Show();
 
-            getMovies();
+            Movie[] movieList = getMovies();
 
-            populateCustomerDropdown();
+            populateMovieList(movieList);
+
+            populateMovieDropdown(movieList);
+
+            Customer[] customerList = getCustomerList();
+
+            populateCustomerDropdown(customerList);
+
+            populateCustomerList(customerList);
         }
 
-        public void getMovies()
+        public Movie[] getMovies()
         {
+            Movie[] movies = new List<Movie>().ToArray();
+
             try
             {
-                movieList = database.getAllMovies();
-                movies.Rows.Clear();
-
-                foreach (Movie movie in movieList)
-                {
-                    movies.Rows.Add(movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
-                }
+                movies = database.getAllMovies();
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error");
             }
+
+            return movies;
+        }
+
+        public void populateMovieList(Movie[] movieList)
+        {
+            movies.Rows.Clear();
+
+            foreach (Movie movie in movieList)
+            {
+                movies.Rows.Add(movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
+            }
+        }
+
+        public void populateMovieDropdown(Movie[] movieList)
+        {
+            movieDropdown.Items.Clear();
+
+            foreach (Movie movie in movieList)
+            {
+                movieDropdown.Items.Add(movie.getName());
+            }
         }
 
         public Customer[] getCustomerList()
         {
-            if (customers == null)
+            Customer[] customerList = new List<Customer>().ToArray(); ;
+            try
             {
-                try
-                {
-                    customers = database.GetAllCustomers();
-                    return customers;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Error");
-                    Customer[] emptyCustomerList = new List<Customer>().ToArray();
+                customerList = database.GetAllCustomers();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error");
+            }
 
-                    return emptyCustomerList;
-                }
-            }
-            else
-            {
-                return customers;
-            }
+            return customerList;
         }
 
-        private void populateCustomerDropdown()
+        private void populateCustomerDropdown(Customer[] customerList)
         {
             customerDropdown.Items.Clear();
-
-            Customer[] customerList = getCustomerList();
 
             foreach (Customer customer in customerList)
             {
                 customerDropdown.Items.Add(customer.AccountNo);
+            }
+        }
+
+        private void populateCustomerList(Customer[] customerList)
+        {
+            CustomersGridView.Rows.Clear();
+
+            foreach (Customer customer in customerList)
+            {
+                CustomersGridView.Rows.Add(customer.AccountNo, customer.LastName, customer.FirstName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating);
             }
         }
 
@@ -141,7 +158,7 @@ namespace CMPT
             //If the search text box is empty show all movies in database
             else
             {
-                movieList = database.getAllMovies();
+                Movie[] movieList = database.getAllMovies();
                 movies.Rows.Clear();
 
                 foreach (Movie movie in movieList)
@@ -154,7 +171,7 @@ namespace CMPT
         private void updateMoviesbutton_Click(object sender, EventArgs e)
         {
             //Loops through the rows and updates all of the movies
-            database.SaveMovies(movieList);
+            //database.SaveMovies(movieList);
 
             //}
             ////Instead of updating, this is for adding a new movie
@@ -275,11 +292,6 @@ namespace CMPT
 
         private void customerDropdown_KeyUp(object sender, KeyEventArgs e)
         {
-            if (customers.Length == 0)
-            {
-                this.getCustomerList();
-            }
-
             string str = customerDropdown.Text;
 
             if (customerDropdown.Items.Contains(str))
@@ -312,7 +324,8 @@ namespace CMPT
             {
                 database.AddCustomer(customer);
                 customerDropdown.Items.Add(customer.AccountNo);
-                customers.Append(customer);
+                //customers.Append(customer);
+                CustomersGridView.Rows.Add(customer.AccountNo, customer.LastName, customer.FirstName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating);
 
                 customerDropdown.SelectedIndex = customerDropdown.Items.Count - 1;
             }
@@ -322,9 +335,31 @@ namespace CMPT
             }
         }
 
+
+
         public void saveCustomer(Customer customer)
         {
             database.SaveCustomer(customer);
+            foreach (DataGridViewRow row in CustomersGridView.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == customer.AccountNo.ToString())
+                {
+                    row.Cells[0].Value = customer.AccountNo;
+                    row.Cells[1].Value = customer.LastName;
+                    row.Cells[2].Value = customer.FirstName;
+                    row.Cells[3].Value = customer.StreetNo;
+                    row.Cells[4].Value = customer.StreetName;
+                    row.Cells[5].Value = customer.AptNo;
+                    row.Cells[6].Value = customer.City;
+                    row.Cells[7].Value = customer.PostalCode;
+                    row.Cells[8].Value = customer.PhoneNumber;
+                    row.Cells[9].Value = customer.Email;
+                    row.Cells[10].Value = customer.CreditCard;
+                    row.Cells[11].Value = customer.Rating;
+
+                    break;
+                }
+            }
         }
 
         private void editCustomerButton_Click(object sender, EventArgs e)
@@ -344,15 +379,15 @@ namespace CMPT
 
         private void addMoviebutton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                database.AddMovie(addMoviebox.Text);
-                movies.Rows.Add(addMoviebox.Text);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //try
+            //{
+            //    database.AddMovie(addMoviebox.Text);
+            //    movies.Rows.Add(addMoviebox.Text);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void assignActorbox_Click(object sender, EventArgs e)
@@ -372,6 +407,37 @@ namespace CMPT
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Customers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+
+            if (int.TryParse(CustomersGridView.Rows[rowIndex].Cells[0].Value.ToString(), out int accountNumber))
+            {
+                ModifyCustomerForm addCustomerForm = new(this, false, accountNumber);
+                addCustomerForm.Show();
+            }
+        }
+
+        private void CustomerDeleteButton_Click(object sender, EventArgs e)
+        {
+            int rowIdx = CustomersGridView.CurrentCell.RowIndex;
+
+            if(int.TryParse(CustomersGridView.Rows[rowIdx].Cells[0].Value.ToString(), out int accountNo))
+            {
+                try
+                {
+                    database.RemoveCustomer(accountNo);
+                    CustomersGridView.Rows.RemoveAt(rowIdx);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+            }
+
+            customerDropdown.Items.Remove(accountNo);
         }
     }
 }

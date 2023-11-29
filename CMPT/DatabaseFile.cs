@@ -110,13 +110,13 @@ namespace CMPT
 
                 while (myReader.Read())
                 {
-                    MovieStruct movieStruct = new(myReader["movieID"].ToString());
+                    MovieStruct movieStruct = new(myReader[(int)MovieEnum.movieID].ToString());
 
-                    movieStruct.price = myReader["price"].ToString();
-                    movieStruct.genre = myReader["genre"].ToString();
-                    movieStruct.rating = myReader["rating"].ToString();
-                    movieStruct.copies = myReader["copies"].ToString();
-                    movieStruct.name = myReader["movieName"].ToString();
+                    movieStruct.price = myReader[(int)MovieEnum.price].ToString();
+                    movieStruct.genre = myReader[(int)MovieEnum.genre].ToString();
+                    movieStruct.rating = myReader[(int)MovieEnum.rating].ToString();
+                    movieStruct.copies = myReader[(int)MovieEnum.copies].ToString();
+                    movieStruct.name = myReader[(int)MovieEnum.movieName].ToString();
 
                     movieList.Add(new Movie(movieStruct));
                 }
@@ -151,11 +151,12 @@ namespace CMPT
             }
         }
 
-        public void AddMovie(string movieID)
+        public void AddMovie(Movie movie)
         {
             
             {
-                myCommand.CommandText = "insert into Movies (movieID) values(" + movieID + ");";
+                myCommand.CommandText = string.Format("insert into Movies (movieID) values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}');",
+                    movie.getId());
                 try
                 {
                     myReader = myCommand.ExecuteReader();
@@ -212,13 +213,15 @@ namespace CMPT
                     CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader[(int)CustomerEnum.accountNo].ToString()));
 
                     customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
-                    customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.firstName = myReader[(int)CustomerEnum.firstName].ToString();
                     customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
                     customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
                     customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
                     customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
                     customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                    customerStruct.postalCode = myReader[(int)CustomerEnum.postalCode].ToString();
+                    customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
                     customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
@@ -238,7 +241,7 @@ namespace CMPT
 
         public Customer[] GetCustomers(string customerName)
         {
-            myCommand.CommandText = "select * from Customer where firstName='" ;
+            myCommand.CommandText = string.Format("select * from Customer where firstName LIKE %'{0}'%", customerName);
 
             var customerList = new List<Customer>();
             try
@@ -250,13 +253,15 @@ namespace CMPT
                     CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader[(int)CustomerEnum.accountNo].ToString()));
 
                     customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
-                    customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.firstName = myReader[(int)CustomerEnum.firstName].ToString();
                     customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
                     customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
                     customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
                     customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
                     customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                    customerStruct.postalCode = myReader[(int)CustomerEnum.postalCode].ToString();
+                    customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
                     customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
@@ -276,7 +281,7 @@ namespace CMPT
 
         public void RemoveCustomer(int accountNo)
         {
-            myCommand.CommandText = "DELETE FROM Customers where accountNo=" + accountNo;
+            myCommand.CommandText = "DELETE FROM Customer where accountNo=" + accountNo;
             //MessageBox.Show(myCommand.CommandText);
             myReader = myCommand.ExecuteReader();
             myReader.Close();
@@ -302,7 +307,7 @@ namespace CMPT
             }
         }
 
-        public void SaveCustomer( Customer customer)
+        public void SaveCustomer(Customer customer)
         {
             myCommand.CommandText = string.Format("Update Customer SET firstName='{0}',lastname='{1}',streetNo='{2}',streetName='{3}',aptNo='{4}',city='{5}',postalCode='{6}',phoneNumber='{7}',email='{8}',creditCard='{9}',rating='{10}' where accountNo='{11}'",
                     customer.FirstName, customer.LastName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating, customer.AccountNo);
