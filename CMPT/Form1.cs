@@ -1,5 +1,6 @@
 using System;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -132,6 +133,18 @@ namespace CMPT
                 movies.Rows.Clear();
 
                 foreach (Movie movie in movieArray)
+                {
+                    movies.Rows.Add(movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
+                }
+
+            }
+            //If the search text box is empty show all movies in database
+            else
+            {
+                movieList = database.getAllMovies();
+                movies.Rows.Clear();
+
+                foreach (Movie movie in movieList)
                 {
                     movies.Rows.Add(movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
                 }
@@ -269,7 +282,8 @@ namespace CMPT
 
             string str = customerDropdown.Text;
 
-            if (customerDropdown.Items.Contains(str)) {
+            if (customerDropdown.Items.Contains(str))
+            {
                 editCustomerButton.Visible = true;
             }
             else
@@ -314,11 +328,50 @@ namespace CMPT
         }
 
         private void editCustomerButton_Click(object sender, EventArgs e)
-        {            string str = customerDropdown.Text;
+        {
+            string str = customerDropdown.Text;
             int.TryParse(customerDropdown.Text, out int accountNumber);
 
             ModifyCustomerForm addCustomerForm = new(this, false, accountNumber);
             addCustomerForm.Show();
+        }
+
+        private void addMoviebox_Click(object sender, EventArgs e)
+        {
+            addMoviebox.Text = string.Empty;
+
+        }
+
+        private void addMoviebutton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                database.AddMovie(addMoviebox.Text);
+                movies.Rows.Add(addMoviebox.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void assignActorbox_Click(object sender, EventArgs e)
+        {
+            assignActorbox.Text = string.Empty;
+        }
+
+        private void assignActorbutton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int rowIdx = movies.CurrentCell.RowIndex;
+                string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
+                database.AssignActor(assignActorbox.Text, movieID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

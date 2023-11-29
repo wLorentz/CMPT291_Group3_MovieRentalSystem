@@ -151,6 +151,25 @@ namespace CMPT
             }
         }
 
+        public void AddMovie(string movieID)
+        {
+            
+            {
+                myCommand.CommandText = "insert into Movies (movieID) values(" + movieID + ");";
+                try
+                {
+                    myReader = myCommand.ExecuteReader();
+
+                    myReader.Close();
+
+                }
+                catch (Exception e3)
+                {
+                    throw new Exception(e3.Message);
+                }
+            }
+        }
+
         public void DeleteMovie(string movieId)
         {
             myCommand.CommandText = "DELETE FROM Movies where movieID=" + movieId;
@@ -160,6 +179,20 @@ namespace CMPT
                 myReader.Close();
             }
             catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void AssignActor(string actorID, string movieID)
+        {
+            myCommand.CommandText = "insert into cast values(" + actorID + ", " + movieID + ");";
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                myReader.Close();
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
