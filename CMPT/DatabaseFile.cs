@@ -152,11 +152,10 @@ namespace CMPT
         }
 
         public void AddMovie(Movie movie)
-        {
-            
+        { 
             {
-                myCommand.CommandText = string.Format("insert into Movies (movieID) values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}');",
-                    movie.getId());
+                myCommand.CommandText = string.Format("insert into Movies values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');",
+                    movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
                 try
                 {
                     myReader = myCommand.ExecuteReader();
@@ -377,17 +376,64 @@ namespace CMPT
             }
         }
 
-        public int GetLatestAccountNumber()
+        public int GetLowestAvailableMovieID()
         {
-            myCommand.CommandText = "select MAX(accountNo) as latestAccount from Customer";
+            myCommand.CommandText =
+            "select\r\n" +
+            "case \r\n" +
+            "when exists (select movieID from Movies where movieID = 1) then\r\n" +
+            "(select MIN(movieID) + 1 as lowestAvailableID \r\n" +
+            "from Movies M1\r\n" +
+            "where M1.movieID + 1 not in (select M2.movieID from Movies M2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableID\r\n" +
+            "from Movies";
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int movieID = 1;
+
+                    int.TryParse(myReader["lowestAvailableID"].ToString(), out movieID);
+
+                    myReader.Close();
+
+                    return movieID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return 1;
+        }
+
+        public int GetLowestAvailableAccountNumber()
+        {
+            myCommand.CommandText =
+            "select distinct\r\n" +
+            "case\r\n" +
+            "when exists (select accountNo from Customer where accountNo = 1) then\r\n" +
+            "(select MIN(accountNo) + 1 as lowestAvailableAccountNo\r\n" +
+            "from Customer C1\r\n" +
+            "where C1.accountNo + 1 not in (select C2.accountNo from Customer C2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableAccountNo\r\n" +
+            "from Customer";
+
             try
             {
                 myReader = myCommand.ExecuteReader();
                 if(myReader.Read())
                 {
-                    int accountNumber = 0;
+                    int accountNumber = 1;
 
-                    int.TryParse(myReader["latestAccount"].ToString(), out accountNumber);
+                    int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out accountNumber);
 
                     myReader.Close();
 
@@ -399,7 +445,7 @@ namespace CMPT
                 throw new Exception(ex.Message);
             }
 
-            return 0;
+            return 1;
         }
 
         public void AddCustomer(Customer customer)

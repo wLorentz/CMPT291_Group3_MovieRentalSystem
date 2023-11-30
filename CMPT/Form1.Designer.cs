@@ -50,7 +50,7 @@
             customerDropdown = new ComboBox();
             allCustomers = new TabPage();
             label5 = new Label();
-            comboBox1 = new ComboBox();
+            SearchByComboBox = new ComboBox();
             button2 = new Button();
             CustomerDeleteButton = new Button();
             SearchCustomerButton = new Button();
@@ -285,7 +285,7 @@
             // allCustomers
             // 
             allCustomers.Controls.Add(label5);
-            allCustomers.Controls.Add(comboBox1);
+            allCustomers.Controls.Add(SearchByComboBox);
             allCustomers.Controls.Add(button2);
             allCustomers.Controls.Add(CustomerDeleteButton);
             allCustomers.Controls.Add(SearchCustomerButton);
@@ -307,13 +307,13 @@
             label5.TabIndex = 13;
             label5.Text = "Search By:";
             // 
-            // comboBox1
+            // SearchByComboBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(815, 301);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 12;
+            SearchByComboBox.FormattingEnabled = true;
+            SearchByComboBox.Location = new Point(815, 301);
+            SearchByComboBox.Name = "SearchByComboBox";
+            SearchByComboBox.Size = new Size(121, 23);
+            SearchByComboBox.TabIndex = 12;
             // 
             // button2
             // 
@@ -478,7 +478,6 @@
             addMoviebox.Size = new Size(110, 23);
             addMoviebox.TabIndex = 8;
             addMoviebox.Text = "Enter Movie ID";
-            addMoviebox.Click += addMoviebox_Click;
             // 
             // addMoviebutton
             // 
@@ -634,7 +633,7 @@
         private TabPage allCustomers;
         private DataGridView CustomersGridView;
         private Label label5;
-        private ComboBox comboBox1;
+        private ComboBox SearchByComboBox;
         private Button button2;
         private Button CustomerDeleteButton;
         private Button SearchCustomerButton;

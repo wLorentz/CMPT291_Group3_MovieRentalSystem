@@ -58,6 +58,8 @@ namespace CMPT
             populateCustomerDropdown(customerList);
 
             populateCustomerList(customerList);
+            
+            populateCustomerSearchDropdown();
         }
 
         public Movie[] getMovies()
@@ -131,6 +133,14 @@ namespace CMPT
             }
         }
 
+        private void populateCustomerSearchDropdown()
+        {
+            foreach(DataGridViewTextBoxColumn column in CustomersGridView.Columns)
+            {
+                SearchByComboBox.Items.Add(column.HeaderText);
+            }
+        }
+
         /**
          * Ensures the login screen is only opened once the form is loaded. This prevents the main screen from 
          * covering the login screen in case the login screen is displayed before the main screen gets displayed
@@ -170,47 +180,31 @@ namespace CMPT
 
         private void updateMoviesbutton_Click(object sender, EventArgs e)
         {
-            //Loops through the rows and updates all of the movies
-            //database.SaveMovies(movieList);
+            var movieList = new List<Movie>();
 
-            //}
-            ////Instead of updating, this is for adding a new movie
-            ////Getting the last row index, which is where the user will input the new movies' information
-            //int lastRowidx = movies.Rows.Count - 1;
-            ////Check if its not null
-            //if (!((movies.Rows[lastRowidx].Cells[0].Value == null)))
-            //{
-            //    //Try to get all of the needed information, if some are null it will go to the catch
-            //    try
-            //    {
-            //        string movieID = movies.Rows[lastRowidx].Cells[0].Value.ToString();
-            //        string movieName = movies.Rows[lastRowidx].Cells[1].Value.ToString();
-            //        string movieGenre = movies.Rows[lastRowidx].Cells[2].Value.ToString();
-            //        string moviePrice = movies.Rows[lastRowidx].Cells[3].Value.ToString();
-            //        string movieCopies = movies.Rows[lastRowidx].Cells[4].Value.ToString();
-            //        string movieRating = movies.Rows[lastRowidx].Cells[5].Value.ToString();
-            //        myCommand.CommandText = "insert into Movies values(" + movieID + ", '" + movieName + "','" + movieGenre + "'," + moviePrice + "," + movieCopies + "," + movieRating + ");";
-            //        //Tries to add the movie. Will fail if ID is not unique or the data type is not compatible
-            //        try
-            //        {
-            //            MessageBox.Show(myCommand.CommandText);
-            //            myReader = myCommand.ExecuteReader();
+            foreach(DataGridViewRow row in movies.Rows)
+            {
+                MovieStruct movieStruct = new MovieStruct(row.Cells[0].Value.ToString())
+                {
+                    name = row.Cells[1].Value.ToString(),
+                    genre = row.Cells[2].Value.ToString(),
+                    price = row.Cells[3].Value.ToString(),
+                    copies = row.Cells[4].Value.ToString(),
+                    rating = row.Cells[5].Value.ToString()
+                };
 
-            //            myReader.Close();
-            //            movies.Rows.Add();
+                movieList.Add(new Movie(movieStruct));
+            }
 
-
-            //        }
-            //        catch (Exception e5)
-            //        {
-            //            MessageBox.Show("Movie ID already used (Must be unique) or wrong data type entered", "Error");
-            //        }
-            //    }
-            //    catch (Exception e6)
-            //    {
-            //        MessageBox.Show("Not all cells filled", "Error");
-            //    }
-            //}
+            try
+            {
+                database.SaveMovies(movieList.ToArray());
+                MessageBox.Show("Movies saved successfully!", "Success");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void movieDeletebutton_Click(object sender, EventArgs e)
@@ -279,6 +273,29 @@ namespace CMPT
 
         }
 
+        public void AddMovie(Movie movie)
+        {
+            try
+            {
+                database.AddMovie(movie);
+
+                movieDropdown.Items.Add(movie.getName());
+
+                movies.Rows.Add(
+                    movie.getId(),
+                    movie.getName(),
+                    movie.getGenre(),
+                    movie.getPrice(),
+                    movie.getCopies(),
+                    movie.getRating()
+                );
+            }
+            catch (Exception ex )
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
         private void customerDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             editCustomerButton.Visible = false;
@@ -308,7 +325,7 @@ namespace CMPT
         {
             try
             {
-                int newAccountNumber = database.GetLatestAccountNumber() + 1;
+                int newAccountNumber = database.GetLowestAvailableAccountNumber();
                 ModifyCustomerForm addCustomerForm = new(this, true, newAccountNumber);
                 addCustomerForm.Show();
             }
@@ -324,7 +341,6 @@ namespace CMPT
             {
                 database.AddCustomer(customer);
                 customerDropdown.Items.Add(customer.AccountNo);
-                //customers.Append(customer);
                 CustomersGridView.Rows.Add(customer.AccountNo, customer.LastName, customer.FirstName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating);
 
                 customerDropdown.SelectedIndex = customerDropdown.Items.Count - 1;
@@ -334,8 +350,6 @@ namespace CMPT
                 MessageBox.Show(ex.Message);
             }
         }
-
-
 
         public void saveCustomer(Customer customer)
         {
@@ -371,23 +385,20 @@ namespace CMPT
             addCustomerForm.Show();
         }
 
-        private void addMoviebox_Click(object sender, EventArgs e)
-        {
-            addMoviebox.Text = string.Empty;
-
-        }
-
         private void addMoviebutton_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    database.AddMovie(addMoviebox.Text);
-            //    movies.Rows.Add(addMoviebox.Text);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            try
+            {
+                int newMovieID = database.GetLowestAvailableMovieID();
+                AddMovieForm addMovieForm = new(this, newMovieID);
+
+                addMovieForm.Show();
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void assignActorbox_Click(object sender, EventArgs e)

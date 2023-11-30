@@ -34,20 +34,22 @@
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
+            MovieNameTextBox = new TextBox();
+            GenreTextBox = new TextBox();
+            PriceTextBox = new TextBox();
+            CopiesTextBox = new TextBox();
+            saveButton = new Button();
             SuspendLayout();
             // 
             // MovieIdText
             // 
             MovieIdText.AutoSize = true;
             MovieIdText.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            MovieIdText.Location = new Point(177, 9);
+            MovieIdText.Location = new Point(141, 9);
             MovieIdText.Name = "MovieIdText";
-            MovieIdText.Size = new Size(0, 25);
+            MovieIdText.Size = new Size(30, 25);
             MovieIdText.TabIndex = 3;
+            MovieIdText.Text = "ID";
             // 
             // label1
             // 
@@ -99,47 +101,59 @@
             label5.TabIndex = 7;
             label5.Text = "Copies:";
             // 
-            // textBox1
+            // MovieNameTextBox
             // 
-            textBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(141, 57);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(200, 33);
-            textBox1.TabIndex = 8;
+            MovieNameTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            MovieNameTextBox.Location = new Point(141, 57);
+            MovieNameTextBox.Name = "MovieNameTextBox";
+            MovieNameTextBox.Size = new Size(200, 33);
+            MovieNameTextBox.TabIndex = 8;
             // 
-            // textBox2
+            // GenreTextBox
             // 
-            textBox2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox2.Location = new Point(141, 96);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(200, 33);
-            textBox2.TabIndex = 9;
+            GenreTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            GenreTextBox.Location = new Point(141, 96);
+            GenreTextBox.Name = "GenreTextBox";
+            GenreTextBox.Size = new Size(200, 33);
+            GenreTextBox.TabIndex = 9;
             // 
-            // textBox3
+            // PriceTextBox
             // 
-            textBox3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox3.Location = new Point(141, 134);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(100, 33);
-            textBox3.TabIndex = 10;
+            PriceTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            PriceTextBox.Location = new Point(141, 134);
+            PriceTextBox.Name = "PriceTextBox";
+            PriceTextBox.Size = new Size(100, 33);
+            PriceTextBox.TabIndex = 10;
             // 
-            // textBox4
+            // CopiesTextBox
             // 
-            textBox4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox4.Location = new Point(141, 175);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(54, 33);
-            textBox4.TabIndex = 11;
+            CopiesTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            CopiesTextBox.Location = new Point(141, 175);
+            CopiesTextBox.Name = "CopiesTextBox";
+            CopiesTextBox.Size = new Size(54, 33);
+            CopiesTextBox.TabIndex = 11;
+            // 
+            // saveButton
+            // 
+            saveButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            saveButton.Location = new Point(12, 236);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(75, 38);
+            saveButton.TabIndex = 24;
+            saveButton.Text = "Save";
+            saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
             // AddMovieForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(436, 222);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            ClientSize = new Size(436, 286);
+            Controls.Add(saveButton);
+            Controls.Add(CopiesTextBox);
+            Controls.Add(PriceTextBox);
+            Controls.Add(GenreTextBox);
+            Controls.Add(MovieNameTextBox);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -149,6 +163,7 @@
             Name = "AddMovieForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add Movie";
+            Load += AddMovieForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -161,9 +176,10 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
+        private TextBox MovieNameTextBox;
+        private TextBox GenreTextBox;
+        private TextBox PriceTextBox;
+        private TextBox CopiesTextBox;
+        private Button saveButton;
     }
 }
