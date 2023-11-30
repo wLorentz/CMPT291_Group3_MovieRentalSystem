@@ -58,7 +58,7 @@ namespace CMPT
             populateCustomerDropdown(customerList);
 
             populateCustomerList(customerList);
-            
+
             populateCustomerSearchDropdown();
         }
 
@@ -135,7 +135,7 @@ namespace CMPT
 
         private void populateCustomerSearchDropdown()
         {
-            foreach(DataGridViewTextBoxColumn column in CustomersGridView.Columns)
+            foreach (DataGridViewTextBoxColumn column in CustomersGridView.Columns)
             {
                 SearchByComboBox.Items.Add(column.HeaderText);
             }
@@ -182,7 +182,7 @@ namespace CMPT
         {
             var movieList = new List<Movie>();
 
-            foreach(DataGridViewRow row in movies.Rows)
+            foreach (DataGridViewRow row in movies.Rows)
             {
                 MovieStruct movieStruct = new MovieStruct(row.Cells[0].Value.ToString())
                 {
@@ -290,7 +290,7 @@ namespace CMPT
                     movie.getRating()
                 );
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
@@ -393,7 +393,7 @@ namespace CMPT
                 AddMovieForm addMovieForm = new(this, newMovieID);
 
                 addMovieForm.Show();
-            } 
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -435,7 +435,7 @@ namespace CMPT
         {
             int rowIdx = CustomersGridView.CurrentCell.RowIndex;
 
-            if(int.TryParse(CustomersGridView.Rows[rowIdx].Cells[0].Value.ToString(), out int accountNo))
+            if (int.TryParse(CustomersGridView.Rows[rowIdx].Cells[0].Value.ToString(), out int accountNo))
             {
                 try
                 {
@@ -449,6 +449,16 @@ namespace CMPT
             }
 
             customerDropdown.Items.Remove(accountNo);
+        }
+
+        private void searchMoviebox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void assignActorbox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

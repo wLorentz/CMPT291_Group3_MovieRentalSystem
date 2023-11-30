@@ -71,7 +71,6 @@
             allMovies = new TabPage();
             assignActorbox = new TextBox();
             assignActorbutton = new Button();
-            addMoviebox = new TextBox();
             addMoviebutton = new Button();
             movieDeletebutton = new Button();
             updateMoviesbutton = new Button();
@@ -320,7 +319,7 @@
             button2.Location = new Point(8, 302);
             button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(82, 22);
+            button2.Size = new Size(82, 24);
             button2.TabIndex = 11;
             button2.Text = "Add";
             button2.UseVisualStyleBackColor = true;
@@ -331,7 +330,7 @@
             CustomerDeleteButton.Location = new Point(96, 302);
             CustomerDeleteButton.Margin = new Padding(3, 2, 3, 2);
             CustomerDeleteButton.Name = "CustomerDeleteButton";
-            CustomerDeleteButton.Size = new Size(82, 22);
+            CustomerDeleteButton.Size = new Size(82, 24);
             CustomerDeleteButton.TabIndex = 10;
             CustomerDeleteButton.Text = "Delete";
             CustomerDeleteButton.UseVisualStyleBackColor = true;
@@ -342,7 +341,7 @@
             SearchCustomerButton.Location = new Point(942, 301);
             SearchCustomerButton.Margin = new Padding(3, 2, 3, 2);
             SearchCustomerButton.Name = "SearchCustomerButton";
-            SearchCustomerButton.Size = new Size(82, 22);
+            SearchCustomerButton.Size = new Size(82, 24);
             SearchCustomerButton.TabIndex = 8;
             SearchCustomerButton.Text = "Search";
             SearchCustomerButton.UseVisualStyleBackColor = true;
@@ -433,7 +432,6 @@
             // 
             allMovies.Controls.Add(assignActorbox);
             allMovies.Controls.Add(assignActorbutton);
-            allMovies.Controls.Add(addMoviebox);
             allMovies.Controls.Add(addMoviebutton);
             allMovies.Controls.Add(movieDeletebutton);
             allMovies.Controls.Add(updateMoviesbutton);
@@ -451,51 +449,43 @@
             // 
             // assignActorbox
             // 
-            assignActorbox.Location = new Point(329, 301);
+            assignActorbox.Location = new Point(125, 303);
             assignActorbox.Margin = new Padding(3, 2, 3, 2);
             assignActorbox.Name = "assignActorbox";
             assignActorbox.Size = new Size(110, 23);
             assignActorbox.TabIndex = 10;
             assignActorbox.Text = "Enter Actor ID";
             assignActorbox.Click += assignActorbox_Click;
+            assignActorbox.TextChanged += assignActorbox_TextChanged;
             // 
             // assignActorbutton
             // 
-            assignActorbutton.Location = new Point(212, 300);
+            assignActorbutton.Location = new Point(8, 301);
             assignActorbutton.Margin = new Padding(3, 2, 3, 2);
             assignActorbutton.Name = "assignActorbutton";
-            assignActorbutton.Size = new Size(111, 22);
+            assignActorbutton.Size = new Size(111, 24);
             assignActorbutton.TabIndex = 9;
             assignActorbutton.Text = "Assign Actor:";
             assignActorbutton.UseVisualStyleBackColor = true;
             assignActorbutton.Click += assignActorbutton_Click;
             // 
-            // addMoviebox
-            // 
-            addMoviebox.Location = new Point(96, 301);
-            addMoviebox.Margin = new Padding(3, 2, 3, 2);
-            addMoviebox.Name = "addMoviebox";
-            addMoviebox.Size = new Size(110, 23);
-            addMoviebox.TabIndex = 8;
-            addMoviebox.Text = "Enter Movie ID";
-            // 
             // addMoviebutton
             // 
-            addMoviebutton.Location = new Point(8, 300);
+            addMoviebutton.Location = new Point(681, 301);
             addMoviebutton.Margin = new Padding(3, 2, 3, 2);
             addMoviebutton.Name = "addMoviebutton";
-            addMoviebutton.Size = new Size(82, 22);
+            addMoviebutton.Size = new Size(82, 24);
             addMoviebutton.TabIndex = 7;
-            addMoviebutton.Text = "Add Movie:";
+            addMoviebutton.Text = "Add";
             addMoviebutton.UseVisualStyleBackColor = true;
             addMoviebutton.Click += addMoviebutton_Click;
             // 
             // movieDeletebutton
             // 
-            movieDeletebutton.Location = new Point(769, 302);
+            movieDeletebutton.Location = new Point(769, 301);
             movieDeletebutton.Margin = new Padding(3, 2, 3, 2);
             movieDeletebutton.Name = "movieDeletebutton";
-            movieDeletebutton.Size = new Size(82, 22);
+            movieDeletebutton.Size = new Size(82, 24);
             movieDeletebutton.TabIndex = 6;
             movieDeletebutton.Text = "Delete";
             movieDeletebutton.UseVisualStyleBackColor = true;
@@ -503,10 +493,10 @@
             // 
             // updateMoviesbutton
             // 
-            updateMoviesbutton.Location = new Point(857, 302);
+            updateMoviesbutton.Location = new Point(857, 301);
             updateMoviesbutton.Margin = new Padding(3, 2, 3, 2);
             updateMoviesbutton.Name = "updateMoviesbutton";
-            updateMoviesbutton.Size = new Size(82, 22);
+            updateMoviesbutton.Size = new Size(82, 24);
             updateMoviesbutton.TabIndex = 5;
             updateMoviesbutton.Text = "Update";
             updateMoviesbutton.UseVisualStyleBackColor = true;
@@ -514,10 +504,10 @@
             // 
             // searchMoviebutton
             // 
-            searchMoviebutton.Location = new Point(945, 302);
+            searchMoviebutton.Location = new Point(945, 301);
             searchMoviebutton.Margin = new Padding(3, 2, 3, 2);
             searchMoviebutton.Name = "searchMoviebutton";
-            searchMoviebutton.Size = new Size(82, 22);
+            searchMoviebutton.Size = new Size(82, 24);
             searchMoviebutton.TabIndex = 4;
             searchMoviebutton.Text = "Search";
             searchMoviebutton.UseVisualStyleBackColor = true;
@@ -525,7 +515,7 @@
             // 
             // searchMoviebox
             // 
-            searchMoviebox.Location = new Point(1033, 301);
+            searchMoviebox.Location = new Point(1033, 303);
             searchMoviebox.Margin = new Padding(3, 2, 3, 2);
             searchMoviebox.Name = "searchMoviebox";
             searchMoviebox.Size = new Size(110, 23);
@@ -627,7 +617,6 @@
         private Label label3;
         private Button button1;
         private Button addMoviebutton;
-        private TextBox addMoviebox;
         private TextBox assignActorbox;
         private Button assignActorbutton;
         private TabPage allCustomers;
