@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
@@ -59,6 +60,7 @@ namespace CMPT
             getMovies();
 
             populateCustomerDropdown();
+            populateMovieDropdown();
         }
 
         public void getMovies()
@@ -76,6 +78,22 @@ namespace CMPT
             catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error");
+            }
+        }
+
+        public string[] getAllMovieTitles()
+        {
+
+            try
+            {
+                var movieTitles = database.getMovieTitles();
+                return movieTitles;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error");
+                String[] movieTitles = new List<string>().ToArray();
+                return movieTitles;
             }
         }
 
@@ -111,6 +129,18 @@ namespace CMPT
             foreach (Customer customer in customerList)
             {
                 customerDropdown.Items.Add(customer.AccountNo);
+            }
+        }
+
+        private void populateMovieDropdown()
+        {
+            movieDropdown.Items.Clear();
+
+            String[] movieList = getAllMovieTitles();
+
+            foreach (String title in movieList)
+            {
+                movieDropdown.Items.Add(title);
             }
         }
 
@@ -262,6 +292,8 @@ namespace CMPT
 
         }
 
+
+
         private void customerDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             editCustomerButton.Visible = false;
@@ -367,6 +399,56 @@ namespace CMPT
                 int rowIdx = movies.CurrentCell.RowIndex;
                 string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
                 database.AssignActor(assignActorbox.Text, movieID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string customerID;
+            string movie;
+            int movieID;
+            DateTime fromDate;
+            DateTime toDate;
+            int[] copies;
+            int[] bookedCopies;
+
+            try
+            {
+                customerID = customerDropdown.SelectedItem.ToString();
+                movie = movieDropdown.SelectedItem.ToString();
+                fromDate = rentalDatePicker.Value;
+                toDate = dueDatePicker.Value;
+                copies = database.getMovieCopies(movie);
+                movieID = database.convertMovieTitleToID(movie);
+                bookedCopies = database.getBookedCopies(movieID, fromDate, toDate);
+                var freeCopies = copies.Except(bookedCopies);
+
+                if (freeCopies.Count() == 0)
+                {
+                    MessageBox.Show("No free copies in this date range.");
+                    return;
+                }
+                else
+                {
+                    int orderID = database.GetLatestOrderNumber() + 1;
+
+                    OrderStruct orderStruct = new(orderID);
+
+                    orderStruct.date = DateTime.Now;
+                    orderStruct.status = "Confirmed"; //Unsure what this value should be yet. *TODO*
+                    orderStruct.fromDate = fromDate;
+                    orderStruct.toDate = toDate;
+                    orderStruct.employeeID = "1";  //Unsure how to get employeeID at this time so just hardcoded Val *TODO*
+                    orderStruct.copyID = freeCopies.ElementAt(0).ToString();
+                    orderStruct.movieID = movieID.ToString();
+                    orderStruct.accountNo = customerID;
+
+                    database.AddOrder(new Order(orderStruct));
+                }
             }
             catch (Exception ex)
             {
