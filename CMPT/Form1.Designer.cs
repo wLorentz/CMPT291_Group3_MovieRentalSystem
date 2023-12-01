@@ -80,9 +80,13 @@
             runReport = new Button();
             reports = new ListBox();
             reportOutputText = new RichTextBox();
+
             UserIDLabel = new Label();
             LogoutButton = new Button();
             EmployeesButton = new Button();
+
+            makeCopybutton = new Button();
+
             ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             first_tab.SuspendLayout();
             rentals.SuspendLayout();
@@ -293,9 +297,11 @@
             allCustomers.Controls.Add(SearchCustomerButton);
             allCustomers.Controls.Add(SearchCustomerBox);
             allCustomers.Controls.Add(CustomersGridView);
-            allCustomers.Location = new Point(4, 24);
+
+            allCustomers.Location = new Point(4, 29);
+            allCustomers.Margin = new Padding(3, 4, 3, 4);
             allCustomers.Name = "allCustomers";
-            allCustomers.Size = new Size(1151, 369);
+            allCustomers.Size = new Size(1317, 496);
             allCustomers.TabIndex = 3;
             allCustomers.Text = "Customers";
             allCustomers.UseVisualStyleBackColor = true;
@@ -303,26 +309,27 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(748, 304);
+            label5.Location = new Point(855, 405);
             label5.Name = "label5";
-            label5.Size = new Size(61, 15);
+            label5.Size = new Size(76, 20);
             label5.TabIndex = 13;
             label5.Text = "Search By:";
             // 
             // SearchByComboBox
             // 
             SearchByComboBox.FormattingEnabled = true;
-            SearchByComboBox.Location = new Point(815, 301);
+            SearchByComboBox.Location = new Point(931, 401);
+            SearchByComboBox.Margin = new Padding(3, 4, 3, 4);
             SearchByComboBox.Name = "SearchByComboBox";
-            SearchByComboBox.Size = new Size(121, 23);
+            SearchByComboBox.Size = new Size(138, 28);
             SearchByComboBox.TabIndex = 12;
             // 
             // button2
             // 
-            button2.Location = new Point(8, 302);
-            button2.Margin = new Padding(3, 2, 3, 2);
+
+            button2.Location = new Point(9, 403);
             button2.Name = "button2";
-            button2.Size = new Size(82, 24);
+            button2.Size = new Size(94, 32);
             button2.TabIndex = 11;
             button2.Text = "Add";
             button2.UseVisualStyleBackColor = true;
@@ -330,10 +337,10 @@
             // 
             // CustomerDeleteButton
             // 
-            CustomerDeleteButton.Location = new Point(96, 302);
-            CustomerDeleteButton.Margin = new Padding(3, 2, 3, 2);
+
+            CustomerDeleteButton.Location = new Point(110, 403);
             CustomerDeleteButton.Name = "CustomerDeleteButton";
-            CustomerDeleteButton.Size = new Size(82, 24);
+            CustomerDeleteButton.Size = new Size(94, 32);
             CustomerDeleteButton.TabIndex = 10;
             CustomerDeleteButton.Text = "Delete";
             CustomerDeleteButton.UseVisualStyleBackColor = true;
@@ -341,20 +348,19 @@
             // 
             // SearchCustomerButton
             // 
-            SearchCustomerButton.Location = new Point(942, 301);
-            SearchCustomerButton.Margin = new Padding(3, 2, 3, 2);
+
+            SearchCustomerButton.Location = new Point(1077, 401);
             SearchCustomerButton.Name = "SearchCustomerButton";
-            SearchCustomerButton.Size = new Size(82, 24);
+            SearchCustomerButton.Size = new Size(94, 32);
             SearchCustomerButton.TabIndex = 8;
             SearchCustomerButton.Text = "Search";
             SearchCustomerButton.UseVisualStyleBackColor = true;
             // 
             // SearchCustomerBox
             // 
-            SearchCustomerBox.Location = new Point(1033, 301);
-            SearchCustomerBox.Margin = new Padding(3, 2, 3, 2);
+            SearchCustomerBox.Location = new Point(1181, 401);
             SearchCustomerBox.Name = "SearchCustomerBox";
-            SearchCustomerBox.Size = new Size(110, 23);
+            SearchCustomerBox.Size = new Size(125, 27);
             SearchCustomerBox.TabIndex = 7;
             // 
             // CustomersGridView
@@ -364,75 +370,89 @@
             CustomersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             CustomersGridView.Columns.AddRange(new DataGridViewColumn[] { accountNo, lastName, firstName, streetNumber, streetName, aptNumber, city, postalCode, phoneNumber, email, creditCard, rating });
             CustomersGridView.Location = new Point(0, 0);
+            CustomersGridView.Margin = new Padding(3, 4, 3, 4);
             CustomersGridView.Name = "CustomersGridView";
             CustomersGridView.RowHeadersWidth = 51;
             CustomersGridView.RowTemplate.Height = 25;
-            CustomersGridView.Size = new Size(1143, 296);
+            CustomersGridView.Size = new Size(1306, 395);
             CustomersGridView.TabIndex = 3;
             CustomersGridView.CellDoubleClick += Customers_CellDoubleClick;
             // 
             // accountNo
             // 
             accountNo.HeaderText = "Account Number";
+            accountNo.MinimumWidth = 6;
             accountNo.Name = "accountNo";
             // 
             // lastName
             // 
             lastName.HeaderText = "Last Name";
+            lastName.MinimumWidth = 6;
             lastName.Name = "lastName";
             // 
             // firstName
             // 
             firstName.HeaderText = "First Name";
+            firstName.MinimumWidth = 6;
             firstName.Name = "firstName";
             // 
             // streetNumber
             // 
             streetNumber.HeaderText = "Street Number";
+            streetNumber.MinimumWidth = 6;
             streetNumber.Name = "streetNumber";
             // 
             // streetName
             // 
             streetName.HeaderText = "Street Name";
+            streetName.MinimumWidth = 6;
             streetName.Name = "streetName";
             // 
             // aptNumber
             // 
             aptNumber.HeaderText = "Apartment Number";
+            aptNumber.MinimumWidth = 6;
             aptNumber.Name = "aptNumber";
             // 
             // city
             // 
             city.HeaderText = "City";
+            city.MinimumWidth = 6;
             city.Name = "city";
             // 
             // postalCode
             // 
             postalCode.HeaderText = "Postal Code";
+            postalCode.MinimumWidth = 6;
             postalCode.Name = "postalCode";
             // 
             // phoneNumber
             // 
             phoneNumber.HeaderText = "Phone Number";
+            phoneNumber.MinimumWidth = 6;
             phoneNumber.Name = "phoneNumber";
             // 
             // email
             // 
             email.HeaderText = "Email";
+            email.MinimumWidth = 6;
             email.Name = "email";
             // 
             // creditCard
             // 
             creditCard.HeaderText = "Credit Card Number";
+            creditCard.MinimumWidth = 6;
             creditCard.Name = "creditCard";
             // 
             // rating
             // 
             rating.HeaderText = "Rating";
+            rating.MinimumWidth = 6;
             rating.Name = "rating";
             // 
             // allMovies
             // 
+            allMovies.Controls.Add(makeCopybutton);
             allMovies.Controls.Add(assignActorbox);
             allMovies.Controls.Add(assignActorbutton);
             allMovies.Controls.Add(addMoviebutton);
@@ -444,28 +464,27 @@
             allMovies.Location = new Point(4, 24);
             allMovies.Margin = new Padding(3, 2, 3, 2);
             allMovies.Name = "allMovies";
-            allMovies.Padding = new Padding(3, 2, 3, 2);
-            allMovies.Size = new Size(1151, 369);
+            allMovies.Padding = new Padding(3, 3, 3, 3);
+            allMovies.Size = new Size(1317, 496);
             allMovies.TabIndex = 0;
             allMovies.Text = "Movies";
             allMovies.UseVisualStyleBackColor = true;
             // 
             // assignActorbox
             // 
-            assignActorbox.Location = new Point(125, 303);
-            assignActorbox.Margin = new Padding(3, 2, 3, 2);
+            assignActorbox.Location = new Point(143, 404);
             assignActorbox.Name = "assignActorbox";
             assignActorbox.Size = new Size(110, 23);
             assignActorbox.TabIndex = 10;
             assignActorbox.Text = "Enter Actor ID";
             assignActorbox.Click += assignActorbox_Click;
+            assignActorbox.TextChanged += assignActorbox_TextChanged;
             // 
             // assignActorbutton
             // 
-            assignActorbutton.Location = new Point(8, 301);
-            assignActorbutton.Margin = new Padding(3, 2, 3, 2);
+            assignActorbutton.Location = new Point(9, 401);
             assignActorbutton.Name = "assignActorbutton";
-            assignActorbutton.Size = new Size(111, 24);
+            assignActorbutton.Size = new Size(127, 32);
             assignActorbutton.TabIndex = 9;
             assignActorbutton.Text = "Assign Actor:";
             assignActorbutton.UseVisualStyleBackColor = true;
@@ -473,10 +492,9 @@
             // 
             // addMoviebutton
             // 
-            addMoviebutton.Location = new Point(681, 301);
-            addMoviebutton.Margin = new Padding(3, 2, 3, 2);
+            addMoviebutton.Location = new Point(778, 401);
             addMoviebutton.Name = "addMoviebutton";
-            addMoviebutton.Size = new Size(82, 24);
+            addMoviebutton.Size = new Size(94, 32);
             addMoviebutton.TabIndex = 7;
             addMoviebutton.Text = "Add";
             addMoviebutton.UseVisualStyleBackColor = true;
@@ -484,10 +502,9 @@
             // 
             // movieDeletebutton
             // 
-            movieDeletebutton.Location = new Point(769, 301);
-            movieDeletebutton.Margin = new Padding(3, 2, 3, 2);
+            movieDeletebutton.Location = new Point(879, 401);
             movieDeletebutton.Name = "movieDeletebutton";
-            movieDeletebutton.Size = new Size(82, 24);
+            movieDeletebutton.Size = new Size(94, 32);
             movieDeletebutton.TabIndex = 6;
             movieDeletebutton.Text = "Delete";
             movieDeletebutton.UseVisualStyleBackColor = true;
@@ -495,10 +512,9 @@
             // 
             // updateMoviesbutton
             // 
-            updateMoviesbutton.Location = new Point(857, 301);
-            updateMoviesbutton.Margin = new Padding(3, 2, 3, 2);
+            updateMoviesbutton.Location = new Point(979, 401);
             updateMoviesbutton.Name = "updateMoviesbutton";
-            updateMoviesbutton.Size = new Size(82, 24);
+            updateMoviesbutton.Size = new Size(94, 32);
             updateMoviesbutton.TabIndex = 5;
             updateMoviesbutton.Text = "Update";
             updateMoviesbutton.UseVisualStyleBackColor = true;
@@ -506,10 +522,9 @@
             // 
             // searchMoviebutton
             // 
-            searchMoviebutton.Location = new Point(945, 301);
-            searchMoviebutton.Margin = new Padding(3, 2, 3, 2);
+            searchMoviebutton.Location = new Point(1080, 401);
             searchMoviebutton.Name = "searchMoviebutton";
-            searchMoviebutton.Size = new Size(82, 24);
+            searchMoviebutton.Size = new Size(94, 32);
             searchMoviebutton.TabIndex = 4;
             searchMoviebutton.Text = "Search";
             searchMoviebutton.UseVisualStyleBackColor = true;
@@ -563,38 +578,15 @@
             reportOutputText.TabIndex = 0;
             reportOutputText.Text = "";
             // 
-            // UserIDLabel
+            // makeCopybutton
             // 
-            UserIDLabel.AutoSize = true;
-            UserIDLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
-            UserIDLabel.Location = new Point(11, 9);
-            UserIDLabel.Name = "UserIDLabel";
-            UserIDLabel.Size = new Size(43, 37);
-            UserIDLabel.TabIndex = 4;
-            UserIDLabel.Text = "ID";
-            // 
-            // LogoutButton
-            // 
-            LogoutButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LogoutButton.Location = new Point(1053, 12);
-            LogoutButton.Name = "LogoutButton";
-            LogoutButton.Size = new Size(89, 40);
-            LogoutButton.TabIndex = 5;
-            LogoutButton.Text = "Logout";
-            LogoutButton.UseVisualStyleBackColor = true;
-            LogoutButton.Click += LogoutButton_Click;
-            // 
-            // EmployeesButton
-            // 
-            EmployeesButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            EmployeesButton.Location = new Point(910, 12);
-            EmployeesButton.Name = "EmployeesButton";
-            EmployeesButton.Size = new Size(114, 40);
-            EmployeesButton.TabIndex = 6;
-            EmployeesButton.Text = "Employees";
-            EmployeesButton.UseMnemonic = false;
-            EmployeesButton.UseVisualStyleBackColor = true;
-            EmployeesButton.Click += EmployeesButton_Click;
+            makeCopybutton.Location = new Point(678, 401);
+            makeCopybutton.Name = "makeCopybutton";
+            makeCopybutton.Size = new Size(94, 32);
+            makeCopybutton.TabIndex = 11;
+            makeCopybutton.Text = "Make Copy";
+            makeCopybutton.UseVisualStyleBackColor = true;
+            makeCopybutton.Click += makeCopybutton_Click;
             // 
             // Form1
             // 
@@ -678,8 +670,6 @@
         private DataGridViewTextBoxColumn email;
         private DataGridViewTextBoxColumn creditCard;
         private DataGridViewTextBoxColumn rating;
-        private Label UserIDLabel;
-        private Button LogoutButton;
-        private Button EmployeesButton;
+        private Button makeCopybutton;
     }
 }

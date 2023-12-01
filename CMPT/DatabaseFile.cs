@@ -197,6 +197,19 @@ namespace CMPT
                 throw new Exception(e.Message);
             }
         }
+        public void MakeCopy(string copyID, string movieID)
+        {
+            myCommand.CommandText = "insert into copies values(" + copyID + ", " + movieID + ");";
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                myReader.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
         public Customer[] GetAllCustomers()
         {
@@ -376,6 +389,42 @@ namespace CMPT
             }
         }
 
+        public int GetLowestAvailableCopyID(string movieID)
+        {
+            myCommand.CommandText =
+            "select\r\n" +
+            "case \r\n" +
+            "when exists (select copyID from copies where movieID = " + movieID + ") then\r\n" +
+            "(select MIN(copyID) + 1 as lowestAvailableCopyID \r\n" +
+            "from copies C1\r\n" +
+            "where C1.copyID + 1 not in (select C2.copyID from copies C2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableCopyID\r\n" +
+            "from Movies";
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int copyID = 1;
+
+                    int.TryParse(myReader["lowestAvailableCopyID"].ToString(), out copyID);
+
+                    myReader.Close();
+
+                    return copyID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return 1;
+        }
+
         public int GetLowestAvailableMovieID()
         {
             myCommand.CommandText =
@@ -446,6 +495,7 @@ namespace CMPT
             }
 
             return 1;
+
         }
 
         public int GetLowestAvailableEmployeeID()
@@ -480,8 +530,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
         }
 
         public void AddCustomer(Customer customer)
