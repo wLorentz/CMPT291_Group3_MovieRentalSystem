@@ -15,7 +15,7 @@ namespace CMPT
     public partial class LoginScreen : Form
     {
         private Form1 mainForm;
-        private DatabaseFile database;
+        private bool loginSuccess;
 
         /**
          * Constructor for the LoginScreen class
@@ -27,7 +27,7 @@ namespace CMPT
         public LoginScreen(Form1 mainForm)
         {
             this.mainForm = mainForm;
-            //this.database = database;
+            loginSuccess = false;
 
             InitializeComponent();
         }
@@ -90,24 +90,6 @@ namespace CMPT
             salt = loginInfo[0];
             passHash = loginInfo[1];
 
-            //sqlCommand.CommandText = "select passHash, salt from Login where userID = " + "\'" + userID + "\'";
-
-            //try
-            //{
-            //    sqlDataReader = sqlCommand.ExecuteReader();
-
-            //    sqlDataReader.Read();
-
-            //    salt = sqlDataReader["salt"].ToString().Trim();
-            //    passHash = sqlDataReader["passHash"].ToString().Trim();
-
-            //    sqlDataReader.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error");
-            //}
-
             string hashedPass = ComputeSha256Hash(password + salt);
 
             if (hashedPass != passHash)
@@ -116,6 +98,7 @@ namespace CMPT
             }
             else
             {
+                loginSuccess = true;
                 var result = MessageBox.Show("Success!", "Successful Login", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
@@ -125,6 +108,12 @@ namespace CMPT
             }
         }
 
-        
+        private void LoginScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!loginSuccess)
+            {
+                this.mainForm.Close();
+            }
+        }
     }
 }

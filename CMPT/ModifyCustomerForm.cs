@@ -113,8 +113,8 @@ namespace CMPT
             customerStruct.email = emailTextBox.Text;
             customerStruct.creditCard = creditCardTextBox.Text;
             customerStruct.rating = ratingTextBox.Text;
-
-            mainFrom.saveCustomer(new Customer(customerStruct));
+            Customer customer = new Customer(customerStruct);
+            mainFrom.saveCustomer(customer);
 
             this.Close();
         }
