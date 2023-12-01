@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -480,6 +480,8 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
+
+            return 1;
         }
 
         public void AddCustomer(Customer customer)
