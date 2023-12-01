@@ -40,7 +40,7 @@
             button1 = new Button();
             dueDatePicker = new DateTimePicker();
             label4 = new Label();
-            retalDatePicker = new DateTimePicker();
+            rentalDatePicker = new DateTimePicker();
             label3 = new Label();
             label2 = new Label();
             movieDropdown = new ComboBox();
@@ -163,7 +163,7 @@
             rentals.Controls.Add(button1);
             rentals.Controls.Add(dueDatePicker);
             rentals.Controls.Add(label4);
-            rentals.Controls.Add(retalDatePicker);
+            rentals.Controls.Add(rentalDatePicker);
             rentals.Controls.Add(label3);
             rentals.Controls.Add(label2);
             rentals.Controls.Add(movieDropdown);
@@ -187,6 +187,7 @@
             button1.TabIndex = 10;
             button1.Text = "Create Rental";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // dueDatePicker
             // 
@@ -207,7 +208,7 @@
             label4.TabIndex = 8;
             label4.Text = "Due Date";
             // 
-            // retalDatePicker
+            // rentalDatePicker
             // 
             retalDatePicker.CalendarFont = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             retalDatePicker.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
@@ -644,7 +645,7 @@
         private ComboBox customerDropdown;
         private DateTimePicker dueDatePicker;
         private Label label4;
-        private DateTimePicker retalDatePicker;
+        private DateTimePicker rentalDatePicker;
         private Label label3;
         private Button button1;
         private Button addMoviebutton;

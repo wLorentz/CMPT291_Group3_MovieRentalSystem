@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
@@ -432,6 +433,54 @@ namespace CMPT
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string customerID;
+            string movie;
+            int movieID;
+            DateTime fromDate;
+            DateTime toDate;
+            int[] copies;
+            int[] bookedCopies;
+
+            try
+            {
+                customerID = customerDropdown.SelectedItem.ToString();
+                movie = movieDropdown.SelectedItem.ToString();
+                fromDate = rentalDatePicker.Value;
+                toDate = dueDatePicker.Value;
+                copies = database.getMovieCopies(movie);
+                movieID = database.convertMovieTitleToID(movie);
+                bookedCopies = database.getBookedCopies(movieID, fromDate, toDate);
+                var freeCopies = copies.Except(bookedCopies);
+
+                if (freeCopies.Count() == 0)
+                {
+                    MessageBox.Show("No free copies in this date range.");
+                    return;
+                }
+                else
+                {
+                    int orderID = database.GetLatestOrderNumber() + 1;
+
+                    OrderStruct orderStruct = new(orderID);
+
+                    orderStruct.date = DateTime.Now;
+                    orderStruct.status = "Confirmed"; //Unsure what this value should be yet. *TODO*
+                    orderStruct.fromDate = fromDate;
+                    orderStruct.toDate = toDate;
+                    orderStruct.employeeID = "1";  //Unsure how to get employeeID at this time so just hardcoded Val *TODO*
+                    orderStruct.copyID = freeCopies.ElementAt(0).ToString();
+                    orderStruct.movieID = movieID.ToString();
+                    orderStruct.accountNo = customerID;
+
+                    database.AddOrder(new Order(orderStruct));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                
         private void Customers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
