@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -392,17 +392,18 @@ namespace CMPT
 
             try
             {
+                int movieID = 1;
+                
                 myReader = myCommand.ExecuteReader();
+                
                 if (myReader.Read())
                 {
-                    int movieID = 1;
-
                     int.TryParse(myReader["lowestAvailableID"].ToString(), out movieID);
-
-                    myReader.Close();
-
-                    return movieID;
                 }
+
+                myReader.Close();
+
+                return movieID;
             }
             catch (Exception ex)
             {
@@ -428,24 +429,22 @@ namespace CMPT
 
             try
             {
+                int accountNumber = 1;
+                
                 myReader = myCommand.ExecuteReader();
                 if(myReader.Read())
                 {
-                    int accountNumber = 1;
-
                     int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out accountNumber);
-
-                    myReader.Close();
-
-                    return accountNumber;
                 }
+                
+                myReader.Close();
+
+                return accountNumber;
             } 
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
         }
 
         public int GetLowestAvailableEmployeeID()
@@ -456,7 +455,7 @@ namespace CMPT
             "when exists (select employeeID from Employees where employeeID = 1) then\r\n" +
             "(select MIN(employeeID) + 1 as lowestAvailableEmployeeID\r\n" +
             "from Employees E1\r\n" +
-            "where E1.employeeID + 1 not in (select E2.employeeID from Customer E2))\r\n" +
+            "where E1.employeeID + 1 not in (select E2.employeeID from Employees E2))\r\n" +
             "else\r\n" +
             "1\r\n" +
             "end as lowestAvailableEmployeeID\r\n" +
@@ -464,17 +463,18 @@ namespace CMPT
 
             try
             {
+                int employeeID = 1;
+                
                 myReader = myCommand.ExecuteReader();
+                
                 if (myReader.Read())
                 {
-                    int employeeID = 1;
-
                     int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out employeeID);
-
-                    myReader.Close();
-
-                    return employeeID;
                 }
+                
+                myReader.Close();
+
+                return employeeID;
             }
             catch (Exception ex)
             {

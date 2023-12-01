@@ -83,13 +83,18 @@ namespace CMPT
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
-        { 
+        {
             employeeForm.SaveEmployee(new Employee(CreateEmployeeStruct()));
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
             employeeForm.SaveEmployee(new Employee(CreateEmployeeStruct()));
+        }
+
+        private void ModifyEmployeeForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            employeeForm.Show();
         }
     }
 }
