@@ -88,9 +88,9 @@ namespace CMPT
             string[] loginInfo = mainForm.GetDatabase().getLoginInfo(userID);
 
             salt = loginInfo[0];
-            passHash = loginInfo[1];
+            passHash = loginInfo[1].ToLower();
 
-            string hashedPass = ComputeSha256Hash(password + salt);
+            string hashedPass = ComputeSha256Hash(password + salt).ToLower();
 
             if (hashedPass != passHash)
             {

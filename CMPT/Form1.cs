@@ -533,6 +533,7 @@ namespace CMPT
 
         private void EmployeesButton_Click(object sender, EventArgs e)
         {
+            this.Hide();
             EmployeeScreen employeeScreen = new(this);
             employeeScreen.Show();
         }
