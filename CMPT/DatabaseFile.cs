@@ -495,6 +495,41 @@ namespace CMPT
             }
 
             return 1;
+
+        }
+
+        public int GetLowestAvailableEmployeeID()
+        {
+            myCommand.CommandText =
+            "select distinct\r\n" +
+            "case\r\n" +
+            "when exists (select employeeID from Employees where employeeID = 1) then\r\n" +
+            "(select MIN(employeeID) + 1 as lowestAvailableEmployeeID\r\n" +
+            "from Employees E1\r\n" +
+            "where E1.employeeID + 1 not in (select E2.employeeID from Customer E2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableEmployeeID\r\n" +
+            "from Employees";
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int employeeID = 1;
+
+                    int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out employeeID);
+
+                    myReader.Close();
+
+                    return employeeID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public void AddCustomer(Customer customer)
@@ -512,6 +547,21 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public Employee GetEmployeeByID(int employeeID)
+        {
+            return null;
+        }
+
+        public void SaveEmployee(Employee employee)
+        {
+
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+
         }
     }
 }

@@ -45,6 +45,19 @@ namespace CMPT
 
         public void SuccessfulLogin(string userID)
         {
+            EmployeesButton.Enabled = false;
+            EmployeesButton.Visible = false;
+
+            if (userID == "admin")
+            {
+                userID = userID.ToUpper();
+
+                EmployeesButton.Enabled = true;
+                EmployeesButton.Visible = true;
+            }
+
+            UserIDLabel.Text = userID;
+
             this.Show();
 
             Movie[] movieList = getMovies();
@@ -373,7 +386,6 @@ namespace CMPT
 
                     break;
                 }
-            }
         }
 
         private void editCustomerButton_Click(object sender, EventArgs e)
@@ -451,6 +463,7 @@ namespace CMPT
             customerDropdown.Items.Remove(accountNo);
         }
 
+
         private void searchMoviebox_TextChanged(object sender, EventArgs e)
         {
 
@@ -478,7 +491,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-
         }
     }
 }
