@@ -96,7 +96,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "LoginScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
+            FormClosed += LoginScreen_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

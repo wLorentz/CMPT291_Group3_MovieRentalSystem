@@ -110,13 +110,13 @@ namespace CMPT
 
                 while (myReader.Read())
                 {
-                    MovieStruct movieStruct = new(myReader["movieID"].ToString());
+                    MovieStruct movieStruct = new(myReader[(int)MovieEnum.movieID].ToString());
 
-                    movieStruct.price = myReader["price"].ToString();
-                    movieStruct.genre = myReader["genre"].ToString();
-                    movieStruct.rating = myReader["rating"].ToString();
-                    movieStruct.copies = myReader["copies"].ToString();
-                    movieStruct.name = myReader["movieName"].ToString();
+                    movieStruct.price = myReader[(int)MovieEnum.price].ToString();
+                    movieStruct.genre = myReader[(int)MovieEnum.genre].ToString();
+                    movieStruct.rating = myReader[(int)MovieEnum.rating].ToString();
+                    movieStruct.copies = myReader[(int)MovieEnum.copies].ToString();
+                    movieStruct.name = myReader[(int)MovieEnum.movieName].ToString();
 
                     movieList.Add(new Movie(movieStruct));
                 }
@@ -151,11 +151,11 @@ namespace CMPT
             }
         }
 
-        public void AddMovie(string movieID)
-        {
-            
+        public void AddMovie(Movie movie)
+        { 
             {
-                myCommand.CommandText = "insert into Movies (movieID) values(" + movieID + ");";
+                myCommand.CommandText = string.Format("insert into Movies values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');",
+                    movie.getId(), movie.getName(), movie.getGenre(), movie.getPrice(), movie.getCopies(), movie.getRating());
                 try
                 {
                     myReader = myCommand.ExecuteReader();
@@ -197,6 +197,19 @@ namespace CMPT
                 throw new Exception(e.Message);
             }
         }
+        public void MakeCopy(string copyID, string movieID)
+        {
+            myCommand.CommandText = "insert into copies values(" + copyID + ", " + movieID + ");";
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                myReader.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
         public Customer[] GetAllCustomers()
         {
@@ -212,13 +225,15 @@ namespace CMPT
                     CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader[(int)CustomerEnum.accountNo].ToString()));
 
                     customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
-                    customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.firstName = myReader[(int)CustomerEnum.firstName].ToString();
                     customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
                     customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
                     customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
                     customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
                     customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                    customerStruct.postalCode = myReader[(int)CustomerEnum.postalCode].ToString();
+                    customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
                     customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
@@ -238,7 +253,7 @@ namespace CMPT
 
         public Customer[] GetCustomers(string customerName)
         {
-            myCommand.CommandText = "select * from Customer where firstName='" ;
+            myCommand.CommandText = string.Format("select * from Customer where firstName LIKE %'{0}'%", customerName);
 
             var customerList = new List<Customer>();
             try
@@ -250,13 +265,15 @@ namespace CMPT
                     CustomerStruct customerStruct = new CustomerStruct(Int32.Parse(myReader[(int)CustomerEnum.accountNo].ToString()));
 
                     customerStruct.lastName = myReader[(int)CustomerEnum.lastName].ToString();
-                    customerStruct.firstName = myReader[(int)CustomerEnum.lastName].ToString();
+                    customerStruct.firstName = myReader[(int)CustomerEnum.firstName].ToString();
                     customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.email = myReader[(int)CustomerEnum.email].ToString();
                     customerStruct.streetNo = myReader[(int)CustomerEnum.streetNo].ToString();
                     customerStruct.streetName = myReader[(int)CustomerEnum.streetName].ToString();
                     customerStruct.aptNo = myReader[(int)CustomerEnum.aptNo].ToString();
                     customerStruct.city = myReader[(int)CustomerEnum.city].ToString();
+                    customerStruct.postalCode = myReader[(int)CustomerEnum.postalCode].ToString();
+                    customerStruct.phoneNumber = myReader[(int)CustomerEnum.phoneNumber].ToString();
                     customerStruct.creditCard = myReader[(int)CustomerEnum.creditCard].ToString();
                     customerStruct.rating = myReader[(int)CustomerEnum.rating].ToString();
 
@@ -276,7 +293,7 @@ namespace CMPT
 
         public void RemoveCustomer(int accountNo)
         {
-            myCommand.CommandText = "DELETE FROM Customers where accountNo=" + accountNo;
+            myCommand.CommandText = "DELETE FROM Customer where accountNo=" + accountNo;
             //MessageBox.Show(myCommand.CommandText);
             myReader = myCommand.ExecuteReader();
             myReader.Close();
@@ -302,7 +319,7 @@ namespace CMPT
             }
         }
 
-        public void SaveCustomer( Customer customer)
+        public void SaveCustomer(Customer customer)
         {
             myCommand.CommandText = string.Format("Update Customer SET firstName='{0}',lastname='{1}',streetNo='{2}',streetName='{3}',aptNo='{4}',city='{5}',postalCode='{6}',phoneNumber='{7}',email='{8}',creditCard='{9}',rating='{10}' where accountNo='{11}'",
                     customer.FirstName, customer.LastName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating, customer.AccountNo);
@@ -372,17 +389,100 @@ namespace CMPT
             }
         }
 
-        public int GetLatestAccountNumber()
+        public int GetLowestAvailableCopyID(string movieID)
         {
-            myCommand.CommandText = "select MAX(accountNo) as latestAccount from Customer";
+            myCommand.CommandText =
+            "select\r\n" +
+            "case \r\n" +
+            "when exists (select copyID from copies where movieID = " + movieID + ") then\r\n" +
+            "(select MIN(copyID) + 1 as lowestAvailableCopyID \r\n" +
+            "from copies C1\r\n" +
+            "where C1.copyID + 1 not in (select C2.copyID from copies C2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableCopyID\r\n" +
+            "from Movies";
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int copyID = 1;
+
+                    int.TryParse(myReader["lowestAvailableCopyID"].ToString(), out copyID);
+
+                    myReader.Close();
+
+                    return copyID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return 1;
+        }
+
+        public int GetLowestAvailableMovieID()
+        {
+            myCommand.CommandText =
+            "select\r\n" +
+            "case \r\n" +
+            "when exists (select movieID from Movies where movieID = 1) then\r\n" +
+            "(select MIN(movieID) + 1 as lowestAvailableID \r\n" +
+            "from Movies M1\r\n" +
+            "where M1.movieID + 1 not in (select M2.movieID from Movies M2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableID\r\n" +
+            "from Movies";
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int movieID = 1;
+
+                    int.TryParse(myReader["lowestAvailableID"].ToString(), out movieID);
+
+                    myReader.Close();
+
+                    return movieID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return 1;
+        }
+
+        public int GetLowestAvailableAccountNumber()
+        {
+            myCommand.CommandText =
+            "select distinct\r\n" +
+            "case\r\n" +
+            "when exists (select accountNo from Customer where accountNo = 1) then\r\n" +
+            "(select MIN(accountNo) + 1 as lowestAvailableAccountNo\r\n" +
+            "from Customer C1\r\n" +
+            "where C1.accountNo + 1 not in (select C2.accountNo from Customer C2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableAccountNo\r\n" +
+            "from Customer";
+
             try
             {
                 myReader = myCommand.ExecuteReader();
                 if(myReader.Read())
                 {
-                    int accountNumber = 0;
+                    int accountNumber = 1;
 
-                    int.TryParse(myReader["latestAccount"].ToString(), out accountNumber);
+                    int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out accountNumber);
 
                     myReader.Close();
 
@@ -394,7 +494,7 @@ namespace CMPT
                 throw new Exception(ex.Message);
             }
 
-            return 0;
+            return 1;
         }
 
         public void AddCustomer(Customer customer)
