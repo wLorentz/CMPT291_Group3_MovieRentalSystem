@@ -197,19 +197,6 @@ namespace CMPT
                 throw new Exception(e.Message);
             }
         }
-        public void MakeCopy(string copyID, string movieID)
-        {
-            myCommand.CommandText = "insert into copies values(" + copyID + ", " + movieID + ");";
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-                myReader.Close();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
 
         public Customer[] GetAllCustomers()
         {
@@ -389,42 +376,6 @@ namespace CMPT
             }
         }
 
-        public int GetLowestAvailableCopyID(string movieID)
-        {
-            myCommand.CommandText =
-            "select\r\n" +
-            "case \r\n" +
-            "when exists (select copyID from copies where movieID = " + movieID + ") then\r\n" +
-            "(select MIN(copyID) + 1 as lowestAvailableCopyID \r\n" +
-            "from copies C1\r\n" +
-            "where C1.copyID + 1 not in (select C2.copyID from copies C2))\r\n" +
-            "else\r\n" +
-            "1\r\n" +
-            "end as lowestAvailableCopyID\r\n" +
-            "from Movies";
-
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-                if (myReader.Read())
-                {
-                    int copyID = 1;
-
-                    int.TryParse(myReader["lowestAvailableCopyID"].ToString(), out copyID);
-
-                    myReader.Close();
-
-                    return copyID;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-            return 1;
-        }
-
         public int GetLowestAvailableMovieID()
         {
             myCommand.CommandText =
@@ -441,17 +392,18 @@ namespace CMPT
 
             try
             {
+                int movieID = 1;
+                
                 myReader = myCommand.ExecuteReader();
+                
                 if (myReader.Read())
                 {
-                    int movieID = 1;
-
                     int.TryParse(myReader["lowestAvailableID"].ToString(), out movieID);
-
-                    myReader.Close();
-
-                    return movieID;
                 }
+
+                myReader.Close();
+
+                return movieID;
             }
             catch (Exception ex)
             {
@@ -477,25 +429,22 @@ namespace CMPT
 
             try
             {
+                int accountNumber = 1;
+                
                 myReader = myCommand.ExecuteReader();
                 if(myReader.Read())
                 {
-                    int accountNumber = 1;
-
                     int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out accountNumber);
-
-                    myReader.Close();
-
-                    return accountNumber;
                 }
+                
+                myReader.Close();
+
+                return accountNumber;
             } 
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
-
         }
 
         public int GetLowestAvailableEmployeeID()
@@ -506,7 +455,7 @@ namespace CMPT
             "when exists (select employeeID from Employees where employeeID = 1) then\r\n" +
             "(select MIN(employeeID) + 1 as lowestAvailableEmployeeID\r\n" +
             "from Employees E1\r\n" +
-            "where E1.employeeID + 1 not in (select E2.employeeID from Customer E2))\r\n" +
+            "where E1.employeeID + 1 not in (select E2.employeeID from Employees E2))\r\n" +
             "else\r\n" +
             "1\r\n" +
             "end as lowestAvailableEmployeeID\r\n" +
@@ -514,17 +463,18 @@ namespace CMPT
 
             try
             {
+                int employeeID = 1;
+                
                 myReader = myCommand.ExecuteReader();
+                
                 if (myReader.Read())
                 {
-                    int employeeID = 1;
-
                     int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out employeeID);
-
-                    myReader.Close();
-
-                    return employeeID;
                 }
+                
+                myReader.Close();
+
+                return employeeID;
             }
             catch (Exception ex)
             {
