@@ -48,7 +48,30 @@
             addCustomerButton = new Button();
             label1 = new Label();
             customerDropdown = new ComboBox();
+            allCustomers = new TabPage();
+            label5 = new Label();
+            SearchByComboBox = new ComboBox();
+            button2 = new Button();
+            CustomerDeleteButton = new Button();
+            SearchCustomerButton = new Button();
+            SearchCustomerBox = new TextBox();
+            CustomersGridView = new DataGridView();
+            accountNo = new DataGridViewTextBoxColumn();
+            lastName = new DataGridViewTextBoxColumn();
+            firstName = new DataGridViewTextBoxColumn();
+            streetNumber = new DataGridViewTextBoxColumn();
+            streetName = new DataGridViewTextBoxColumn();
+            aptNumber = new DataGridViewTextBoxColumn();
+            city = new DataGridViewTextBoxColumn();
+            postalCode = new DataGridViewTextBoxColumn();
+            phoneNumber = new DataGridViewTextBoxColumn();
+            email = new DataGridViewTextBoxColumn();
+            creditCard = new DataGridViewTextBoxColumn();
+            rating = new DataGridViewTextBoxColumn();
             allMovies = new TabPage();
+            assignActorbox = new TextBox();
+            assignActorbutton = new Button();
+            addMoviebutton = new Button();
             movieDeletebutton = new Button();
             updateMoviesbutton = new Button();
             searchMoviebutton = new Button();
@@ -57,9 +80,14 @@
             runReport = new Button();
             reports = new ListBox();
             reportOutputText = new RichTextBox();
+            UserIDLabel = new Label();
+            LogoutButton = new Button();
+            EmployeesButton = new Button();
             ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             first_tab.SuspendLayout();
             rentals.SuspendLayout();
+            allCustomers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)CustomersGridView).BeginInit();
             allMovies.SuspendLayout();
             runReports.SuspendLayout();
             SuspendLayout();
@@ -116,9 +144,10 @@
             // first_tab
             // 
             first_tab.Controls.Add(rentals);
+            first_tab.Controls.Add(allCustomers);
             first_tab.Controls.Add(allMovies);
             first_tab.Controls.Add(runReports);
-            first_tab.Location = new Point(0, 0);
+            first_tab.Location = new Point(-1, 60);
             first_tab.Margin = new Padding(3, 2, 3, 2);
             first_tab.Name = "first_tab";
             first_tab.SelectedIndex = 0;
@@ -221,6 +250,7 @@
             editCustomerButton.Text = "Edit";
             editCustomerButton.UseVisualStyleBackColor = true;
             editCustomerButton.Visible = false;
+            editCustomerButton.Click += editCustomerButton_Click;
             // 
             // addCustomerButton
             // 
@@ -230,6 +260,7 @@
             addCustomerButton.TabIndex = 2;
             addCustomerButton.Text = "Add";
             addCustomerButton.UseVisualStyleBackColor = true;
+            addCustomerButton.Click += addCustomerButton_Click;
             // 
             // label1
             // 
@@ -253,8 +284,158 @@
             customerDropdown.SelectedIndexChanged += customerDropdown_SelectedIndexChanged;
             customerDropdown.KeyUp += customerDropdown_KeyUp;
             // 
+            // allCustomers
+            // 
+            allCustomers.Controls.Add(label5);
+            allCustomers.Controls.Add(SearchByComboBox);
+            allCustomers.Controls.Add(button2);
+            allCustomers.Controls.Add(CustomerDeleteButton);
+            allCustomers.Controls.Add(SearchCustomerButton);
+            allCustomers.Controls.Add(SearchCustomerBox);
+            allCustomers.Controls.Add(CustomersGridView);
+            allCustomers.Location = new Point(4, 24);
+            allCustomers.Name = "allCustomers";
+            allCustomers.Size = new Size(1151, 369);
+            allCustomers.TabIndex = 3;
+            allCustomers.Text = "Customers";
+            allCustomers.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(748, 304);
+            label5.Name = "label5";
+            label5.Size = new Size(61, 15);
+            label5.TabIndex = 13;
+            label5.Text = "Search By:";
+            // 
+            // SearchByComboBox
+            // 
+            SearchByComboBox.FormattingEnabled = true;
+            SearchByComboBox.Location = new Point(815, 301);
+            SearchByComboBox.Name = "SearchByComboBox";
+            SearchByComboBox.Size = new Size(121, 23);
+            SearchByComboBox.TabIndex = 12;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(8, 302);
+            button2.Margin = new Padding(3, 2, 3, 2);
+            button2.Name = "button2";
+            button2.Size = new Size(82, 24);
+            button2.TabIndex = 11;
+            button2.Text = "Add";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += addCustomerButton_Click;
+            // 
+            // CustomerDeleteButton
+            // 
+            CustomerDeleteButton.Location = new Point(96, 302);
+            CustomerDeleteButton.Margin = new Padding(3, 2, 3, 2);
+            CustomerDeleteButton.Name = "CustomerDeleteButton";
+            CustomerDeleteButton.Size = new Size(82, 24);
+            CustomerDeleteButton.TabIndex = 10;
+            CustomerDeleteButton.Text = "Delete";
+            CustomerDeleteButton.UseVisualStyleBackColor = true;
+            CustomerDeleteButton.Click += CustomerDeleteButton_Click;
+            // 
+            // SearchCustomerButton
+            // 
+            SearchCustomerButton.Location = new Point(942, 301);
+            SearchCustomerButton.Margin = new Padding(3, 2, 3, 2);
+            SearchCustomerButton.Name = "SearchCustomerButton";
+            SearchCustomerButton.Size = new Size(82, 24);
+            SearchCustomerButton.TabIndex = 8;
+            SearchCustomerButton.Text = "Search";
+            SearchCustomerButton.UseVisualStyleBackColor = true;
+            // 
+            // SearchCustomerBox
+            // 
+            SearchCustomerBox.Location = new Point(1033, 301);
+            SearchCustomerBox.Margin = new Padding(3, 2, 3, 2);
+            SearchCustomerBox.Name = "SearchCustomerBox";
+            SearchCustomerBox.Size = new Size(110, 23);
+            SearchCustomerBox.TabIndex = 7;
+            // 
+            // CustomersGridView
+            // 
+            CustomersGridView.AllowUserToAddRows = false;
+            CustomersGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CustomersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            CustomersGridView.Columns.AddRange(new DataGridViewColumn[] { accountNo, lastName, firstName, streetNumber, streetName, aptNumber, city, postalCode, phoneNumber, email, creditCard, rating });
+            CustomersGridView.Location = new Point(0, 0);
+            CustomersGridView.Name = "CustomersGridView";
+            CustomersGridView.RowHeadersWidth = 51;
+            CustomersGridView.RowTemplate.Height = 25;
+            CustomersGridView.Size = new Size(1143, 296);
+            CustomersGridView.TabIndex = 3;
+            CustomersGridView.CellDoubleClick += Customers_CellDoubleClick;
+            // 
+            // accountNo
+            // 
+            accountNo.HeaderText = "Account Number";
+            accountNo.Name = "accountNo";
+            // 
+            // lastName
+            // 
+            lastName.HeaderText = "Last Name";
+            lastName.Name = "lastName";
+            // 
+            // firstName
+            // 
+            firstName.HeaderText = "First Name";
+            firstName.Name = "firstName";
+            // 
+            // streetNumber
+            // 
+            streetNumber.HeaderText = "Street Number";
+            streetNumber.Name = "streetNumber";
+            // 
+            // streetName
+            // 
+            streetName.HeaderText = "Street Name";
+            streetName.Name = "streetName";
+            // 
+            // aptNumber
+            // 
+            aptNumber.HeaderText = "Apartment Number";
+            aptNumber.Name = "aptNumber";
+            // 
+            // city
+            // 
+            city.HeaderText = "City";
+            city.Name = "city";
+            // 
+            // postalCode
+            // 
+            postalCode.HeaderText = "Postal Code";
+            postalCode.Name = "postalCode";
+            // 
+            // phoneNumber
+            // 
+            phoneNumber.HeaderText = "Phone Number";
+            phoneNumber.Name = "phoneNumber";
+            // 
+            // email
+            // 
+            email.HeaderText = "Email";
+            email.Name = "email";
+            // 
+            // creditCard
+            // 
+            creditCard.HeaderText = "Credit Card Number";
+            creditCard.Name = "creditCard";
+            // 
+            // rating
+            // 
+            rating.HeaderText = "Rating";
+            rating.Name = "rating";
+            // 
             // allMovies
             // 
+            allMovies.Controls.Add(assignActorbox);
+            allMovies.Controls.Add(assignActorbutton);
+            allMovies.Controls.Add(addMoviebutton);
             allMovies.Controls.Add(movieDeletebutton);
             allMovies.Controls.Add(updateMoviesbutton);
             allMovies.Controls.Add(searchMoviebutton);
@@ -269,12 +450,44 @@
             allMovies.Text = "Movies";
             allMovies.UseVisualStyleBackColor = true;
             // 
+            // assignActorbox
+            // 
+            assignActorbox.Location = new Point(125, 303);
+            assignActorbox.Margin = new Padding(3, 2, 3, 2);
+            assignActorbox.Name = "assignActorbox";
+            assignActorbox.Size = new Size(110, 23);
+            assignActorbox.TabIndex = 10;
+            assignActorbox.Text = "Enter Actor ID";
+            assignActorbox.Click += assignActorbox_Click;
+            // 
+            // assignActorbutton
+            // 
+            assignActorbutton.Location = new Point(8, 301);
+            assignActorbutton.Margin = new Padding(3, 2, 3, 2);
+            assignActorbutton.Name = "assignActorbutton";
+            assignActorbutton.Size = new Size(111, 24);
+            assignActorbutton.TabIndex = 9;
+            assignActorbutton.Text = "Assign Actor:";
+            assignActorbutton.UseVisualStyleBackColor = true;
+            assignActorbutton.Click += assignActorbutton_Click;
+            // 
+            // addMoviebutton
+            // 
+            addMoviebutton.Location = new Point(681, 301);
+            addMoviebutton.Margin = new Padding(3, 2, 3, 2);
+            addMoviebutton.Name = "addMoviebutton";
+            addMoviebutton.Size = new Size(82, 24);
+            addMoviebutton.TabIndex = 7;
+            addMoviebutton.Text = "Add";
+            addMoviebutton.UseVisualStyleBackColor = true;
+            addMoviebutton.Click += addMoviebutton_Click;
+            // 
             // movieDeletebutton
             // 
-            movieDeletebutton.Location = new Point(771, 304);
+            movieDeletebutton.Location = new Point(769, 301);
             movieDeletebutton.Margin = new Padding(3, 2, 3, 2);
             movieDeletebutton.Name = "movieDeletebutton";
-            movieDeletebutton.Size = new Size(82, 22);
+            movieDeletebutton.Size = new Size(82, 24);
             movieDeletebutton.TabIndex = 6;
             movieDeletebutton.Text = "Delete";
             movieDeletebutton.UseVisualStyleBackColor = true;
@@ -282,10 +495,10 @@
             // 
             // updateMoviesbutton
             // 
-            updateMoviesbutton.Location = new Point(858, 304);
+            updateMoviesbutton.Location = new Point(857, 301);
             updateMoviesbutton.Margin = new Padding(3, 2, 3, 2);
             updateMoviesbutton.Name = "updateMoviesbutton";
-            updateMoviesbutton.Size = new Size(82, 22);
+            updateMoviesbutton.Size = new Size(82, 24);
             updateMoviesbutton.TabIndex = 5;
             updateMoviesbutton.Text = "Update";
             updateMoviesbutton.UseVisualStyleBackColor = true;
@@ -293,10 +506,10 @@
             // 
             // searchMoviebutton
             // 
-            searchMoviebutton.Location = new Point(946, 303);
+            searchMoviebutton.Location = new Point(945, 301);
             searchMoviebutton.Margin = new Padding(3, 2, 3, 2);
             searchMoviebutton.Name = "searchMoviebutton";
-            searchMoviebutton.Size = new Size(82, 22);
+            searchMoviebutton.Size = new Size(82, 24);
             searchMoviebutton.TabIndex = 4;
             searchMoviebutton.Text = "Search";
             searchMoviebutton.UseVisualStyleBackColor = true;
@@ -350,23 +563,64 @@
             reportOutputText.TabIndex = 0;
             reportOutputText.Text = "";
             // 
+            // UserIDLabel
+            // 
+            UserIDLabel.AutoSize = true;
+            UserIDLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
+            UserIDLabel.Location = new Point(11, 9);
+            UserIDLabel.Name = "UserIDLabel";
+            UserIDLabel.Size = new Size(43, 37);
+            UserIDLabel.TabIndex = 4;
+            UserIDLabel.Text = "ID";
+            // 
+            // LogoutButton
+            // 
+            LogoutButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            LogoutButton.Location = new Point(1053, 12);
+            LogoutButton.Name = "LogoutButton";
+            LogoutButton.Size = new Size(89, 40);
+            LogoutButton.TabIndex = 5;
+            LogoutButton.Text = "Logout";
+            LogoutButton.UseVisualStyleBackColor = true;
+            LogoutButton.Click += LogoutButton_Click;
+            // 
+            // EmployeesButton
+            // 
+            EmployeesButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            EmployeesButton.Location = new Point(910, 12);
+            EmployeesButton.Name = "EmployeesButton";
+            EmployeesButton.Size = new Size(114, 40);
+            EmployeesButton.TabIndex = 6;
+            EmployeesButton.Text = "Employees";
+            EmployeesButton.UseMnemonic = false;
+            EmployeesButton.UseVisualStyleBackColor = true;
+            EmployeesButton.Click += EmployeesButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1170, 404);
+            ClientSize = new Size(1154, 457);
+            Controls.Add(EmployeesButton);
+            Controls.Add(LogoutButton);
+            Controls.Add(UserIDLabel);
             Controls.Add(first_tab);
             Name = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             Shown += Form1_Shown;
             ((System.ComponentModel.ISupportInitialize)movies).EndInit();
             first_tab.ResumeLayout(false);
             rentals.ResumeLayout(false);
             rentals.PerformLayout();
+            allCustomers.ResumeLayout(false);
+            allCustomers.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)CustomersGridView).EndInit();
             allMovies.ResumeLayout(false);
             allMovies.PerformLayout();
             runReports.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -401,5 +655,31 @@
         private DateTimePicker retalDatePicker;
         private Label label3;
         private Button button1;
+        private Button addMoviebutton;
+        private TextBox assignActorbox;
+        private Button assignActorbutton;
+        private TabPage allCustomers;
+        private DataGridView CustomersGridView;
+        private Label label5;
+        private ComboBox SearchByComboBox;
+        private Button button2;
+        private Button CustomerDeleteButton;
+        private Button SearchCustomerButton;
+        private TextBox SearchCustomerBox;
+        private DataGridViewTextBoxColumn accountNo;
+        private DataGridViewTextBoxColumn lastName;
+        private DataGridViewTextBoxColumn firstName;
+        private DataGridViewTextBoxColumn streetNumber;
+        private DataGridViewTextBoxColumn streetName;
+        private DataGridViewTextBoxColumn aptNumber;
+        private DataGridViewTextBoxColumn city;
+        private DataGridViewTextBoxColumn postalCode;
+        private DataGridViewTextBoxColumn phoneNumber;
+        private DataGridViewTextBoxColumn email;
+        private DataGridViewTextBoxColumn creditCard;
+        private DataGridViewTextBoxColumn rating;
+        private Label UserIDLabel;
+        private Button LogoutButton;
+        private Button EmployeesButton;
     }
 }

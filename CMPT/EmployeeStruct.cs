@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace CMPT
 {
-    public struct CustomerStruct
+    public struct EmployeeStruct
     {
-        public int accountNo;
-        public string firstName;
+        public int id;
+        public string ssn;
         public string lastName;
+        public string firstName;
         public string streetNo;
         public string streetName;
         public string aptNo;
         public string city;
+        public ProvinceEnum province;
         public string postalCode;
         public string phoneNumber;
-        public string email;
-        public string creditCard;
-        public string rating;
+        public string startDate;
 
-        public CustomerStruct(int accountNo) 
+        public EmployeeStruct (int id)
         {
-            this.accountNo = accountNo;
+            this.id = id;
         }
     }
 }

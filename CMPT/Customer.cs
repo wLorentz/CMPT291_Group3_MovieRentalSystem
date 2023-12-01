@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace CMPT
 {
 
-    internal class Customer
+    public class Customer
     {
-        private string accountNo;
+        private int accountNo;
         private string firstName;
         private string lastName;
         private string streetNo;
@@ -39,6 +39,17 @@ namespace CMPT
             this.rating = customerStruct.rating;
         }
 
-        public string AccountNo { get { return accountNo; } }
+        public int AccountNo { get { return accountNo; } }
+        public string FirstName { get { return firstName; } }
+        public string LastName { get { return lastName; } }
+        public string StreetNo { get { return streetNo; } }
+        public string StreetName { get { return streetName; } }
+        public string AptNo { get { return aptNo; } }
+        public string City { get { return city; } } 
+        public string PostalCode { get { return postalCode; } }
+        public string PhoneNumber { get { return phoneNumber; } }
+        public string Email { get { return email; } }
+        public string CreditCard { get {  return creditCard; } }
+        public string Rating { get { return rating; } }
     }
 }
