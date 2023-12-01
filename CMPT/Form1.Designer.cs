@@ -80,6 +80,9 @@
             runReport = new Button();
             reports = new ListBox();
             reportOutputText = new RichTextBox();
+            UserIDLabel = new Label();
+            LogoutButton = new Button();
+            EmployeesButton = new Button();
             ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             first_tab.SuspendLayout();
             rentals.SuspendLayout();
@@ -144,7 +147,7 @@
             first_tab.Controls.Add(allCustomers);
             first_tab.Controls.Add(allMovies);
             first_tab.Controls.Add(runReports);
-            first_tab.Location = new Point(0, 0);
+            first_tab.Location = new Point(-1, 60);
             first_tab.Margin = new Padding(3, 2, 3, 2);
             first_tab.Name = "first_tab";
             first_tab.SelectedIndex = 0;
@@ -456,7 +459,6 @@
             assignActorbox.TabIndex = 10;
             assignActorbox.Text = "Enter Actor ID";
             assignActorbox.Click += assignActorbox_Click;
-            assignActorbox.TextChanged += assignActorbox_TextChanged;
             // 
             // assignActorbutton
             // 
@@ -561,11 +563,47 @@
             reportOutputText.TabIndex = 0;
             reportOutputText.Text = "";
             // 
+            // UserIDLabel
+            // 
+            UserIDLabel.AutoSize = true;
+            UserIDLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
+            UserIDLabel.Location = new Point(11, 9);
+            UserIDLabel.Name = "UserIDLabel";
+            UserIDLabel.Size = new Size(43, 37);
+            UserIDLabel.TabIndex = 4;
+            UserIDLabel.Text = "ID";
+            // 
+            // LogoutButton
+            // 
+            LogoutButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            LogoutButton.Location = new Point(1053, 12);
+            LogoutButton.Name = "LogoutButton";
+            LogoutButton.Size = new Size(89, 40);
+            LogoutButton.TabIndex = 5;
+            LogoutButton.Text = "Logout";
+            LogoutButton.UseVisualStyleBackColor = true;
+            LogoutButton.Click += LogoutButton_Click;
+            // 
+            // EmployeesButton
+            // 
+            EmployeesButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            EmployeesButton.Location = new Point(910, 12);
+            EmployeesButton.Name = "EmployeesButton";
+            EmployeesButton.Size = new Size(114, 40);
+            EmployeesButton.TabIndex = 6;
+            EmployeesButton.Text = "Employees";
+            EmployeesButton.UseMnemonic = false;
+            EmployeesButton.UseVisualStyleBackColor = true;
+            EmployeesButton.Click += EmployeesButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1170, 404);
+            ClientSize = new Size(1154, 457);
+            Controls.Add(EmployeesButton);
+            Controls.Add(LogoutButton);
+            Controls.Add(UserIDLabel);
             Controls.Add(first_tab);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
@@ -582,6 +620,7 @@
             allMovies.PerformLayout();
             runReports.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -639,5 +678,8 @@
         private DataGridViewTextBoxColumn email;
         private DataGridViewTextBoxColumn creditCard;
         private DataGridViewTextBoxColumn rating;
+        private Label UserIDLabel;
+        private Button LogoutButton;
+        private Button EmployeesButton;
     }
 }
