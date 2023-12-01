@@ -216,6 +216,7 @@
             phoneNumberTextBox.Name = "phoneNumberTextBox";
             phoneNumberTextBox.Size = new Size(192, 33);
             phoneNumberTextBox.TabIndex = 18;
+            phoneNumberTextBox.KeyPress += phoneNumberTextBox_KeyPress;
             // 
             // label9
             // 
@@ -239,11 +240,13 @@
             // 
             // creditCardTextBox
             // 
+            creditCardTextBox.BackColor = Color.White;
             creditCardTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             creditCardTextBox.Location = new Point(156, 420);
             creditCardTextBox.Name = "creditCardTextBox";
             creditCardTextBox.Size = new Size(249, 33);
             creditCardTextBox.TabIndex = 21;
+            creditCardTextBox.KeyPress += creditCardTextBox_KeyPress;
             // 
             // label11
             // 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CMPT
 {
@@ -15,6 +16,9 @@ namespace CMPT
         Form1 mainFrom;
         bool isNew;
         int accountNumber;
+
+        Color errorColor = Color.LightCoral;
+
         public ModifyCustomerForm(Form1 mainForm, bool isNew, int accountNumber)
         {
             InitializeComponent();
@@ -77,46 +81,193 @@ namespace CMPT
             }
         }
 
+        private bool ValidateEmail()
+        {
+            bool hasOneAmprisand = emailTextBox.Text.IndexOf('@') != -1 && emailTextBox.Text.Count(f => f == '@') == 1;
+            bool hasDomain = (emailTextBox.Text.LastIndexOf('.') > emailTextBox.Text.IndexOf('@')) && emailTextBox.Text.LastIndexOf('.') != emailTextBox.Text.Length - 1;
+
+            bool validEmail = (hasDomain && hasOneAmprisand && !emailTextBox.Text.StartsWith('.') && !emailTextBox.Text.StartsWith('@')) || emailTextBox.Text.Length == 0;
+
+            if (validEmail)
+            {
+                emailTextBox.BackColor = Color.White;
+            }
+            else
+            {
+                emailTextBox.BackColor = errorColor;
+            }
+
+            return validEmail;
+        }
+
+        private bool ValidatePhoneNumber()
+        {
+            bool validPhoneNumber = phoneNumberTextBox.Text.Length % 13 == 0;
+
+            if (validPhoneNumber)
+            {
+                phoneNumberTextBox.BackColor = Color.White;
+            }
+            else
+            {
+                phoneNumberTextBox.BackColor = errorColor;
+            }
+
+            return validPhoneNumber;
+        }
+
+        private bool ValidateCreditCard()
+        {
+            bool validCreditCardNumber = creditCardTextBox.Text.Length % 19 == 0;
+
+            if (validCreditCardNumber)
+            {
+                creditCardTextBox.BackColor = Color.White;
+            }
+            else
+            {
+                creditCardTextBox.BackColor = errorColor;
+            }
+
+            return validCreditCardNumber;
+        }
+
+        private bool ValidateFields()
+        {
+            bool validPhone = ValidatePhoneNumber();
+            bool validCreditCard = ValidateCreditCard();
+            bool validEmail = ValidateEmail();
+
+            return validPhone && validCreditCard && validEmail;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            CustomerStruct customerStruct = new(accountNumber);
+            if(ValidateFields())
+            {
+                CustomerStruct customerStruct = new(accountNumber);
 
-            customerStruct.lastName = lastNameTextBox.Text;
-            customerStruct.firstName = firstNameTextBox.Text;
-            customerStruct.streetNo = streetNumberTextBox.Text;
-            customerStruct.streetName = streetNameTextBox.Text;
-            customerStruct.aptNo = aptNumberTextBox.Text;
-            customerStruct.city = cityTextBox.Text;
-            customerStruct.postalCode = postalCodeTextBox.Text;
-            customerStruct.phoneNumber = phoneNumberTextBox.Text;
-            customerStruct.email = emailTextBox.Text;
-            customerStruct.creditCard = creditCardTextBox.Text;
-            customerStruct.rating = ratingTextBox.Text;
+                customerStruct.lastName = lastNameTextBox.Text;
+                customerStruct.firstName = firstNameTextBox.Text;
+                customerStruct.streetNo = streetNumberTextBox.Text;
+                customerStruct.streetName = streetNameTextBox.Text;
+                customerStruct.aptNo = aptNumberTextBox.Text;
+                customerStruct.city = cityTextBox.Text;
+                customerStruct.postalCode = postalCodeTextBox.Text;
+                customerStruct.phoneNumber = phoneNumberTextBox.Text;
+                customerStruct.email = emailTextBox.Text;
+                customerStruct.creditCard = creditCardTextBox.Text;
+                customerStruct.rating = ratingTextBox.Text;
 
-            mainFrom.AddCustomer(new Customer(customerStruct));
+                mainFrom.AddCustomer(new Customer(customerStruct));
 
-            this.Close();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Some Fields are Invalid!", "Error");
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            CustomerStruct customerStruct = new(accountNumber);
+            if (ValidateFields())
+            {
+                CustomerStruct customerStruct = new(accountNumber);
 
-            customerStruct.lastName = lastNameTextBox.Text;
-            customerStruct.firstName = firstNameTextBox.Text;
-            customerStruct.streetNo = streetNumberTextBox.Text;
-            customerStruct.streetName = streetNameTextBox.Text;
-            customerStruct.aptNo = aptNumberTextBox.Text;
-            customerStruct.city = cityTextBox.Text;
-            customerStruct.postalCode = postalCodeTextBox.Text;
-            customerStruct.phoneNumber = phoneNumberTextBox.Text;
-            customerStruct.email = emailTextBox.Text;
-            customerStruct.creditCard = creditCardTextBox.Text;
-            customerStruct.rating = ratingTextBox.Text;
-            Customer customer = new Customer(customerStruct);
-            mainFrom.saveCustomer(customer);
+                customerStruct.lastName = lastNameTextBox.Text;
+                customerStruct.firstName = firstNameTextBox.Text;
+                customerStruct.streetNo = streetNumberTextBox.Text;
+                customerStruct.streetName = streetNameTextBox.Text;
+                customerStruct.aptNo = aptNumberTextBox.Text;
+                customerStruct.city = cityTextBox.Text;
+                customerStruct.postalCode = postalCodeTextBox.Text;
+                customerStruct.phoneNumber = phoneNumberTextBox.Text;
+                customerStruct.email = emailTextBox.Text;
+                customerStruct.creditCard = creditCardTextBox.Text;
+                customerStruct.rating = ratingTextBox.Text;
+                Customer customer = new Customer(customerStruct);
+                mainFrom.saveCustomer(customer);
 
-            this.Close();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Some Fields are Invalid!", "Error");
+            }
+        }
+
+        private void phoneNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) || (phoneNumberTextBox.Text.Length == 13 && e.KeyChar != '\b'))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            string text = phoneNumberTextBox.Text;
+
+            if (text.Length == 0)
+            {
+                phoneNumberTextBox.Text = "(" + text;
+            }
+            else if (text.Length == 2 && e.KeyChar == '\b')
+            {
+                phoneNumberTextBox.Text = "";
+            }
+            else if (text.Length == 4 && e.KeyChar != '\b')
+            {
+                phoneNumberTextBox.Text = text + ")";
+            }
+            else if (text.Length == 6 && e.KeyChar == '\b')
+            {
+                phoneNumberTextBox.Text = phoneNumberTextBox.Text.Remove(5);
+            }
+            else if (text.Length == 8 && e.KeyChar != '\b')
+            {
+                phoneNumberTextBox.Text = text + "-";
+            }
+            else if (text.Length == 10 && e.KeyChar == '\b')
+            {
+                phoneNumberTextBox.Text = phoneNumberTextBox.Text.Remove(9);
+            }
+
+            phoneNumberTextBox.SelectionStart = phoneNumberTextBox.Text.Length;
+        }
+
+        private void creditCardTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) || (creditCardTextBox.Text.Length == 19 && e.KeyChar != '\b'))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            string text = creditCardTextBox.Text;
+
+            for (int i = 0; i <= 2; i++)
+            {
+                int addIndex = 4 + i * 5;
+                int removeIndex = 6 + i * 5;
+                if (text.Length == addIndex && e.KeyChar != '\b')
+                {
+                    creditCardTextBox.Text = text + "-";
+
+                    creditCardTextBox.SelectionStart = creditCardTextBox.Text.Length;
+
+                    break;
+                }
+                else if(text.Length == removeIndex && e.KeyChar == '\b')
+                {
+                    creditCardTextBox.Text = creditCardTextBox.Text.Remove(removeIndex - 1);
+                
+                    creditCardTextBox.SelectionStart = creditCardTextBox.Text.Length;
+                    
+                    break;
+                }
+
+            }
+            
         }
     }
 }
