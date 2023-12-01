@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic.Devices;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
@@ -367,7 +366,16 @@ namespace CMPT
 
         public void saveCustomer(Customer customer)
         {
-            database.SaveCustomer(customer);
+            try
+            {
+                database.SaveCustomer(customer);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
             foreach (DataGridViewRow row in CustomersGridView.Rows)
             {
                 if (row.Cells[0].Value.ToString() == customer.AccountNo.ToString())
@@ -387,6 +395,54 @@ namespace CMPT
 
                     break;
                 }
+            }
+        }
+
+        public void SaveEmployee(Employee employee)
+        {
+            try
+            {
+                database.SaveEmployee(employee);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //foreach(DataGridViewRow row in EmployeeDataGrid.Rows)
+            //{
+            //    if (row.Cells[0].Value.ToString() == employee.EmployeeID.ToString())
+            //    {
+            //        row.Cells[0].Value = employee.EmployeeID;
+            //        row.Cells[1].Value = employee.Ssn;
+            //        row.Cells[2].Value = employee.LastName;
+            //        row.Cells[3].Value = employee.FirstName;
+            //        row.Cells[4].Value = employee.StreetNo;
+            //        row.Cells[5].Value = employee.StreetName;
+            //        row.Cells[6].Value = employee.AptNo;
+            //        row.Cells[7].Value = employee.City;
+            //        row.Cells[8].Value = employee.Province;
+            //        row.Cells[9].Value = employee.PostalCode;
+            //        row.Cells[10].Value = employee.PhoneNumber;
+            //        row.Cells[11].Value = employee.StartDate;
+            //    }
+            //}
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+            try
+            {
+
+                database.AddEmployee(employee);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            // EmployeeDataGrid.Rows.Add(employee);
         }
 
         private void editCustomerButton_Click(object sender, EventArgs e)
@@ -433,54 +489,6 @@ namespace CMPT
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string customerID;
-            string movie;
-            int movieID;
-            DateTime fromDate;
-            DateTime toDate;
-            int[] copies;
-            int[] bookedCopies;
-
-            try
-            {
-                customerID = customerDropdown.SelectedItem.ToString();
-                movie = movieDropdown.SelectedItem.ToString();
-                fromDate = rentalDatePicker.Value;
-                toDate = dueDatePicker.Value;
-                copies = database.getMovieCopies(movie);
-                movieID = database.convertMovieTitleToID(movie);
-                bookedCopies = database.getBookedCopies(movieID, fromDate, toDate);
-                var freeCopies = copies.Except(bookedCopies);
-
-                if (freeCopies.Count() == 0)
-                {
-                    MessageBox.Show("No free copies in this date range.");
-                    return;
-                }
-                else
-                {
-                    int orderID = database.GetLatestOrderNumber() + 1;
-
-                    OrderStruct orderStruct = new(orderID);
-
-                    orderStruct.date = DateTime.Now;
-                    orderStruct.status = "Confirmed"; //Unsure what this value should be yet. *TODO*
-                    orderStruct.fromDate = fromDate;
-                    orderStruct.toDate = toDate;
-                    orderStruct.employeeID = "1";  //Unsure how to get employeeID at this time so just hardcoded Val *TODO*
-                    orderStruct.copyID = freeCopies.ElementAt(0).ToString();
-                    orderStruct.movieID = movieID.ToString();
-                    orderStruct.accountNo = customerID;
-
-                    database.AddOrder(new Order(orderStruct));
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                
         private void Customers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
@@ -512,34 +520,21 @@ namespace CMPT
             customerDropdown.Items.Remove(accountNo);
         }
 
-
-        private void searchMoviebox_TextChanged(object sender, EventArgs e)
+        private void LogoutButton_Click(object sender, EventArgs e)
         {
+            UserIDLabel.Text = "ID";
+
+            this.Hide();
+
+            LoginScreen loginScreen = new(this);
+            loginScreen.Show();
 
         }
 
-        private void assignActorbox_TextChanged(object sender, EventArgs e)
+        private void EmployeesButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void makeCopybutton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                int rowIdx = movies.CurrentCell.RowIndex;
-
-                string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
-
-                int lowestCopyID = database.GetLowestAvailableCopyID(movieID);
-
-                database.MakeCopy(lowestCopyID.ToString(), movieID);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            EmployeeScreen employeeScreen = new(this);
+            employeeScreen.Show();
         }
     }
 }

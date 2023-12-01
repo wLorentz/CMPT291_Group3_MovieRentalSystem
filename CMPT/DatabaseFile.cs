@@ -1,15 +1,11 @@
-﻿using CMPT;
-using Microsoft.VisualBasic.ApplicationServices;
+﻿using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace CMPT
@@ -91,31 +87,6 @@ namespace CMPT
                     movieStruct.name = myReader[(int)MovieEnum.movieName].ToString();
 
                     movieList.Add(new Movie(movieStruct));
-                }
-
-                myReader.Close();
-            }
-            catch (Exception e3)
-            {
-                throw new Exception(e3.Message);
-            }
-
-            return movieList.ToArray();
-        }
-
-        public string[] getMovieTitles()
-        {
-            var movieList = new List<string>();
-
-            myCommand.CommandText = "select * from Movies";
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-
-                while (myReader.Read())
-                {      
-                    string title = myReader.GetString(myReader.GetOrdinal("movieName")).ToString();
-                    movieList.Add(title);
                 }
 
                 myReader.Close();
@@ -226,19 +197,6 @@ namespace CMPT
                 throw new Exception(e.Message);
             }
         }
-        public void MakeCopy(string copyID, string movieID)
-        {
-            myCommand.CommandText = "insert into copies values(" + copyID + ", " + movieID + ");";
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-                myReader.Close();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
 
         public Customer[] GetAllCustomers()
         {
@@ -279,7 +237,6 @@ namespace CMPT
 
             return customerList.ToArray();
         }
-
 
         public Customer[] GetCustomers(string customerName)
         {
@@ -403,7 +360,6 @@ namespace CMPT
             return customer;
         }
 
-
         public void RunCustomQuery(string query)
         {
             myCommand.CommandText = query;
@@ -418,42 +374,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-        }
-
-        public int GetLowestAvailableCopyID(string movieID)
-        {
-            myCommand.CommandText =
-            "select\r\n" +
-            "case \r\n" +
-            "when exists (select copyID from copies where movieID = " + movieID + ") then\r\n" +
-            "(select MIN(copyID) + 1 as lowestAvailableCopyID \r\n" +
-            "from copies C1\r\n" +
-            "where C1.copyID + 1 not in (select C2.copyID from copies C2))\r\n" +
-            "else\r\n" +
-            "1\r\n" +
-            "end as lowestAvailableCopyID\r\n" +
-            "from Movies";
-
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-                if (myReader.Read())
-                {
-                    int copyID = 1;
-
-                    int.TryParse(myReader["lowestAvailableCopyID"].ToString(), out copyID);
-
-                    myReader.Close();
-
-                    return copyID;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-            return 1;
         }
 
         public int GetLowestAvailableMovieID()
@@ -526,7 +446,6 @@ namespace CMPT
             }
 
             return 1;
-
         }
 
         public int GetLowestAvailableEmployeeID()
@@ -561,6 +480,8 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
+
+            return 1;
         }
 
         public void AddCustomer(Customer customer)
@@ -580,129 +501,19 @@ namespace CMPT
             }
         }
 
-        public int[] getMovieCopies(string movieName)
+        public Employee GetEmployeeByID(int employeeID)
         {
-            
-            myCommand.CommandText = "SELECT copyID FROM copy WHERE movieID IN (SELECT movieID FROM Movies WHERE movieName ='" + movieName + "')";
+            return null;
+        }
 
-            var copies = new List<int>();
-
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-
-                while (myReader.Read())
-                {
-                    int cID = myReader.GetInt32(myReader.GetOrdinal("copyID"));
-                    copies.Add(cID);
-                }
-
-                myReader.Close();
-            }
-            catch (Exception ex) 
-            {
-                throw new Exception(ex.Message); 
-            }
-
-            return copies.ToArray();
+        public void SaveEmployee(Employee employee)
+        {
 
         }
 
-        public int[] getBookedCopies(int movieID, DateTime fromDate, DateTime toDate)
+        public void AddEmployee(Employee employee)
         {
-            var availableCopies = new List<int>();
-            try
-            {   
-                //get all cases where toDate and fromDate lie in the interval of fromDate and toDate of existing orders.  **TODO Need Edge Cases** from < minfrom to > toMax  
-                myCommand.CommandText = "SELECT copyID FROM \"Order\" WHERE movieID = '" + movieID + "' AND (('" + fromDate + "'>= fromDate AND '" + fromDate + "' <= toDate) OR ('" + toDate + "' >=  fromDate AND '" + toDate + "' <= toDate))";
-                myReader = myCommand.ExecuteReader();
 
-                while (myReader.Read())
-                {
-                    int cID = myReader.GetInt32(myReader.GetOrdinal("copyID"));
-                    availableCopies.Add(cID);
-                }
-                myReader.Close();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-
-
-
-            return availableCopies.ToArray();
-        }
-
-
-        public void insertBooking(int movieID, int copyID, DateTime fromDate, DateTime toDate)
-        {
-            myCommand.CommandText = "INSERT INTO orders ()";
-        }
-
-        public int convertMovieTitleToID(string movieName)
-        {
-            var movieID = new int();
-
-            try
-            {
-                myCommand.CommandText = "SELECT movieID FROM Movies WHERE movieName = '" + movieName + "'";
-                myReader = myCommand.ExecuteReader();
-
-
-                while (myReader.Read())
-                {
-                    movieID = myReader.GetInt32(myReader.GetOrdinal("movieID"));
-                }
-
-                myReader.Close();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-            return movieID;
-        }
-
-
-        public void AddOrder(Order order)
-        {
-            myCommand.CommandText = string.Format("insert into \"Order\" values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}');",
-                order.OrderID, order.Date, order.Status, order.FromDate, order.ToDate, order.EmployeeID, order.CopyID, order.MovieID, order.AccountNo);
-
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-
-                myReader.Close();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public int GetLatestOrderNumber()
-        {
-            myCommand.CommandText = "select MAX(orderID) as latestOrder from \"Order\"";
-            try
-            {
-                myReader = myCommand.ExecuteReader();
-                if (myReader.Read())
-                {
-                    int orderNumber = 0;
-
-                    int.TryParse(myReader["latestOrder"].ToString(), out orderNumber);
-
-                    myReader.Close();
-
-                    return orderNumber;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
         }
     }
 }
