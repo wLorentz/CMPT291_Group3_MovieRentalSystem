@@ -30,8 +30,6 @@ namespace CMPT
 
         private void AddEmployeeButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-
             int employeeID = mainForm.GetDatabase().GetLowestAvailableEmployeeID();
 
             ModifyEmployeeForm modifyEmployeeForm = new(this, true, employeeID);
@@ -56,6 +54,12 @@ namespace CMPT
         public DatabaseFile GetDatabase()
         {
             return mainForm.GetDatabase();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            mainForm.Show();
+            this.Close();
         }
     }
 }

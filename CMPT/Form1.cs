@@ -366,7 +366,16 @@ namespace CMPT
 
         public void saveCustomer(Customer customer)
         {
-            database.SaveCustomer(customer);
+            try
+            {
+                database.SaveCustomer(customer);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
             foreach (DataGridViewRow row in CustomersGridView.Rows)
             {
                 if (row.Cells[0].Value.ToString() == customer.AccountNo.ToString())
@@ -386,6 +395,54 @@ namespace CMPT
 
                     break;
                 }
+            }
+        }
+
+        public void SaveEmployee(Employee employee)
+        {
+            try
+            {
+                database.SaveEmployee(employee);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            //foreach(DataGridViewRow row in EmployeeDataGrid.Rows)
+            //{
+            //    if (row.Cells[0].Value.ToString() == employee.EmployeeID.ToString())
+            //    {
+            //        row.Cells[0].Value = employee.EmployeeID;
+            //        row.Cells[1].Value = employee.Ssn;
+            //        row.Cells[2].Value = employee.LastName;
+            //        row.Cells[3].Value = employee.FirstName;
+            //        row.Cells[4].Value = employee.StreetNo;
+            //        row.Cells[5].Value = employee.StreetName;
+            //        row.Cells[6].Value = employee.AptNo;
+            //        row.Cells[7].Value = employee.City;
+            //        row.Cells[8].Value = employee.Province;
+            //        row.Cells[9].Value = employee.PostalCode;
+            //        row.Cells[10].Value = employee.PhoneNumber;
+            //        row.Cells[11].Value = employee.StartDate;
+            //    }
+            //}
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+            try
+            {
+
+                database.AddEmployee(employee);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            // EmployeeDataGrid.Rows.Add(employee);
         }
 
         private void editCustomerButton_Click(object sender, EventArgs e)
@@ -463,34 +520,22 @@ namespace CMPT
             customerDropdown.Items.Remove(accountNo);
         }
 
-
-        private void searchMoviebox_TextChanged(object sender, EventArgs e)
+        private void LogoutButton_Click(object sender, EventArgs e)
         {
+            UserIDLabel.Text = "ID";
+
+            this.Hide();
+
+            LoginScreen loginScreen = new(this);
+            loginScreen.Show();
 
         }
 
-        private void assignActorbox_TextChanged(object sender, EventArgs e)
+        private void EmployeesButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void makeCopybutton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                int rowIdx = movies.CurrentCell.RowIndex;
-
-                string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
-
-                int lowestCopyID = database.GetLowestAvailableCopyID(movieID);
-
-                database.MakeCopy(lowestCopyID.ToString(), movieID);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            this.Hide();
+            EmployeeScreen employeeScreen = new(this);
+            employeeScreen.Show();
         }
     }
 }
