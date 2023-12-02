@@ -409,8 +409,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
         }
 
         public int GetLowestAvailableAccountNumber()
@@ -480,8 +478,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
         }
 
         public void AddCustomer(Customer customer)
@@ -513,6 +509,126 @@ namespace CMPT
 
         public void AddEmployee(Employee employee)
         {
+
+        }
+
+        public int GetLatestOrderNumber()
+        {
+            myCommand.CommandText = "select MAX(orderID) as latestOrder from \"Order\"";
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int orderNumber = 0;
+
+                    int.TryParse(myReader["latestOrder"].ToString(), out orderNumber);
+
+                    myReader.Close();
+
+                    return orderNumber;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return 0;
+        }
+
+        public void AddOrder(Order order)
+        {
+            myCommand.CommandText = string.Format("insert into \"Order\" values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}');",
+                order.OrderID, order.Date, order.Status, order.FromDate, order.ToDate, order.EmployeeID, order.CopyID, order.MovieID, order.AccountNo);
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        
+        public int convertMovieTitleToID(string movieName)
+        {
+            var movieID = new int();
+
+            try
+            {
+                myCommand.CommandText = "SELECT movieID FROM Movies WHERE movieName = '" + movieName + "'";
+                myReader = myCommand.ExecuteReader();
+
+
+                while (myReader.Read())
+                {
+                    movieID = myReader.GetInt32(myReader.GetOrdinal("movieID"));
+                }
+
+                myReader.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return movieID;
+        }
+
+        public int[] getBookedCopies(int movieID, DateTime fromDate, DateTime toDate)
+        {
+            var availableCopies = new List<int>();
+            try
+            {
+                //get all cases where toDate and fromDate lie in the interval of fromDate and toDate of existing orders.  **TODO Need Edge Cases** from < minfrom to > toMax  
+                myCommand.CommandText = "SELECT copyID FROM \"Order\" WHERE movieID = '" + movieID + "' AND (('" + fromDate + "'>= fromDate AND '" + fromDate + "' <= toDate) OR ('" + toDate + "' >=  fromDate AND '" + toDate + "' <= toDate) OR ('" + fromDate + "' <= fromDate AND '" + toDate + "' >= toDate))";
+                myReader = myCommand.ExecuteReader();
+
+                while (myReader.Read())
+                {
+                    int cID = myReader.GetInt32(myReader.GetOrdinal("copyID"));
+                    availableCopies.Add(cID);
+                }
+                myReader.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+
+
+            return availableCopies.ToArray();
+        }
+
+        public int[] getMovieCopies(string movieName)
+        {
+
+            myCommand.CommandText = "SELECT copyID FROM copy WHERE movieID IN (SELECT movieID FROM Movies WHERE movieName ='" + movieName + "')";
+
+            var copies = new List<int>();
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                while (myReader.Read())
+                {
+                    int cID = myReader.GetInt32(myReader.GetOrdinal("copyID"));
+                    copies.Add(cID);
+                }
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return copies.ToArray();
 
         }
     }

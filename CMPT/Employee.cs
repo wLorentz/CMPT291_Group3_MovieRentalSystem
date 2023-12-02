@@ -29,6 +29,7 @@ namespace CMPT
             firstName = employeeStruct.firstName;
             streetNo = employeeStruct.streetNo;
             streetName = employeeStruct.streetName;
+            aptNo = employeeStruct.aptNo;
             city = employeeStruct.city;
             province = employeeStruct.province;
             postalCode = employeeStruct.postalCode;
