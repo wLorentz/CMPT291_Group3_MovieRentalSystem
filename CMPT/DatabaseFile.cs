@@ -409,8 +409,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
         }
 
         public int GetLowestAvailableAccountNumber()
@@ -480,8 +478,6 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
-
-            return 1;
         }
 
         public void AddCustomer(Customer customer)
