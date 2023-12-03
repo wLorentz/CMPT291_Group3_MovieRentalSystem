@@ -63,6 +63,7 @@
             EmployeeDataGrid.RowTemplate.Height = 25;
             EmployeeDataGrid.Size = new Size(1143, 365);
             EmployeeDataGrid.TabIndex = 5;
+            EmployeeDataGrid.CellDoubleClick += EmployeeDataGrid_CellDoubleClick;
             // 
             // employeeID
             // 
