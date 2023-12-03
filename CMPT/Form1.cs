@@ -507,7 +507,6 @@ namespace CMPT
             DateTime toDate;
             int[] copies;
             int[] bookedCopies;
-            string employeeID;
 
             try
             {
@@ -519,7 +518,6 @@ namespace CMPT
                 movieID = database.convertMovieTitleToID(movie);
                 bookedCopies = database.getBookedCopies(movieID, fromDate, toDate);
                 var freeCopies = copies.Except(bookedCopies);
-                employeeID = UserIDLabel.Text.ToString();
 
                 if (freeCopies.Count() == 0)
                 {
@@ -536,7 +534,7 @@ namespace CMPT
                     orderStruct.status = "Confirmed";
                     orderStruct.fromDate = fromDate;
                     orderStruct.toDate = toDate;
-                    orderStruct.employeeID = employeeID;
+                    orderStruct.employeeID = employeeID.ToString();
                     orderStruct.copyID = freeCopies.ElementAt(0).ToString();
                     orderStruct.movieID = movieID.ToString();
                     orderStruct.accountNo = customerID;
