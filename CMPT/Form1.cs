@@ -537,5 +537,60 @@ namespace CMPT
             EmployeeScreen employeeScreen = new(this);
             employeeScreen.Show();
         }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string customerID;
+            string movie;
+            int movieID;
+            DateTime fromDate;
+            DateTime toDate;
+            int[] copies;
+            int[] bookedCopies;
+            string employeeID;
+
+            try
+            {
+                customerID = customerDropdown.SelectedItem.ToString();
+                movie = movieDropdown.SelectedItem.ToString();
+                fromDate = retalDatePicker.Value;
+                toDate = dueDatePicker.Value;
+                copies = database.getMovieCopies(movie);
+                movieID = database.convertMovieTitleToID(movie);
+                bookedCopies = database.getBookedCopies(movieID, fromDate, toDate);
+                var freeCopies = copies.Except(bookedCopies);
+                employeeID = UserIDLabel.Text.ToString();
+
+                if (freeCopies.Count() == 0)
+                {
+                    MessageBox.Show("No available movie copies in this date range.");
+                    return;
+                }
+                else
+                {
+                    int orderID = database.GetLatestOrderNumber() + 1;
+
+                    OrderStruct orderStruct = new(orderID);
+
+                    orderStruct.date = DateTime.Now;
+                    orderStruct.status = "Confirmed";
+                    orderStruct.fromDate = fromDate;
+                    orderStruct.toDate = toDate;
+                    orderStruct.employeeID = employeeID;
+                    orderStruct.copyID = freeCopies.ElementAt(0).ToString();
+                    orderStruct.movieID = movieID.ToString();
+                    orderStruct.accountNo = customerID;
+
+                    database.AddOrder(new Order(orderStruct));
+
+                    MessageBox.Show("Order Created.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

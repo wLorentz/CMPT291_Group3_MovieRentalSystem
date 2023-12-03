@@ -189,6 +189,7 @@ namespace CMPT
             button1.TabIndex = 10;
             button1.Text = "Create Rental";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // dueDatePicker
             // 
