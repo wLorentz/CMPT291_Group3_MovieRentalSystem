@@ -54,228 +54,223 @@
             SaveButton = new Button();
             ProvinceComboBox = new ComboBox();
             label2 = new Label();
-            label13 = new Label();
-            textBox1 = new TextBox();
+            PasswordLabel = new Label();
+            PasswordTextBox = new TextBox();
+            ReEnterPasswordLabel = new Label();
+            ReEnterPasswordTextBox = new TextBox();
+            UpdatePasswordButton = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(14, 12);
+            label1.Location = new Point(12, 9);
             label1.Name = "label1";
-            label1.Size = new Size(154, 32);
+            label1.Size = new Size(121, 25);
             label1.TabIndex = 0;
             label1.Text = "Employee ID:";
             // 
             // SsnTextBox
             // 
             SsnTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            SsnTextBox.Location = new Point(181, 75);
-            SsnTextBox.Margin = new Padding(3, 4, 3, 4);
+            SsnTextBox.Location = new Point(190, 56);
             SsnTextBox.Name = "SsnTextBox";
-            SsnTextBox.Size = new Size(228, 39);
-            SsnTextBox.TabIndex = 1;
+            SsnTextBox.Size = new Size(200, 33);
+            SsnTextBox.TabIndex = 5;
+            SsnTextBox.KeyPress += SsnTextBox_KeyPress;
             // 
             // EmployeeIDText
             // 
             EmployeeIDText.AutoSize = true;
             EmployeeIDText.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            EmployeeIDText.Location = new Point(181, 12);
+            EmployeeIDText.Location = new Point(190, 9);
             EmployeeIDText.Name = "EmployeeIDText";
-            EmployeeIDText.Size = new Size(37, 32);
-            EmployeeIDText.TabIndex = 2;
+            EmployeeIDText.Size = new Size(30, 25);
+            EmployeeIDText.TabIndex = 1;
             EmployeeIDText.Text = "ID";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(14, 79);
+            label3.Location = new Point(12, 59);
             label3.Name = "label3";
-            label3.Size = new Size(63, 32);
-            label3.TabIndex = 3;
+            label3.Size = new Size(50, 25);
+            label3.TabIndex = 2;
             label3.Text = "SSN:";
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(14, 139);
+            label4.Location = new Point(12, 104);
             label4.Name = "label4";
-            label4.Size = new Size(131, 32);
-            label4.TabIndex = 5;
+            label4.Size = new Size(104, 25);
+            label4.TabIndex = 3;
             label4.Text = "Last Name:";
             // 
             // LastNameTextBox
             // 
             LastNameTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LastNameTextBox.Location = new Point(181, 135);
-            LastNameTextBox.Margin = new Padding(3, 4, 3, 4);
+            LastNameTextBox.Location = new Point(190, 101);
             LastNameTextBox.Name = "LastNameTextBox";
-            LastNameTextBox.Size = new Size(228, 39);
-            LastNameTextBox.TabIndex = 4;
+            LastNameTextBox.Size = new Size(200, 33);
+            LastNameTextBox.TabIndex = 6;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label5.Location = new Point(14, 203);
+            label5.Location = new Point(12, 152);
             label5.Name = "label5";
-            label5.Size = new Size(134, 32);
-            label5.TabIndex = 7;
+            label5.Size = new Size(106, 25);
+            label5.TabIndex = 4;
             label5.Text = "First Name:";
             // 
             // FirstNameTextBox
             // 
             FirstNameTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            FirstNameTextBox.Location = new Point(181, 199);
-            FirstNameTextBox.Margin = new Padding(3, 4, 3, 4);
+            FirstNameTextBox.Location = new Point(190, 149);
             FirstNameTextBox.Name = "FirstNameTextBox";
-            FirstNameTextBox.Size = new Size(228, 39);
-            FirstNameTextBox.TabIndex = 6;
+            FirstNameTextBox.Size = new Size(200, 33);
+            FirstNameTextBox.TabIndex = 7;
             // 
             // PostalCodeTextBox
             // 
             PostalCodeTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            PostalCodeTextBox.Location = new Point(423, 367);
-            PostalCodeTextBox.Margin = new Padding(3, 4, 3, 4);
+            PostalCodeTextBox.Location = new Point(396, 275);
             PostalCodeTextBox.Name = "PostalCodeTextBox";
-            PostalCodeTextBox.Size = new Size(153, 39);
-            PostalCodeTextBox.TabIndex = 26;
+            PostalCodeTextBox.Size = new Size(134, 33);
+            PostalCodeTextBox.TabIndex = 13;
+            PostalCodeTextBox.KeyPress += PostalCodeTextBox_KeyPress;
             // 
             // CityTextBox
             // 
             CityTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            CityTextBox.Location = new Point(14, 367);
-            CityTextBox.Margin = new Padding(3, 4, 3, 4);
+            CityTextBox.Location = new Point(12, 275);
             CityTextBox.Name = "CityTextBox";
-            CityTextBox.Size = new Size(228, 39);
-            CityTextBox.TabIndex = 25;
+            CityTextBox.Size = new Size(251, 33);
+            CityTextBox.TabIndex = 11;
             // 
             // AptNumberTextBox
             // 
             AptNumberTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            AptNumberTextBox.Location = new Point(423, 275);
-            AptNumberTextBox.Margin = new Padding(3, 4, 3, 4);
+            AptNumberTextBox.Location = new Point(396, 206);
             AptNumberTextBox.Name = "AptNumberTextBox";
-            AptNumberTextBox.Size = new Size(153, 39);
-            AptNumberTextBox.TabIndex = 24;
+            AptNumberTextBox.Size = new Size(134, 33);
+            AptNumberTextBox.TabIndex = 10;
             // 
             // StreetNameTextBox
             // 
             StreetNameTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            StreetNameTextBox.Location = new Point(181, 275);
-            StreetNameTextBox.Margin = new Padding(3, 4, 3, 4);
+            StreetNameTextBox.Location = new Point(190, 206);
             StreetNameTextBox.Name = "StreetNameTextBox";
-            StreetNameTextBox.Size = new Size(228, 39);
-            StreetNameTextBox.TabIndex = 23;
+            StreetNameTextBox.Size = new Size(200, 33);
+            StreetNameTextBox.TabIndex = 9;
             // 
             // StreetNumberTextBox
             // 
             StreetNumberTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            StreetNumberTextBox.Location = new Point(14, 275);
-            StreetNumberTextBox.Margin = new Padding(3, 4, 3, 4);
+            StreetNumberTextBox.Location = new Point(12, 206);
             StreetNumberTextBox.Name = "StreetNumberTextBox";
-            StreetNumberTextBox.Size = new Size(153, 39);
-            StreetNumberTextBox.TabIndex = 22;
+            StreetNumberTextBox.Size = new Size(172, 33);
+            StreetNumberTextBox.TabIndex = 8;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label8.Location = new Point(423, 415);
+            label8.Location = new Point(396, 311);
             label8.Name = "label8";
-            label8.Size = new Size(139, 32);
-            label8.TabIndex = 20;
+            label8.Size = new Size(111, 25);
+            label8.TabIndex = 30;
             label8.Text = "Postal Code";
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label7.Location = new Point(14, 415);
+            label7.Location = new Point(12, 311);
             label7.Name = "label7";
-            label7.Size = new Size(55, 32);
-            label7.TabIndex = 19;
+            label7.Size = new Size(44, 25);
+            label7.TabIndex = 18;
             label7.Text = "City";
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(423, 323);
+            label6.Location = new Point(396, 242);
             label6.Name = "label6";
-            label6.Size = new Size(146, 32);
-            label6.TabIndex = 18;
+            label6.Size = new Size(115, 25);
+            label6.TabIndex = 19;
             label6.Text = "Apt Number";
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label9.Location = new Point(181, 323);
+            label9.Location = new Point(190, 242);
             label9.Name = "label9";
-            label9.Size = new Size(147, 32);
-            label9.TabIndex = 17;
+            label9.Size = new Size(115, 25);
+            label9.TabIndex = 20;
             label9.Text = "Street Name";
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label10.Location = new Point(14, 323);
+            label10.Location = new Point(12, 242);
             label10.Name = "label10";
-            label10.Size = new Size(171, 32);
-            label10.TabIndex = 16;
+            label10.Size = new Size(134, 25);
+            label10.TabIndex = 21;
             label10.Text = "Street Number";
             // 
             // PhoneNumberTextBox
             // 
             PhoneNumberTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            PhoneNumberTextBox.Location = new Point(181, 481);
-            PhoneNumberTextBox.Margin = new Padding(3, 4, 3, 4);
+            PhoneNumberTextBox.Location = new Point(190, 361);
             PhoneNumberTextBox.Name = "PhoneNumberTextBox";
-            PhoneNumberTextBox.Size = new Size(228, 39);
-            PhoneNumberTextBox.TabIndex = 28;
+            PhoneNumberTextBox.Size = new Size(200, 33);
+            PhoneNumberTextBox.TabIndex = 14;
+            PhoneNumberTextBox.KeyPress += PhoneNumberTextBox_KeyPress;
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label11.Location = new Point(14, 485);
+            label11.Location = new Point(12, 364);
             label11.Name = "label11";
-            label11.Size = new Size(182, 32);
-            label11.TabIndex = 27;
+            label11.Size = new Size(144, 25);
+            label11.TabIndex = 22;
             label11.Text = "Phone Number:";
             // 
             // label12
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.Location = new Point(14, 571);
+            label12.Location = new Point(12, 428);
             label12.Name = "label12";
-            label12.Size = new Size(124, 32);
-            label12.TabIndex = 29;
+            label12.Size = new Size(98, 25);
+            label12.TabIndex = 23;
             label12.Text = "Start Date:";
             // 
             // StartDatePicker
             // 
             StartDatePicker.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            StartDatePicker.Location = new Point(181, 563);
-            StartDatePicker.Margin = new Padding(3, 4, 3, 4);
+            StartDatePicker.Location = new Point(190, 422);
             StartDatePicker.Name = "StartDatePicker";
-            StartDatePicker.Size = new Size(228, 39);
-            StartDatePicker.TabIndex = 30;
+            StartDatePicker.Size = new Size(200, 33);
+            StartDatePicker.TabIndex = 15;
             // 
             // AddButton
             // 
             AddButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            AddButton.Location = new Point(14, 708);
-            AddButton.Margin = new Padding(3, 4, 3, 4);
+            AddButton.Location = new Point(12, 620);
             AddButton.Name = "AddButton";
-            AddButton.Size = new Size(86, 45);
-            AddButton.TabIndex = 31;
+            AddButton.Size = new Size(75, 34);
+            AddButton.TabIndex = 24;
             AddButton.Text = "Add";
             AddButton.UseVisualStyleBackColor = true;
             AddButton.Click += AddButton_Click;
@@ -283,11 +278,10 @@
             // SaveButton
             // 
             SaveButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            SaveButton.Location = new Point(14, 708);
-            SaveButton.Margin = new Padding(3, 4, 3, 4);
+            SaveButton.Location = new Point(12, 620);
             SaveButton.Name = "SaveButton";
-            SaveButton.Size = new Size(86, 45);
-            SaveButton.TabIndex = 32;
+            SaveButton.Size = new Size(75, 34);
+            SaveButton.TabIndex = 25;
             SaveButton.Text = "Save";
             SaveButton.UseVisualStyleBackColor = true;
             SaveButton.Click += SaveButton_Click;
@@ -296,48 +290,80 @@
             // 
             ProvinceComboBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             ProvinceComboBox.FormattingEnabled = true;
-            ProvinceComboBox.Location = new Point(261, 367);
-            ProvinceComboBox.Margin = new Padding(3, 4, 3, 4);
+            ProvinceComboBox.Items.AddRange(new object[] { "AB", "BC", "MB", "NB", "NL", "NT", "NS", "NU", "ON", "PE", "QC", "SK", "YT" });
+            ProvinceComboBox.Location = new Point(269, 275);
             ProvinceComboBox.Name = "ProvinceComboBox";
-            ProvinceComboBox.Size = new Size(138, 40);
-            ProvinceComboBox.TabIndex = 33;
+            ProvinceComboBox.Size = new Size(121, 33);
+            ProvinceComboBox.TabIndex = 12;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(261, 415);
+            label2.Location = new Point(269, 311);
             label2.Name = "label2";
-            label2.Size = new Size(105, 32);
-            label2.TabIndex = 34;
+            label2.Size = new Size(85, 25);
+            label2.TabIndex = 26;
             label2.Text = "Province";
             // 
-            // label13
+            // PasswordLabel
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label13.Location = new Point(14, 639);
-            label13.Name = "label13";
-            label13.Size = new Size(116, 32);
-            label13.TabIndex = 36;
-            label13.Text = "Password:";
+            PasswordLabel.AutoSize = true;
+            PasswordLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            PasswordLabel.Location = new Point(12, 479);
+            PasswordLabel.Name = "PasswordLabel";
+            PasswordLabel.Size = new Size(95, 25);
+            PasswordLabel.TabIndex = 27;
+            PasswordLabel.Text = "Password:";
             // 
-            // textBox1
+            // PasswordTextBox
             // 
-            textBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(181, 635);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(228, 39);
-            textBox1.TabIndex = 35;
+            PasswordTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            PasswordTextBox.Location = new Point(190, 476);
+            PasswordTextBox.Name = "PasswordTextBox";
+            PasswordTextBox.PasswordChar = '*';
+            PasswordTextBox.Size = new Size(200, 33);
+            PasswordTextBox.TabIndex = 16;
+            // 
+            // ReEnterPasswordLabel
+            // 
+            ReEnterPasswordLabel.AutoSize = true;
+            ReEnterPasswordLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ReEnterPasswordLabel.Location = new Point(12, 536);
+            ReEnterPasswordLabel.Name = "ReEnterPasswordLabel";
+            ReEnterPasswordLabel.Size = new Size(172, 25);
+            ReEnterPasswordLabel.TabIndex = 29;
+            ReEnterPasswordLabel.Text = "Re-Enter Password:";
+            // 
+            // ReEnterPasswordTextBox
+            // 
+            ReEnterPasswordTextBox.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ReEnterPasswordTextBox.Location = new Point(190, 533);
+            ReEnterPasswordTextBox.Name = "ReEnterPasswordTextBox";
+            ReEnterPasswordTextBox.PasswordChar = '*';
+            ReEnterPasswordTextBox.Size = new Size(200, 33);
+            ReEnterPasswordTextBox.TabIndex = 17;
+            // 
+            // UpdatePasswordButton
+            // 
+            UpdatePasswordButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            UpdatePasswordButton.Location = new Point(12, 507);
+            UpdatePasswordButton.Name = "UpdatePasswordButton";
+            UpdatePasswordButton.Size = new Size(172, 34);
+            UpdatePasswordButton.TabIndex = 31;
+            UpdatePasswordButton.Text = "Update Password";
+            UpdatePasswordButton.UseVisualStyleBackColor = true;
             // 
             // ModifyEmployeeForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(634, 766);
-            Controls.Add(label13);
-            Controls.Add(textBox1);
+            ClientSize = new Size(618, 666);
+            Controls.Add(UpdatePasswordButton);
+            Controls.Add(ReEnterPasswordLabel);
+            Controls.Add(ReEnterPasswordTextBox);
+            Controls.Add(PasswordLabel);
+            Controls.Add(PasswordTextBox);
             Controls.Add(label2);
             Controls.Add(ProvinceComboBox);
             Controls.Add(SaveButton);
@@ -364,7 +390,6 @@
             Controls.Add(EmployeeIDText);
             Controls.Add(SsnTextBox);
             Controls.Add(label1);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "ModifyEmployeeForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ModifyEmployeeForm";
@@ -402,7 +427,10 @@
         private Button SaveButton;
         private ComboBox ProvinceComboBox;
         private Label label2;
-        private Label label13;
-        private TextBox textBox1;
+        private Label PasswordLabel;
+        private TextBox PasswordTextBox;
+        private Label ReEnterPasswordLabel;
+        private TextBox ReEnterPasswordTextBox;
+        private Button UpdatePasswordButton;
     }
 }
