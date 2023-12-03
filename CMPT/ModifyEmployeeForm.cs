@@ -26,7 +26,7 @@ namespace CMPT
 
         private void PopulateFields(Employee employee)
         {
-            SsnTextBox.Text = employee.Ssn;
+            SsnTextBox.Text = employee.Ssn.ToString();
             LastNameTextBox.Text = employee.LastName;
             FirstNameTextBox.Text = employee.FirstName;
             StreetNumberTextBox.Text = employee.StreetNo;
@@ -36,7 +36,7 @@ namespace CMPT
             ProvinceComboBox.SelectedIndex = ProvinceComboBox.Items.IndexOf(employee.Province);
             PostalCodeTextBox.Text = employee.PostalCode;
             PhoneNumberTextBox.Text = employee.PhoneNumber;
-            StartDatePicker.Text = employee.StartDate;
+            StartDatePicker.Text = employee.StartDate.ToString();
         }
 
         private void ModifyEmployeeForm_Load(object sender, EventArgs e)
@@ -76,7 +76,7 @@ namespace CMPT
                 city = CityTextBox.Text.ToString(),
                 province = (ProvinceEnum)ProvinceComboBox.SelectedIndex,
                 postalCode = PostalCodeTextBox.Text.ToString(),
-                startDate = StartDatePicker.Text.ToString(),
+                startDate = DateTime.Parse(StartDatePicker.Text.ToString())
             };
 
             return employeeStruct;
@@ -95,6 +95,11 @@ namespace CMPT
         private void ModifyEmployeeForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             employeeForm.Show();
+        }
+
+        private void EmployeeIDText_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

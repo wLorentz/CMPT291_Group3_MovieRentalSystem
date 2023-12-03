@@ -43,20 +43,20 @@ namespace CMPT
             loginScreen.Show();
         }
 
-        public void SuccessfulLogin(string userID)
+        public void SuccessfulLogin(int userID)
         {
             EmployeesButton.Enabled = false;
             EmployeesButton.Visible = false;
 
-            if (userID == "admin")
+            if (userID == 0)
             {
-                userID = userID.ToUpper();
-
                 EmployeesButton.Enabled = true;
                 EmployeesButton.Visible = true;
             }
 
-            UserIDLabel.Text = userID;
+            Employee employee = database.GetEmployeeByID(userID);
+
+            UserIDLabel.Text = employee.FirstName;
 
             this.Show();
 
