@@ -116,6 +116,22 @@ namespace CMPT
             return validPhoneNumber;
         }
 
+        private bool ValidatePostalCode()
+        {
+            bool validPostalCode = postalCodeTextBox.Text.Length % 7 == 0;
+
+            if (validPostalCode)
+            {
+                postalCodeTextBox.BackColor = Color.White;
+            }
+            else
+            {
+                postalCodeTextBox.BackColor = errorColor;
+            }
+
+            return validPostalCode;
+        }
+
         private bool ValidateCreditCard()
         {
             bool validCreditCardNumber = creditCardTextBox.Text.Length % 19 == 0;
@@ -137,13 +153,14 @@ namespace CMPT
             bool validPhone = ValidatePhoneNumber();
             bool validCreditCard = ValidateCreditCard();
             bool validEmail = ValidateEmail();
+            bool validPostalCode = ValidatePostalCode();
 
-            return validPhone && validCreditCard && validEmail;
+            return validPhone && validCreditCard && validEmail && validPostalCode;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(ValidateFields())
+            if (ValidateFields())
             {
                 CustomerStruct customerStruct = new(accountNumber);
 
@@ -257,17 +274,53 @@ namespace CMPT
 
                     break;
                 }
-                else if(text.Length == removeIndex && e.KeyChar == '\b')
+                else if (text.Length == removeIndex && e.KeyChar == '\b')
                 {
                     creditCardTextBox.Text = creditCardTextBox.Text.Remove(removeIndex - 1);
-                
+
                     creditCardTextBox.SelectionStart = creditCardTextBox.Text.Length;
-                    
+
                     break;
                 }
 
             }
-            
+
+        }
+
+        private void postalCodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            string text = postalCodeTextBox.Text;
+
+            if (text.Length == 0 || text.Length == 2 || text.Length == 5)
+            {
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            else if (text.Length == 1 || text.Length == 3 || text.Length == 6)
+            {
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            if (e.KeyChar != '\b')
+            {
+                if(text.Length == 3)
+                {
+                    postalCodeTextBox.Text = text + ' ';
+                    postalCodeTextBox.SelectionStart = postalCodeTextBox.Text.Length;
+                }
+                else if (text.Length == 7)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
         }
     }
 }

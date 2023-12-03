@@ -143,6 +143,7 @@
             PostalCodeTextBox.Name = "PostalCodeTextBox";
             PostalCodeTextBox.Size = new Size(134, 33);
             PostalCodeTextBox.TabIndex = 13;
+            PostalCodeTextBox.KeyPress += PostalCodeTextBox_KeyPress;
             // 
             // CityTextBox
             // 

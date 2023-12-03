@@ -110,9 +110,9 @@ namespace CMPT
             return employeeStruct;
         }
 
-        private string CreateSalt ()
+        private string CreateSalt()
         {
-           const string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
             Random random = new();
 
@@ -235,6 +235,42 @@ namespace CMPT
             }
 
             PhoneNumberTextBox.SelectionStart = PhoneNumberTextBox.Text.Length;
+        }
+
+        private void PostalCodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            string text = PostalCodeTextBox.Text;
+
+            if (text.Length == 0 || text.Length == 2 || text.Length == 5)
+            {
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+            else if (text.Length == 1 || text.Length == 3 || text.Length == 6)
+            {
+                if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            if (e.KeyChar != '\b')
+            {
+                if (text.Length == 3)
+                {
+                    PostalCodeTextBox.Text = text + ' ';
+                    PostalCodeTextBox.SelectionStart = PostalCodeTextBox.Text.Length;
+                }
+                else if (text.Length == 7)
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
         }
     }
 }
