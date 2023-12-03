@@ -13,9 +13,11 @@ namespace CMPT
     public partial class EmployeeScreen : Form
     {
         Form1 mainForm;
+        bool isReturn;
         public EmployeeScreen(Form1 mainForm)
         {
             this.mainForm = mainForm;
+            isReturn = false;
 
             InitializeComponent();
         }
@@ -48,7 +50,7 @@ namespace CMPT
 
         private void EmployeeScreen_Load(object sender, EventArgs e)
         {
-
+            //Employee[] employees = mainForm.GetDatabase()
         }
 
         public DatabaseFile GetDatabase()
@@ -58,8 +60,17 @@ namespace CMPT
 
         private void button1_Click(object sender, EventArgs e)
         {
+            isReturn = true;
             mainForm.Show();
             this.Close();
+        }
+
+        private void EmployeeScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if(!isReturn)
+            {
+                mainForm.Close();
+            }
         }
     }
 }

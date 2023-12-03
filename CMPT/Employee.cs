@@ -19,7 +19,7 @@ namespace CMPT
         private ProvinceEnum province;
         private string postalCode;
         private string phoneNumber;
-        private string startDate;
+        private DateTime startDate;
 
         public Employee(EmployeeStruct employeeStruct) 
         {
@@ -48,6 +48,6 @@ namespace CMPT
         public ProvinceEnum Province { get { return province; } }
         public string PostalCode { get {  return postalCode; } }
         public string PhoneNumber { get {  return phoneNumber; } }
-        public string StartDate {  get { return startDate; } }
+        public DateTime StartDate {  get { return startDate; } }
     }
 }

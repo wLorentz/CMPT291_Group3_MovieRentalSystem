@@ -19,7 +19,7 @@ namespace CMPT
         public ProvinceEnum province;
         public string postalCode;
         public string phoneNumber;
-        public string startDate;
+        public DateTime startDate;
 
         public EmployeeStruct (int id)
         {

@@ -80,10 +80,15 @@ namespace CMPT
          */
         private void ValidateLogin()
         {
-            string userID = userId.Text;
+            string userIDText = userId.Text;
             string password = passwordText.Text;
             string salt = "";
             string passHash = "";
+            int userID = 0;
+            if(userIDText != "admin")
+            {
+                int.TryParse(userIDText, out userID);
+            }
 
             string[] loginInfo = mainForm.GetDatabase().getLoginInfo(userID);
 
@@ -94,7 +99,7 @@ namespace CMPT
 
             if (hashedPass != passHash)
             {
-                MessageBox.Show("Invalid Password!", "Invalid Password", MessageBoxButtons.OK);
+                MessageBox.Show("Invalid Login Information", "Invalid Login", MessageBoxButtons.OK);
             }
             else
             {

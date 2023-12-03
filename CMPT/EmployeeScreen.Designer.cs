@@ -57,12 +57,11 @@
             EmployeeDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             EmployeeDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             EmployeeDataGrid.Columns.AddRange(new DataGridViewColumn[] { employeeID, SSN, employeeLastName, employeeFirstName, employeeStreetNo, employeeStreetName, emplyeeAptNo, employeeCity, employeeProvince, employeePostalCode, employeePhoneNumber, employeeStartDate });
-            EmployeeDataGrid.Location = new Point(14, 48);
-            EmployeeDataGrid.Margin = new Padding(3, 4, 3, 4);
+            EmployeeDataGrid.Location = new Point(12, 36);
             EmployeeDataGrid.Name = "EmployeeDataGrid";
             EmployeeDataGrid.RowHeadersWidth = 51;
             EmployeeDataGrid.RowTemplate.Height = 25;
-            EmployeeDataGrid.Size = new Size(1306, 487);
+            EmployeeDataGrid.Size = new Size(1143, 365);
             EmployeeDataGrid.TabIndex = 5;
             // 
             // employeeID
@@ -140,26 +139,26 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(859, 545);
+            label6.Location = new Point(752, 409);
             label6.Name = "label6";
-            label6.Size = new Size(76, 20);
+            label6.Size = new Size(61, 15);
             label6.TabIndex = 25;
             label6.Text = "Search By:";
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(936, 541);
-            comboBox1.Margin = new Padding(3, 4, 3, 4);
+            comboBox1.Location = new Point(819, 406);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(138, 28);
+            comboBox1.Size = new Size(121, 23);
             comboBox1.TabIndex = 24;
             // 
             // AddEmployeeButton
             // 
-            AddEmployeeButton.Location = new Point(14, 542);
+            AddEmployeeButton.Location = new Point(12, 406);
+            AddEmployeeButton.Margin = new Padding(3, 2, 3, 2);
             AddEmployeeButton.Name = "AddEmployeeButton";
-            AddEmployeeButton.Size = new Size(94, 32);
+            AddEmployeeButton.Size = new Size(82, 24);
             AddEmployeeButton.TabIndex = 23;
             AddEmployeeButton.Text = "Add";
             AddEmployeeButton.UseVisualStyleBackColor = true;
@@ -167,34 +166,38 @@
             // 
             // button4
             // 
-            button4.Location = new Point(114, 542);
+            button4.Location = new Point(100, 406);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Size = new Size(94, 32);
+            button4.Size = new Size(82, 24);
             button4.TabIndex = 22;
             button4.Text = "Delete";
             button4.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
-            button5.Location = new Point(1081, 541);
+            button5.Location = new Point(946, 406);
+            button5.Margin = new Padding(3, 2, 3, 2);
             button5.Name = "button5";
-            button5.Size = new Size(94, 32);
+            button5.Size = new Size(82, 24);
             button5.TabIndex = 21;
             button5.Text = "Search";
             button5.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(1185, 541);
+            textBox1.Location = new Point(1037, 406);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
+            textBox1.Size = new Size(110, 23);
             textBox1.TabIndex = 20;
             // 
             // button1
             // 
-            button1.Location = new Point(14, 12);
+            button1.Location = new Point(12, 9);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(94, 29);
+            button1.Size = new Size(82, 22);
             button1.TabIndex = 26;
             button1.Text = "Return";
             button1.UseVisualStyleBackColor = true;
@@ -202,9 +205,9 @@
             // 
             // EmployeeScreen
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1338, 582);
+            ClientSize = new Size(1171, 436);
             Controls.Add(button1);
             Controls.Add(label6);
             Controls.Add(comboBox1);
@@ -213,10 +216,10 @@
             Controls.Add(button5);
             Controls.Add(textBox1);
             Controls.Add(EmployeeDataGrid);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "EmployeeScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Employees";
+            FormClosed += EmployeeScreen_FormClosed;
             Load += EmployeeScreen_Load;
             ((System.ComponentModel.ISupportInitialize)EmployeeDataGrid).EndInit();
             ResumeLayout(false);

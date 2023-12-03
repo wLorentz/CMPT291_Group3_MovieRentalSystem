@@ -11,7 +11,7 @@ streetName varchar(50),
 aptNo varchar(10),
 city varchar(50),
 postalCode varchar(7),
-phoneNumber varchar(12),
+phoneNumber varchar(13),
 email varchar(50),
 creditCard varChar(19),
 rating int);

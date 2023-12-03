@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,12 +39,12 @@ namespace CMPT
             }
         }
 
-        public string[] getLoginInfo(string userID)
+        public string[] getLoginInfo(int userID)
         {
             string salt = "";
             string passHash = "";
             
-            myCommand.CommandText = "select passHash, salt from Login where userID = " + "\'" + userID + "\'";
+            myCommand.CommandText = "select passHash, salt from Login where userID = " + userID;
 
             try
             {
@@ -467,7 +468,7 @@ namespace CMPT
                 
                 if (myReader.Read())
                 {
-                    int.TryParse(myReader["lowestAvailableAccountNo"].ToString(), out employeeID);
+                    int.TryParse(myReader["lowestAvailableEmployeeID"].ToString(), out employeeID);
                 }
                 
                 myReader.Close();
@@ -499,7 +500,44 @@ namespace CMPT
 
         public Employee GetEmployeeByID(int employeeID)
         {
-            return null;
+            myCommand.CommandText = string.Format("select * from Employees where employeeID = {0}", employeeID);
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                Employee employee = null;
+                if (myReader.Read())
+                {
+                    int emplyeeID;
+                    if (int.TryParse(myReader[(int)EmployeeEnum.employeeID].ToString(), out employeeID))
+                    {
+                        EmployeeStruct employeeStruct = new(employeeID)
+                        {
+                            ssn = myReader[(int)EmployeeEnum.ssn].ToString(),
+                            lastName = myReader[(int)EmployeeEnum.lastName].ToString(),
+                            firstName = myReader[(int)EmployeeEnum.firstName].ToString(),
+                            streetNo = myReader[(int)EmployeeEnum.streetNo].ToString(),
+                            streetName = myReader[(int)EmployeeEnum.streetName].ToString(),
+                            aptNo = myReader[(int)EmployeeEnum.aptNo].ToString(),
+                            city = myReader[(int)EmployeeEnum.city].ToString(),
+                            province = (ProvinceEnum)int.Parse(myReader[(int)EmployeeEnum.province].ToString()),
+                            postalCode = myReader[(int)EmployeeEnum.postalCode].ToString(),
+                            phoneNumber = myReader[(int)EmployeeEnum.phoneNumber].ToString(),
+                            startDate = DateTime.Parse(myReader[(int)EmployeeEnum.startDate].ToString()),
+                        };
+
+                        employee = new(employeeStruct);
+                    }
+                }
+
+                myReader.Close();
+
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public void SaveEmployee(Employee employee)
