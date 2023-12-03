@@ -483,7 +483,7 @@ namespace CMPT
 
         public void AddCustomer(Customer customer)
         {
-            myCommand.CommandText = string.Format("insert into Customer values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}');",
+            myCommand.CommandText = string.Format("insert into Customer values({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}', '{11}');",
                 customer.AccountNo, customer.LastName, customer.FirstName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating);
 
             try
@@ -492,6 +492,48 @@ namespace CMPT
 
                 myReader.Close();
             } 
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public Employee[] GetAllEmployees()
+        {
+            myCommand.CommandText = "select * from Employees";
+
+            var employeeList = new List<Employee>();
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                while(myReader.Read())
+                {
+                    int employeeID = int.Parse(myReader[(int)EmployeeEnum.employeeID].ToString());
+
+                    EmployeeStruct employeeStruct = new(employeeID)
+                    {
+                        ssn = myReader[(int)EmployeeEnum.ssn].ToString(),
+                        lastName = myReader[(int)EmployeeEnum.lastName].ToString(),
+                        firstName = myReader[(int)EmployeeEnum.firstName].ToString(),
+                        streetNo = myReader[(int)EmployeeEnum.streetNo].ToString(),
+                        streetName = myReader[(int)EmployeeEnum.streetName].ToString(),
+                        aptNo = myReader[(int)EmployeeEnum.aptNo].ToString(),
+                        city = myReader[(int)EmployeeEnum.city].ToString(),
+                        province = (ProvinceEnum)int.Parse(myReader[(int)EmployeeEnum.province].ToString()),
+                        postalCode = myReader[(int)EmployeeEnum.postalCode].ToString(),
+                        phoneNumber = myReader[(int)EmployeeEnum.phoneNumber].ToString(),
+                        startDate = DateTime.Parse(myReader[(int)EmployeeEnum.startDate].ToString()),
+                    };
+
+                    employeeList.Add(new(employeeStruct));
+                }
+
+                myReader.Close();
+
+                return employeeList.ToArray();
+            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -542,12 +584,52 @@ namespace CMPT
 
         public void SaveEmployee(Employee employee)
         {
+            myCommand.CommandText = string.Format("Update Employees SET firstName='{0}',lastname='{1}',streetNo='{2}',streetName='{3}',aptNo='{4}',city='{5}',postalCode='{6}',phoneNumber='{7}', province={8}, startDate='{9}', ssn='{10}'   where employeeID={11}",
+                    employee.FirstName, employee.LastName, employee.StreetNo, employee.StreetName, employee.AptNo, employee.City, employee.PostalCode, employee.PhoneNumber, (int)employee.Province, employee.StartDate.Date, employee.Ssn, employee.EmployeeID);
 
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public void AddEmployee(Employee employee)
         {
+            myCommand.CommandText = string.Format("insert into Employees values ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, '{9}', '{10}', '{11}')",
+                employee.EmployeeID, employee.Ssn, employee.LastName, employee.FirstName, employee.StreetNo, employee.StreetName, employee.AptNo, employee.City, (int)employee.Province, employee.PostalCode, employee.PhoneNumber, employee.StartDate);
 
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void CreateUserLogin(int userID, string passHash, string salt)
+        {
+            myCommand.CommandText = string.Format("insert into Login values ({0}, '{1}', '{2}')", userID, passHash, salt);
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public int GetLatestOrderNumber()
