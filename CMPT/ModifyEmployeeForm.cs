@@ -16,6 +16,15 @@ namespace CMPT
         EmployeeScreen employeeForm;
         bool isNew;
         int employeeID;
+        
+        /**
+         * Constructor for the ModifyEmployeeScreen
+         * 
+         * Parameters:
+         *      employeeForm {EmployeeScreen} The screen from which this form is opened
+         *      isNew {bool} Whether the screen is being opened to add a new employee
+         *      employeeID {int} The id of the employee being modified
+         */
         public ModifyEmployeeForm(EmployeeScreen employeeForm, bool isNew, int employeeID)
         {
             this.employeeForm = employeeForm;
@@ -25,6 +34,9 @@ namespace CMPT
             InitializeComponent();
         }
 
+        /**
+         * Populates the form fields with the information for the specified employee 
+         */
         private void PopulateFields(Employee employee)
         {
             SsnTextBox.Text = employee.Ssn.ToString();
@@ -40,6 +52,10 @@ namespace CMPT
             StartDatePicker.Text = employee.StartDate.ToString();
         }
 
+        /**
+         * The handler for when the form loads.
+         * Hides and shows the appropriate fields based on if an employee is being added or modified
+         */
         private void ModifyEmployeeForm_Load(object sender, EventArgs e)
         {
             SaveButton.Enabled = false;
@@ -90,6 +106,9 @@ namespace CMPT
             }
         }
 
+        /**
+         * Creates an EmployeeStruct from the data in the form fields
+         */
         private EmployeeStruct CreateEmployeeStruct()
         {
             EmployeeStruct employeeStruct = new(employeeID)
@@ -110,6 +129,9 @@ namespace CMPT
             return employeeStruct;
         }
 
+        /**
+         * Creates a random alphanumeric string with a random length between 10 and 20 characters long
+         */
         private string CreateSalt()
         {
             const string characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -128,6 +150,9 @@ namespace CMPT
             return stringBuilder.ToString();
         }
 
+        /**
+         * Creates a hash from the provided string
+         */
         private string CreatePassHash(string password)
         {
             // Create a SHA256
@@ -146,6 +171,10 @@ namespace CMPT
             }
         }
 
+        /**
+         * Handler for the Save button
+         * Saves the employee
+         */
         private void SaveButton_Click(object sender, EventArgs e)
         {
             employeeForm.SaveEmployee(new Employee(CreateEmployeeStruct()));
@@ -153,6 +182,10 @@ namespace CMPT
             this.Close();
         }
 
+        /**
+         * Handler for the Add button
+         * Adds an employee to the system
+         */
         private void AddButton_Click(object sender, EventArgs e)
         {
             string salt = CreateSalt();
@@ -171,11 +204,19 @@ namespace CMPT
             this.Close();
         }
 
+        /**
+         * Handler for when the form is closed
+         * Shows the from from which this screen was opened
+         */
         private void ModifyEmployeeForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             employeeForm.Show();
         }
 
+        /**
+         * Handler for when the user pressed a key in the SSN textbox
+         * Limits the input allowed in  the SSN text box and auto formats the user entered value
+         */
         private void SsnTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             string text = SsnTextBox.Text;
@@ -199,6 +240,10 @@ namespace CMPT
             SsnTextBox.SelectionStart = SsnTextBox.Text.Length;
         }
 
+        /**
+         * Handler for when the user pressed a key in the Phone Number textbox
+         * Limits the allows input in the Phone Number textbox and autoformats the user input
+         */
         private void PhoneNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) || (PhoneNumberTextBox.Text.Length == 13 && e.KeyChar != '\b'))
@@ -237,6 +282,10 @@ namespace CMPT
             PhoneNumberTextBox.SelectionStart = PhoneNumberTextBox.Text.Length;
         }
 
+        /**
+         * Handler for when the user pressed a key in the Postal Code textbox
+         * Limits the allows input in the Postal Code text box and auto formats the user input
+         */
         private void PostalCodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             string text = PostalCodeTextBox.Text;

@@ -374,6 +374,7 @@ namespace CMPT
             CustomersGridView.Location = new Point(0, 0);
             CustomersGridView.Margin = new Padding(3, 2, 3, 2);
             CustomersGridView.Name = "CustomersGridView";
+            CustomersGridView.ReadOnly = true;
             CustomersGridView.RowHeadersWidth = 51;
             CustomersGridView.RowTemplate.Height = 25;
             CustomersGridView.Size = new Size(1151, 334);
@@ -384,61 +385,73 @@ namespace CMPT
             // 
             accountNo.HeaderText = "Account Number";
             accountNo.Name = "accountNo";
+            accountNo.ReadOnly = true;
             // 
             // lastName
             // 
             lastName.HeaderText = "Last Name";
             lastName.Name = "lastName";
+            lastName.ReadOnly = true;
             // 
             // firstName
             // 
             firstName.HeaderText = "First Name";
             firstName.Name = "firstName";
+            firstName.ReadOnly = true;
             // 
             // streetNumber
             // 
             streetNumber.HeaderText = "Street Number";
             streetNumber.Name = "streetNumber";
+            streetNumber.ReadOnly = true;
             // 
             // streetName
             // 
             streetName.HeaderText = "Street Name";
             streetName.Name = "streetName";
+            streetName.ReadOnly = true;
             // 
             // aptNumber
             // 
             aptNumber.HeaderText = "Apartment Number";
             aptNumber.Name = "aptNumber";
+            aptNumber.ReadOnly = true;
             // 
             // city
             // 
             city.HeaderText = "City";
             city.Name = "city";
+            city.ReadOnly = true;
             // 
             // postalCode
             // 
             postalCode.HeaderText = "Postal Code";
             postalCode.Name = "postalCode";
+            postalCode.ReadOnly = true;
             // 
             // phoneNumber
             // 
             phoneNumber.HeaderText = "Phone Number";
             phoneNumber.Name = "phoneNumber";
+            phoneNumber.ReadOnly = true;
             // 
             // email
             // 
             email.HeaderText = "Email";
             email.Name = "email";
+            email.ReadOnly = true;
             // 
             // creditCard
             // 
             creditCard.HeaderText = "Credit Card Number";
             creditCard.Name = "creditCard";
+            creditCard.ReadOnly = true;
             // 
             // rating
             // 
             rating.HeaderText = "Rating";
             rating.Name = "rating";
+            rating.ReadOnly = true;
             // 
             // allMovies
             // 
