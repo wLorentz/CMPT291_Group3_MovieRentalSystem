@@ -54,10 +54,11 @@
             SaveButton = new Button();
             ProvinceComboBox = new ComboBox();
             label2 = new Label();
-            label13 = new Label();
+            PasswordLabel = new Label();
             PasswordTextBox = new TextBox();
-            label14 = new Label();
+            ReEnterPasswordLabel = new Label();
             ReEnterPasswordTextBox = new TextBox();
+            UpdatePasswordButton = new Button();
             SuspendLayout();
             // 
             // label1
@@ -77,6 +78,7 @@
             SsnTextBox.Name = "SsnTextBox";
             SsnTextBox.Size = new Size(200, 33);
             SsnTextBox.TabIndex = 5;
+            SsnTextBox.KeyPress += SsnTextBox_KeyPress;
             // 
             // EmployeeIDText
             // 
@@ -87,7 +89,6 @@
             EmployeeIDText.Size = new Size(30, 25);
             EmployeeIDText.TabIndex = 1;
             EmployeeIDText.Text = "ID";
-            EmployeeIDText.Click += EmployeeIDText_Click;
             // 
             // label3
             // 
@@ -142,6 +143,7 @@
             PostalCodeTextBox.Name = "PostalCodeTextBox";
             PostalCodeTextBox.Size = new Size(134, 33);
             PostalCodeTextBox.TabIndex = 13;
+            PostalCodeTextBox.KeyPress += PostalCodeTextBox_KeyPress;
             // 
             // CityTextBox
             // 
@@ -232,6 +234,7 @@
             PhoneNumberTextBox.Name = "PhoneNumberTextBox";
             PhoneNumberTextBox.Size = new Size(200, 33);
             PhoneNumberTextBox.TabIndex = 14;
+            PhoneNumberTextBox.KeyPress += PhoneNumberTextBox_KeyPress;
             // 
             // label11
             // 
@@ -303,15 +306,15 @@
             label2.TabIndex = 26;
             label2.Text = "Province";
             // 
-            // label13
+            // PasswordLabel
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label13.Location = new Point(12, 479);
-            label13.Name = "label13";
-            label13.Size = new Size(95, 25);
-            label13.TabIndex = 27;
-            label13.Text = "Password:";
+            PasswordLabel.AutoSize = true;
+            PasswordLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            PasswordLabel.Location = new Point(12, 479);
+            PasswordLabel.Name = "PasswordLabel";
+            PasswordLabel.Size = new Size(95, 25);
+            PasswordLabel.TabIndex = 27;
+            PasswordLabel.Text = "Password:";
             // 
             // PasswordTextBox
             // 
@@ -322,15 +325,15 @@
             PasswordTextBox.Size = new Size(200, 33);
             PasswordTextBox.TabIndex = 16;
             // 
-            // label14
+            // ReEnterPasswordLabel
             // 
-            label14.AutoSize = true;
-            label14.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label14.Location = new Point(12, 536);
-            label14.Name = "label14";
-            label14.Size = new Size(172, 25);
-            label14.TabIndex = 29;
-            label14.Text = "Re-Enter Password:";
+            ReEnterPasswordLabel.AutoSize = true;
+            ReEnterPasswordLabel.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            ReEnterPasswordLabel.Location = new Point(12, 536);
+            ReEnterPasswordLabel.Name = "ReEnterPasswordLabel";
+            ReEnterPasswordLabel.Size = new Size(172, 25);
+            ReEnterPasswordLabel.TabIndex = 29;
+            ReEnterPasswordLabel.Text = "Re-Enter Password:";
             // 
             // ReEnterPasswordTextBox
             // 
@@ -341,14 +344,25 @@
             ReEnterPasswordTextBox.Size = new Size(200, 33);
             ReEnterPasswordTextBox.TabIndex = 17;
             // 
+            // UpdatePasswordButton
+            // 
+            UpdatePasswordButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            UpdatePasswordButton.Location = new Point(12, 507);
+            UpdatePasswordButton.Name = "UpdatePasswordButton";
+            UpdatePasswordButton.Size = new Size(172, 34);
+            UpdatePasswordButton.TabIndex = 31;
+            UpdatePasswordButton.Text = "Update Password";
+            UpdatePasswordButton.UseVisualStyleBackColor = true;
+            // 
             // ModifyEmployeeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(618, 666);
-            Controls.Add(label14);
+            Controls.Add(UpdatePasswordButton);
+            Controls.Add(ReEnterPasswordLabel);
             Controls.Add(ReEnterPasswordTextBox);
-            Controls.Add(label13);
+            Controls.Add(PasswordLabel);
             Controls.Add(PasswordTextBox);
             Controls.Add(label2);
             Controls.Add(ProvinceComboBox);
@@ -413,9 +427,10 @@
         private Button SaveButton;
         private ComboBox ProvinceComboBox;
         private Label label2;
-        private Label label13;
+        private Label PasswordLabel;
         private TextBox PasswordTextBox;
-        private Label label14;
+        private Label ReEnterPasswordLabel;
         private TextBox ReEnterPasswordTextBox;
+        private Button UpdatePasswordButton;
     }
 }

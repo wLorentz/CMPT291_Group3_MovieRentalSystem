@@ -97,7 +97,7 @@ namespace CMPT
 
             string hashedPass = ComputeSha256Hash(password + salt).ToLower();
 
-            if (hashedPass != passHash)
+            if (hashedPass != passHash || (userID == 0 && userIDText != "admin"))
             {
                 MessageBox.Show("Invalid Login Information", "Invalid Login", MessageBoxButtons.OK);
             }

@@ -200,6 +200,7 @@
             postalCodeTextBox.Name = "postalCodeTextBox";
             postalCodeTextBox.Size = new Size(134, 33);
             postalCodeTextBox.TabIndex = 15;
+            postalCodeTextBox.KeyPress += postalCodeTextBox_KeyPress;
             // 
             // emailTextBox
             // 

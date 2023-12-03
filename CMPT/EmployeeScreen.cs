@@ -26,7 +26,21 @@ namespace CMPT
         {
             foreach (Employee employee in employees)
             {
-                EmployeeDataGrid.Rows.Add(employee.EmployeeID, employee.Ssn); // keep filling in fields
+                if (employee.EmployeeID != 0)
+                {
+                    EmployeeDataGrid.Rows.Add(employee.EmployeeID, employee.Ssn, employee.LastName, employee.FirstName, employee.StreetNo, employee.StreetName, employee.AptNo, employee.City, employee.Province, employee.PostalCode, employee.PhoneNumber, employee.StartDate.ToString("yyyy-MM-dd"));
+                }
+            }
+        }
+
+        private void UpdateDataGrid(Employee employee)
+        {
+            foreach(DataGridViewRow row in EmployeeDataGrid.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == employee.EmployeeID.ToString())
+                {
+                    row.SetValues(employee.EmployeeID, employee.Ssn, employee.LastName, employee.FirstName, employee.StreetNo, employee.StreetName, employee.AptNo, employee.City, employee.Province, employee.PostalCode, employee.PhoneNumber, employee.StartDate.ToString("yyyy-MM-dd"));
+                }
             }
         }
 
@@ -40,17 +54,20 @@ namespace CMPT
 
         public void AddEmployee(Employee employee)
         {
-
+            mainForm.AddEmployee(employee);
+            EmployeeDataGrid.Rows.Add(employee.EmployeeID, employee.Ssn, employee.LastName, employee.FirstName, employee.StreetNo, employee.StreetName, employee.AptNo, employee.City, employee.Province, employee.PostalCode, employee.PhoneNumber, employee.StartDate.ToString("yyyy-MM-dd"));
         }
 
         public void SaveEmployee(Employee employee)
         {
-
+            UpdateDataGrid(employee);
+            mainForm.SaveEmployee(employee);
         }
 
         private void EmployeeScreen_Load(object sender, EventArgs e)
         {
-            //Employee[] employees = mainForm.GetDatabase()
+            Employee[] employees = mainForm.GetDatabase().GetAllEmployees();
+            PopulateEmployeeGridView(employees);
         }
 
         public DatabaseFile GetDatabase()
@@ -67,9 +84,20 @@ namespace CMPT
 
         private void EmployeeScreen_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if(!isReturn)
+            if (!isReturn)
             {
                 mainForm.Close();
+            }
+        }
+
+        private void EmployeeDataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+
+            if (int.TryParse(EmployeeDataGrid.Rows[rowIndex].Cells[0].Value.ToString(), out int employeeID))
+            {
+                ModifyEmployeeForm modifyEmployeeForm = new(this, false, employeeID);
+                modifyEmployeeForm.Show();
             }
         }
     }
