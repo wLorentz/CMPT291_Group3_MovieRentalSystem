@@ -44,10 +44,10 @@
             label6 = new Label();
             comboBox1 = new ComboBox();
             AddEmployeeButton = new Button();
-            button4 = new Button();
+            DeleteButton = new Button();
             button5 = new Button();
             textBox1 = new TextBox();
-            button1 = new Button();
+            ReturnButton = new Button();
             ((System.ComponentModel.ISupportInitialize)EmployeeDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -59,6 +59,7 @@
             EmployeeDataGrid.Columns.AddRange(new DataGridViewColumn[] { employeeID, SSN, employeeLastName, employeeFirstName, employeeStreetNo, employeeStreetName, emplyeeAptNo, employeeCity, employeeProvince, employeePostalCode, employeePhoneNumber, employeeStartDate });
             EmployeeDataGrid.Location = new Point(12, 36);
             EmployeeDataGrid.Name = "EmployeeDataGrid";
+            EmployeeDataGrid.ReadOnly = true;
             EmployeeDataGrid.RowHeadersWidth = 51;
             EmployeeDataGrid.RowTemplate.Height = 25;
             EmployeeDataGrid.Size = new Size(1143, 365);
@@ -70,72 +71,84 @@
             employeeID.HeaderText = "ID";
             employeeID.MinimumWidth = 6;
             employeeID.Name = "employeeID";
+            employeeID.ReadOnly = true;
             // 
             // SSN
             // 
             SSN.HeaderText = "SSN";
             SSN.MinimumWidth = 6;
             SSN.Name = "SSN";
+            SSN.ReadOnly = true;
             // 
             // employeeLastName
             // 
             employeeLastName.HeaderText = "Last Name";
             employeeLastName.MinimumWidth = 6;
             employeeLastName.Name = "employeeLastName";
+            employeeLastName.ReadOnly = true;
             // 
             // employeeFirstName
             // 
             employeeFirstName.HeaderText = "First Name";
             employeeFirstName.MinimumWidth = 6;
             employeeFirstName.Name = "employeeFirstName";
+            employeeFirstName.ReadOnly = true;
             // 
             // employeeStreetNo
             // 
             employeeStreetNo.HeaderText = "Street Number";
             employeeStreetNo.MinimumWidth = 6;
             employeeStreetNo.Name = "employeeStreetNo";
+            employeeStreetNo.ReadOnly = true;
             // 
             // employeeStreetName
             // 
             employeeStreetName.HeaderText = "Street Name";
             employeeStreetName.MinimumWidth = 6;
             employeeStreetName.Name = "employeeStreetName";
+            employeeStreetName.ReadOnly = true;
             // 
             // emplyeeAptNo
             // 
             emplyeeAptNo.HeaderText = "Apt Number";
             emplyeeAptNo.MinimumWidth = 6;
             emplyeeAptNo.Name = "emplyeeAptNo";
+            emplyeeAptNo.ReadOnly = true;
             // 
             // employeeCity
             // 
             employeeCity.HeaderText = "City";
             employeeCity.MinimumWidth = 6;
             employeeCity.Name = "employeeCity";
+            employeeCity.ReadOnly = true;
             // 
             // employeeProvince
             // 
             employeeProvince.HeaderText = "Province";
             employeeProvince.MinimumWidth = 6;
             employeeProvince.Name = "employeeProvince";
+            employeeProvince.ReadOnly = true;
             // 
             // employeePostalCode
             // 
             employeePostalCode.HeaderText = "Postal Code";
             employeePostalCode.MinimumWidth = 6;
             employeePostalCode.Name = "employeePostalCode";
+            employeePostalCode.ReadOnly = true;
             // 
             // employeePhoneNumber
             // 
             employeePhoneNumber.HeaderText = "Phone Number";
             employeePhoneNumber.MinimumWidth = 6;
             employeePhoneNumber.Name = "employeePhoneNumber";
+            employeePhoneNumber.ReadOnly = true;
             // 
             // employeeStartDate
             // 
             employeeStartDate.HeaderText = "Start Date";
             employeeStartDate.MinimumWidth = 6;
             employeeStartDate.Name = "employeeStartDate";
+            employeeStartDate.ReadOnly = true;
             // 
             // label6
             // 
@@ -165,15 +178,16 @@
             AddEmployeeButton.UseVisualStyleBackColor = true;
             AddEmployeeButton.Click += AddEmployeeButton_Click;
             // 
-            // button4
+            // DeleteButton
             // 
-            button4.Location = new Point(100, 406);
-            button4.Margin = new Padding(3, 2, 3, 2);
-            button4.Name = "button4";
-            button4.Size = new Size(82, 24);
-            button4.TabIndex = 22;
-            button4.Text = "Delete";
-            button4.UseVisualStyleBackColor = true;
+            DeleteButton.Location = new Point(100, 406);
+            DeleteButton.Margin = new Padding(3, 2, 3, 2);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(82, 24);
+            DeleteButton.TabIndex = 22;
+            DeleteButton.Text = "Delete";
+            DeleteButton.UseVisualStyleBackColor = true;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // button5
             // 
@@ -193,27 +207,27 @@
             textBox1.Size = new Size(110, 23);
             textBox1.TabIndex = 20;
             // 
-            // button1
+            // ReturnButton
             // 
-            button1.Location = new Point(12, 9);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(82, 22);
-            button1.TabIndex = 26;
-            button1.Text = "Return";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            ReturnButton.Location = new Point(12, 9);
+            ReturnButton.Margin = new Padding(3, 2, 3, 2);
+            ReturnButton.Name = "ReturnButton";
+            ReturnButton.Size = new Size(82, 22);
+            ReturnButton.TabIndex = 26;
+            ReturnButton.Text = "Return";
+            ReturnButton.UseVisualStyleBackColor = true;
+            ReturnButton.Click += ReturnButton_Click;
             // 
             // EmployeeScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1171, 436);
-            Controls.Add(button1);
+            Controls.Add(ReturnButton);
             Controls.Add(label6);
             Controls.Add(comboBox1);
             Controls.Add(AddEmployeeButton);
-            Controls.Add(button4);
+            Controls.Add(DeleteButton);
             Controls.Add(button5);
             Controls.Add(textBox1);
             Controls.Add(EmployeeDataGrid);
@@ -245,9 +259,9 @@
         private Label label6;
         private ComboBox comboBox1;
         private Button AddEmployeeButton;
-        private Button button4;
+        private Button DeleteButton;
         private Button button5;
         private TextBox textBox1;
-        private Button button1;
+        private Button ReturnButton;
     }
 }

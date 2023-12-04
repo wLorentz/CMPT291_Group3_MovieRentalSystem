@@ -616,6 +616,21 @@ namespace CMPT
             }
         }
 
+        public void DeleteEmployee(int employeeID)
+        {
+            myCommand.CommandText = string.Format("delete from Employees where employeeID = {0}; delete from Login where userID = {0}", employeeID);
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public void CreateUserLogin(int userID, string passHash, string salt)
         {
             myCommand.CommandText = string.Format("insert into Login values ({0}, '{1}', '{2}')", userID, passHash, salt);
