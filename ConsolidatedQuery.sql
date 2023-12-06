@@ -5,9 +5,9 @@ drop table "Copy";
 drop table Customer;
 drop table Employees;
 drop table "Login";
+drop table "Cast";
 drop table Movies;
 drop table Actor;
-drop table "Cast";
 
 create table Customer (
 	accountNo int primary key,
@@ -106,3 +106,6 @@ insert into "Copy" values (4, 0);
 
 insert into Actor values (0, 'Depp', 'Johnny', 'M', '1963-7-9', 0, 5);
 insert into Actor values (1, 'Bohnam Carter', 'Helena', 'F', '1966-05-26', 0, 5);
+
+insert into "Cast" values (0, 0);
+insert into "Cast" values (1, 0);
