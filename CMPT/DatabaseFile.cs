@@ -361,15 +361,26 @@ namespace CMPT
             return customer;
         }
 
-        public void RunCustomQuery(string query)
+        public string[][] RunCustomQuery(string query)
         {
             myCommand.CommandText = query;
-
+            var stringList = new List<string[]>();
             try
             {
                 myReader = myCommand.ExecuteReader();
+                while(myReader.Read())
+                {
+                    var strings = new List<string>();
+                    for(int i = 0; i < myReader.FieldCount; i++)
+                    {
+                        strings.Add(myReader[i].ToString());
+                    }
 
+                    stringList.Add(strings.ToArray());
+                }
                 myReader.Close();
+
+                return stringList.ToArray();
             }
             catch (Exception ex)
             {

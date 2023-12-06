@@ -12,9 +12,6 @@ namespace CMPT
 
         int employeeID;
 
-        //private Customer[] customers;
-        //private Movie[] movieList;
-
         public Form1()
         {
             InitializeComponent();
@@ -245,50 +242,59 @@ namespace CMPT
 
         private void runReport_Click(object sender, EventArgs e)
         {
-            //reportOutputText.Clear();
+            reportOutputText.Clear();
 
-            //String report = reports.GetItemText(reports.SelectedItem);
-            //string output = "";
+            String report = reports.GetItemText(reports.SelectedItem);
+            string output = "";
 
-            //MessageBox.Show(report);
+            MessageBox.Show(report);
 
-            //switch (report)
-            //{
-            //    case "Report 1":
+            switch (report)
+            {
+                case "Report 1":
 
-            //        myCommand.CommandText = "select * from Movies";
-            //        myReader = myCommand.ExecuteReader();
+                    string query = "Select * from Movies";
 
-            //        while (myReader.Read())
-            //        {
-            //            output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
-            //            output += "\n";
-            //        }
+                    try
+                    {
+                        string[][] result = database.RunCustomQuery(query);
 
-            //        reportOutputText.Text = output;
-            //        myReader.Close();
-            //        break;
+                        for (int i=0; i < result.Length; i++)
+                        {
+                            for (int j = 0; j < result[i].Length; j++)
+                            {
+                                output += result[i][j] + ' ';
 
-            //    case "Report 2":
+                            }
+                            output += "\n";
+                        }
 
-            //        myReader.Close();
-            //        break;
+                        reportOutputText.Text = output;
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    
+                    break;
 
-            //    case "Report 3":
+                case "Report 2":
 
-            //        myReader.Close();
-            //        break;
+                    break;
 
-            //    case "Report 4":
+                case "Report 3":
 
-            //        myReader.Close();
-            //        break;
+                    break;
 
-            //    case "Report 5":
+                case "Report 4":
 
-            //        myReader.Close();
-            //        break;
-            //}
+                    break;
+
+                case "Report 5":
+
+                    break;
+            }
 
         }
 
