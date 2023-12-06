@@ -12,9 +12,6 @@ namespace CMPT
 
         int employeeID;
 
-        //private Customer[] customers;
-        //private Movie[] movieList;
-
         public Form1()
         {
             InitializeComponent();
@@ -243,52 +240,79 @@ namespace CMPT
             }
         }
 
+        private void RunReportQuery(string query)
+        {
+            MessageBox.Show(query);
+
+            string output = "";
+
+            try
+            {
+                string[][] result = database.RunCustomQuery(query);
+
+                for (int i = 0; i < result.Length; i++)
+                {
+                    output += "\n";
+                    
+                    for (int j = 0; j < result[i].Length; j++)
+                    {
+                        output += result[i][j] + ' ';
+
+                    }
+                }
+
+                reportOutputText.Text += output;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void runReport_Click(object sender, EventArgs e)
         {
-            //reportOutputText.Clear();
+            reportOutputText.Clear();
 
-            //String report = reports.GetItemText(reports.SelectedItem);
-            //string output = "";
+            string report = reports.GetItemText(reports.SelectedItem);
 
-            //MessageBox.Show(report);
+            string query = "";
 
-            //switch (report)
-            //{
-            //    case "Report 1":
+            switch (report)
+            {
+                case "Report 1":
 
-            //        myCommand.CommandText = "select * from Movies";
-            //        myReader = myCommand.ExecuteReader();
+                    reportOutputText.Text = "List all movies\n";
 
-            //        while (myReader.Read())
-            //        {
-            //            output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
-            //            output += "\n";
-            //        }
+                    query = "Select * from Movies";
+                    
+                    break;
 
-            //        reportOutputText.Text = output;
-            //        myReader.Close();
-            //        break;
+                case "Report 2":
 
-            //    case "Report 2":
+                    query = "Select * from Movies";
 
-            //        myReader.Close();
-            //        break;
+                    break;
 
-            //    case "Report 3":
+                case "Report 3":
 
-            //        myReader.Close();
-            //        break;
+                    query = "Select * from Movies";
 
-            //    case "Report 4":
+                    break;
 
-            //        myReader.Close();
-            //        break;
+                case "Report 4":
 
-            //    case "Report 5":
+                    query = "Select * from Movies";
 
-            //        myReader.Close();
-            //        break;
-            //}
+                    break;
+
+                case "Report 5":
+
+                    query = "Select * from Movies";
+
+                    break;
+            }
+
+            RunReportQuery(query);
 
         }
 
