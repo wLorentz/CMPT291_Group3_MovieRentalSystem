@@ -252,15 +252,16 @@ namespace CMPT
 
                 for (int i = 0; i < result.Length; i++)
                 {
+                    output += "\n";
+                    
                     for (int j = 0; j < result[i].Length; j++)
                     {
                         output += result[i][j] + ' ';
 
                     }
-                    output += "\n";
                 }
 
-                reportOutputText.Text = output;
+                reportOutputText.Text += output;
             }
             catch (Exception ex)
             {
@@ -272,13 +273,15 @@ namespace CMPT
         {
             reportOutputText.Clear();
 
-            String report = reports.GetItemText(reports.SelectedItem);
+            string report = reports.GetItemText(reports.SelectedItem);
 
             string query = "";
 
             switch (report)
             {
                 case "Report 1":
+
+                    reportOutputText.Text = "List all movies\n";
 
                     query = "Select * from Movies";
                     
