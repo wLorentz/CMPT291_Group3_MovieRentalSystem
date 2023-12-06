@@ -240,61 +240,76 @@ namespace CMPT
             }
         }
 
+        private void RunReportQuery(string query)
+        {
+            MessageBox.Show(query);
+
+            string output = "";
+
+            try
+            {
+                string[][] result = database.RunCustomQuery(query);
+
+                for (int i = 0; i < result.Length; i++)
+                {
+                    for (int j = 0; j < result[i].Length; j++)
+                    {
+                        output += result[i][j] + ' ';
+
+                    }
+                    output += "\n";
+                }
+
+                reportOutputText.Text = output;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void runReport_Click(object sender, EventArgs e)
         {
             reportOutputText.Clear();
 
             String report = reports.GetItemText(reports.SelectedItem);
-            string output = "";
 
-            MessageBox.Show(report);
+            string query = "";
 
             switch (report)
             {
                 case "Report 1":
 
-                    string query = "Select * from Movies";
-
-                    try
-                    {
-                        string[][] result = database.RunCustomQuery(query);
-
-                        for (int i=0; i < result.Length; i++)
-                        {
-                            for (int j = 0; j < result[i].Length; j++)
-                            {
-                                output += result[i][j] + ' ';
-
-                            }
-                            output += "\n";
-                        }
-
-                        reportOutputText.Text = output;
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                    query = "Select * from Movies";
                     
                     break;
 
                 case "Report 2":
 
+                    query = "Select * from Movies";
+
                     break;
 
                 case "Report 3":
+
+                    query = "Select * from Movies";
 
                     break;
 
                 case "Report 4":
 
+                    query = "Select * from Movies";
+
                     break;
 
                 case "Report 5":
 
+                    query = "Select * from Movies";
+
                     break;
             }
+
+            RunReportQuery(query);
 
         }
 
