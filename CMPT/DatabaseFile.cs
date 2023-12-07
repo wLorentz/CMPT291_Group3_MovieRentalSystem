@@ -239,10 +239,61 @@ namespace CMPT
             return customerList.ToArray();
         }
 
-        public Customer[] GetCustomers(string customerIdentifier, string customerIdentity)
+        public Customer[] GetCustomersByAttribute(string customerIdentifier, string customerIdentity)
         {
-            myCommand.CommandText = string.Format("select * from Customer where CAST({0} AS VARCHAR(20)) LIKE '%{1}%';", customerIdentifier, customerIdentity);
-            MessageBox.Show(myCommand.CommandText);
+            string databaseColumn = "None";
+            switch(customerIdentifier)
+            {
+                case "Account Number":
+                    databaseColumn = "accountNo";
+                    break;
+
+                case "Last Name":
+                    databaseColumn = "lastName";
+                    break;
+
+                case "First Name":
+                    databaseColumn = "firstName";
+                    break;
+
+                case "Street Number":
+                    databaseColumn = "streetNo";
+                    break;
+
+                case "Street Name":
+                    databaseColumn = "streetName";
+                    break;
+
+                case "Apartment Number":
+                    databaseColumn = "aptNo";
+                    break;
+
+                case "City":
+                    databaseColumn = "city";
+                    break;
+
+                case "Postal Code":
+                    databaseColumn = "postalCode";
+                    break;
+
+                case "Phone Number":
+                    databaseColumn = "phoneNumber";
+                    break;
+
+                case "Email":
+                    databaseColumn = "email";
+                    break;
+
+                case "Credit Card Number":
+                    databaseColumn = "creditCard";
+                    break;
+
+                case "Rating":
+                    databaseColumn = "rating";
+                    break;
+
+            }
+            myCommand.CommandText = string.Format("select * from Customer where CAST({0} AS VARCHAR(20)) LIKE '%{1}%';", databaseColumn, customerIdentity);
             var customerList = new List<Customer>();
             try
             {
@@ -779,6 +830,23 @@ namespace CMPT
             catch (Exception e)
             {
                 throw new Exception(e.Message);
+            }
+        }
+
+        public void MakeCopyFromCreation(int copyAmount, string movieID)
+        {
+            for(int i = 0; i < copyAmount; i++)
+            {
+                myCommand.CommandText = "insert into Copy values(" + (i) + ", " + movieID + ");";
+                try
+                {
+                    myReader = myCommand.ExecuteReader();
+                    myReader.Close();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
             }
         }
 

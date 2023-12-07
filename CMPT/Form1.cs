@@ -308,6 +308,9 @@ namespace CMPT
                     movie.getCopies(),
                     movie.getRating()
                 );
+               int copyAmount;
+                int.TryParse(movie.getCopies().ToString(), out copyAmount);
+                database.MakeCopyFromCreation(copyAmount, movie.getId());
             }
             catch (Exception ex)
             {
@@ -555,7 +558,7 @@ namespace CMPT
 
             if (!(string.IsNullOrEmpty(SearchCustomerBox.Text)))
             {
-                Customer[] customerListLike = database.GetCustomers(SearchByComboBox.SelectedItem.ToString(), SearchCustomerBox.Text);
+                Customer[] customerListLike = database.GetCustomersByAttribute(SearchByComboBox.SelectedItem.ToString(), SearchCustomerBox.Text);
 
                 CustomersGridView.Rows.Clear();
 
@@ -583,17 +586,21 @@ namespace CMPT
             {
                 if(int.TryParse(makeCopybox.Text, out value))
                 {
+                    int rowIdx = movies.CurrentCell.RowIndex;
+
+                    string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
+
                     for (int i = 0; i < value; i++)
                     {
-                        int rowIdx = movies.CurrentCell.RowIndex;
-
-                        string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
-
                         int lowestCopyID = database.GetLowestAvailableCopyID(movieID);
 
                         database.MakeCopy(lowestCopyID.ToString(), movieID);
                     }
+                    int previousCopies; 
+                    int.TryParse(movies.Rows[rowIdx].Cells[4].Value.ToString(), out previousCopies);
+                    movies.Rows[rowIdx].Cells[4].Value = value + previousCopies;
                 }
+                
 
             }
             catch (Exception ex)
