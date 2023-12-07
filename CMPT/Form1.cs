@@ -281,9 +281,14 @@ namespace CMPT
             {
                 case "Report 1":
 
-                    reportOutputText.Text = "List all movies\n";
+                    reportOutputText.Text = "List all customers who have rented a movie on the birthday of an actor who stared in the movie\n";
 
-                    query = "Select * from Movies";
+                    query = "select distinct lastName, firstName from Customer C, \"Order\" O\r\n" +
+                            "where O.accountNo = C.accountNo and\r\n" +
+                            "MONTH(O.fromDate) in \r\n" +
+                            "(select MONTH(dateOfBirth) from Actor A, \"Cast\" T where A.actorID = T.actorID and T.movieID = O.movieID) and\r\n" +
+                            "DAY(O.fromDate) in \r\n" +
+                            "(select DAY(dateOfBirth) from Actor A, \"Cast\" T where A.actorID = T.actorID and T.movieID = O.movieID);";
                     
                     break;
 
@@ -332,6 +337,9 @@ namespace CMPT
                     movie.getCopies(),
                     movie.getRating()
                 );
+               int copyAmount;
+                int.TryParse(movie.getCopies().ToString(), out copyAmount);
+                database.MakeCopyFromCreation(copyAmount, movie.getId());
             }
             catch (Exception ex)
             {
@@ -571,6 +579,62 @@ namespace CMPT
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SearchCustomerButton_Click(object sender, EventArgs e)
+        {
+
+            if (!(string.IsNullOrEmpty(SearchCustomerBox.Text)))
+            {
+                Customer[] customerListLike = database.GetCustomersByAttribute(SearchByComboBox.SelectedItem.ToString(), SearchCustomerBox.Text);
+
+                CustomersGridView.Rows.Clear();
+
+                foreach (Customer customer in customerListLike)
+                {
+                    CustomersGridView.Rows.Add(customer.AccountNo, customer.LastName, customer.FirstName, customer.StreetNo, customer.StreetName, customer.AptNo, customer.City, customer.PostalCode, customer.PhoneNumber, customer.Email, customer.CreditCard, customer.Rating);
+                }
+            }
+        }
+
+        private void assignActorbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void makeCopybox_Click(object sender, EventArgs e)
+        {
+            makeCopybox.Text = string.Empty;
+        }
+
+        private void makeCopybutton_Click(object sender, EventArgs e)
+        {
+            int value;
+            try
+            {
+                if(int.TryParse(makeCopybox.Text, out value))
+                {
+                    int rowIdx = movies.CurrentCell.RowIndex;
+
+                    string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
+
+                    for (int i = 0; i < value; i++)
+                    {
+                        int lowestCopyID = database.GetLowestAvailableCopyID(movieID);
+
+                        database.MakeCopy(lowestCopyID.ToString(), movieID);
+                    }
+                    int previousCopies; 
+                    int.TryParse(movies.Rows[rowIdx].Cells[4].Value.ToString(), out previousCopies);
+                    movies.Rows[rowIdx].Cells[4].Value = value + previousCopies;
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }
