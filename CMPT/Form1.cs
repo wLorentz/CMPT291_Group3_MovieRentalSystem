@@ -281,9 +281,14 @@ namespace CMPT
             {
                 case "Report 1":
 
-                    reportOutputText.Text = "List all movies\n";
+                    reportOutputText.Text = "List all customers who have rented a movie on the birthday of an actor who stared in the movie\n";
 
-                    query = "Select * from Movies";
+                    query = "select distinct lastName, firstName from Customer C, \"Order\" O\r\n" +
+                            "where O.accountNo = C.accountNo and\r\n" +
+                            "MONTH(O.fromDate) in \r\n" +
+                            "(select MONTH(dateOfBirth) from Actor A, \"Cast\" T where A.actorID = T.actorID and T.movieID = O.movieID) and\r\n" +
+                            "DAY(O.fromDate) in \r\n" +
+                            "(select DAY(dateOfBirth) from Actor A, \"Cast\" T where A.actorID = T.actorID and T.movieID = O.movieID);";
                     
                     break;
 
