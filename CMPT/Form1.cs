@@ -10,8 +10,7 @@ namespace CMPT
     {
         private DatabaseFile database;
 
-        //private Customer[] customers;
-        //private Movie[] movieList;
+        int employeeID;
 
         public Form1()
         {
@@ -26,6 +25,8 @@ namespace CMPT
                 MessageBox.Show(e1.ToString(), "Error");
                 this.Close();
             }
+
+            employeeID = -1;
         }
 
         public DatabaseFile GetDatabase()
@@ -45,6 +46,8 @@ namespace CMPT
 
         public void SuccessfulLogin(int userID)
         {
+            employeeID = userID;
+
             EmployeesButton.Enabled = false;
             EmployeesButton.Visible = false;
 
@@ -237,52 +240,79 @@ namespace CMPT
             }
         }
 
+        private void RunReportQuery(string query)
+        {
+            MessageBox.Show(query);
+
+            string output = "";
+
+            try
+            {
+                string[][] result = database.RunCustomQuery(query);
+
+                for (int i = 0; i < result.Length; i++)
+                {
+                    output += "\n";
+                    
+                    for (int j = 0; j < result[i].Length; j++)
+                    {
+                        output += result[i][j] + ' ';
+
+                    }
+                }
+
+                reportOutputText.Text += output;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void runReport_Click(object sender, EventArgs e)
         {
-            //reportOutputText.Clear();
+            reportOutputText.Clear();
 
-            //String report = reports.GetItemText(reports.SelectedItem);
-            //string output = "";
+            string report = reports.GetItemText(reports.SelectedItem);
 
-            //MessageBox.Show(report);
+            string query = "";
 
-            //switch (report)
-            //{
-            //    case "Report 1":
+            switch (report)
+            {
+                case "Report 1":
 
-            //        myCommand.CommandText = "select * from Movies";
-            //        myReader = myCommand.ExecuteReader();
+                    reportOutputText.Text = "List all movies\n";
 
-            //        while (myReader.Read())
-            //        {
-            //            output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
-            //            output += "\n";
-            //        }
+                    query = "Select * from Movies";
+                    
+                    break;
 
-            //        reportOutputText.Text = output;
-            //        myReader.Close();
-            //        break;
+                case "Report 2":
 
-            //    case "Report 2":
+                    query = "Select * from Movies";
 
-            //        myReader.Close();
-            //        break;
+                    break;
 
-            //    case "Report 3":
+                case "Report 3":
 
-            //        myReader.Close();
-            //        break;
+                    query = "Select * from Movies";
 
-            //    case "Report 4":
+                    break;
 
-            //        myReader.Close();
-            //        break;
+                case "Report 4":
 
-            //    case "Report 5":
+                    query = "Select * from Movies";
 
-            //        myReader.Close();
-            //        break;
-            //}
+                    break;
+
+                case "Report 5":
+
+                    query = "Select * from Movies";
+
+                    break;
+            }
+
+            RunReportQuery(query);
 
         }
 
@@ -398,53 +428,6 @@ namespace CMPT
             }
         }
 
-        public void SaveEmployee(Employee employee)
-        {
-            try
-            {
-                database.SaveEmployee(employee);
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            //foreach(DataGridViewRow row in EmployeeDataGrid.Rows)
-            //{
-            //    if (row.Cells[0].Value.ToString() == employee.EmployeeID.ToString())
-            //    {
-            //        row.Cells[0].Value = employee.EmployeeID;
-            //        row.Cells[1].Value = employee.Ssn;
-            //        row.Cells[2].Value = employee.LastName;
-            //        row.Cells[3].Value = employee.FirstName;
-            //        row.Cells[4].Value = employee.StreetNo;
-            //        row.Cells[5].Value = employee.StreetName;
-            //        row.Cells[6].Value = employee.AptNo;
-            //        row.Cells[7].Value = employee.City;
-            //        row.Cells[8].Value = employee.Province;
-            //        row.Cells[9].Value = employee.PostalCode;
-            //        row.Cells[10].Value = employee.PhoneNumber;
-            //        row.Cells[11].Value = employee.StartDate;
-            //    }
-            //}
-        }
-
-        public void AddEmployee(Employee employee)
-        {
-            try
-            {
-
-                database.AddEmployee(employee);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            // EmployeeDataGrid.Rows.Add(employee);
-        }
-
         private void editCustomerButton_Click(object sender, EventArgs e)
         {
             string str = customerDropdown.Text;
@@ -548,7 +531,6 @@ namespace CMPT
             DateTime toDate;
             int[] copies;
             int[] bookedCopies;
-            string employeeID;
 
             try
             {
@@ -560,7 +542,6 @@ namespace CMPT
                 movieID = database.convertMovieTitleToID(movie);
                 bookedCopies = database.getBookedCopies(movieID, fromDate, toDate);
                 var freeCopies = copies.Except(bookedCopies);
-                employeeID = UserIDLabel.Text.ToString();
 
                 if (freeCopies.Count() == 0)
                 {
@@ -577,7 +558,7 @@ namespace CMPT
                     orderStruct.status = "Confirmed";
                     orderStruct.fromDate = fromDate;
                     orderStruct.toDate = toDate;
-                    orderStruct.employeeID = employeeID;
+                    orderStruct.employeeID = employeeID.ToString();
                     orderStruct.copyID = freeCopies.ElementAt(0).ToString();
                     orderStruct.movieID = movieID.ToString();
                     orderStruct.accountNo = customerID;

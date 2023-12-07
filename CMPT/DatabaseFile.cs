@@ -361,15 +361,26 @@ namespace CMPT
             return customer;
         }
 
-        public void RunCustomQuery(string query)
+        public string[][] RunCustomQuery(string query)
         {
             myCommand.CommandText = query;
-
+            var stringList = new List<string[]>();
             try
             {
                 myReader = myCommand.ExecuteReader();
+                while(myReader.Read())
+                {
+                    var strings = new List<string>();
+                    for(int i = 0; i < myReader.FieldCount; i++)
+                    {
+                        strings.Add(myReader[i].ToString());
+                    }
 
+                    stringList.Add(strings.ToArray());
+                }
                 myReader.Close();
+
+                return stringList.ToArray();
             }
             catch (Exception ex)
             {
@@ -604,6 +615,21 @@ namespace CMPT
             myCommand.CommandText = string.Format("insert into Employees values ({0}, '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', {8}, '{9}', '{10}', '{11}')",
                 employee.EmployeeID, employee.Ssn, employee.LastName, employee.FirstName, employee.StreetNo, employee.StreetName, employee.AptNo, employee.City, (int)employee.Province, employee.PostalCode, employee.PhoneNumber, employee.StartDate);
 
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void DeleteEmployee(int employeeID)
+        {
+            myCommand.CommandText = string.Format("delete from Employees where employeeID = {0}; delete from Login where userID = {0}", employeeID);
             try
             {
                 myReader = myCommand.ExecuteReader();

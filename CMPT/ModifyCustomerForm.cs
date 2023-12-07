@@ -19,6 +19,14 @@ namespace CMPT
 
         Color errorColor = Color.LightCoral;
 
+        /**
+         * Constructor for the ModifyCustomerForm class
+         * 
+         * Parameters:
+         *      mainForm {Form1} The from which this screen was opened
+         *      isNew {bool} Whether the screen is being opened to add or modify a customer
+         *      accountNumber {int} The account number of the customer who's being added/modified
+         */
         public ModifyCustomerForm(Form1 mainForm, bool isNew, int accountNumber)
         {
             InitializeComponent();
@@ -28,6 +36,9 @@ namespace CMPT
             this.accountNumber = accountNumber;
         }
 
+        /**
+         * Populates the form fields with the customer's information
+         */
         private void PopulateFields(Customer customer)
         {
             lastNameTextBox.Text = customer.LastName;
@@ -43,6 +54,10 @@ namespace CMPT
             ratingTextBox.Text = customer.Rating;
         }
 
+        /**
+         * Handler for then the form loads
+         * Hides and shows the apporpriate fields
+         */
         private void AddCustomerForm_Load(object sender, EventArgs e)
         {
             saveButton.Enabled = false;
@@ -81,12 +96,17 @@ namespace CMPT
             }
         }
 
+        /**
+         * Validates the email is formatted correctly. The email field can be left blank
+         */
         private bool ValidateEmail()
         {
+            // Chekcs that there is exactly one '@' character in the email string
             bool hasOneAmprisand = emailTextBox.Text.IndexOf('@') != -1 && emailTextBox.Text.Count(f => f == '@') == 1;
+            // Checks that there is a '.' after the '@' character
             bool hasDomain = (emailTextBox.Text.LastIndexOf('.') > emailTextBox.Text.IndexOf('@')) && emailTextBox.Text.LastIndexOf('.') != emailTextBox.Text.Length - 1;
-
-            bool validEmail = (hasDomain && hasOneAmprisand && !emailTextBox.Text.StartsWith('.') && !emailTextBox.Text.StartsWith('@')) || emailTextBox.Text.Length == 0;
+            // Checks that the two previous checks pass and the email string doesn't start with either a number or letter or the field is empty
+            bool validEmail = (hasDomain && hasOneAmprisand && char.IsAsciiLetterOrDigit(emailTextBox.Text[0])) || emailTextBox.Text.Length == 0;
 
             if (validEmail)
             {
@@ -100,8 +120,13 @@ namespace CMPT
             return validEmail;
         }
 
+        /**
+         * Validates that the phone number is formatted correctly. The phone number field can be left empty
+         */
         private bool ValidatePhoneNumber()
         {
+            // Since the phone number field is autoformatted and the number of characters is limited 
+            // this only needs to check if the value in the phone number field is 0 or 13 characters long
             bool validPhoneNumber = phoneNumberTextBox.Text.Length % 13 == 0;
 
             if (validPhoneNumber)
@@ -116,8 +141,13 @@ namespace CMPT
             return validPhoneNumber;
         }
 
+        /**
+         * Validates the postal code is properly formated. The postal code field can be empty
+         */
         private bool ValidatePostalCode()
         {
+            // Since the postal code field is autoformatted and the number of characters is limited 
+            // this only needs to check if the value in the postal code field is 0 or 7 characters long
             bool validPostalCode = postalCodeTextBox.Text.Length % 7 == 0;
 
             if (validPostalCode)
@@ -132,8 +162,13 @@ namespace CMPT
             return validPostalCode;
         }
 
+        /**
+         * Validates the credit card field. The credit card field can be empty
+         */
         private bool ValidateCreditCard()
         {
+            // Since the credit card field is autoformatted and the number of characters is limited 
+            // this only needs to check if the value in the postal code field is 0 or 19 characters long
             bool validCreditCardNumber = creditCardTextBox.Text.Length % 19 == 0;
 
             if (validCreditCardNumber)
@@ -148,6 +183,9 @@ namespace CMPT
             return validCreditCardNumber;
         }
 
+        /**
+         * Validates the fields in the form
+         */
         private bool ValidateFields()
         {
             bool validPhone = ValidatePhoneNumber();
@@ -158,6 +196,10 @@ namespace CMPT
             return validPhone && validCreditCard && validEmail && validPostalCode;
         }
 
+        /**
+         * Handler for the Add button
+         * Validates and adds a customer to the system
+         */
         private void button1_Click(object sender, EventArgs e)
         {
             if (ValidateFields())
@@ -186,6 +228,10 @@ namespace CMPT
             }
         }
 
+        /**
+         * Handler for the Save button
+         * Vallidates and saves a customer in the system
+         */
         private void saveButton_Click(object sender, EventArgs e)
         {
             if (ValidateFields())
@@ -214,6 +260,10 @@ namespace CMPT
             }
         }
 
+        /**
+         * Handler for when the use presses a key in the phone number textbox
+         * Auto formats and limits the input for the phone number text box
+         */
         private void phoneNumberTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) || (phoneNumberTextBox.Text.Length == 13 && e.KeyChar != '\b'))
@@ -252,6 +302,10 @@ namespace CMPT
             phoneNumberTextBox.SelectionStart = phoneNumberTextBox.Text.Length;
         }
 
+        /**
+         * Handler for when the use presses a key in the credit card textbox
+         * Auto formats and limits the input for the credit card text box
+         */
         private void creditCardTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) || (creditCardTextBox.Text.Length == 19 && e.KeyChar != '\b'))
@@ -287,6 +341,10 @@ namespace CMPT
 
         }
 
+        /**
+         * Handler for when the use presses a key in the postal code textbox
+         * Auto formats and limits the input for the postal code text box
+         */
         private void postalCodeTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             string text = postalCodeTextBox.Text;
