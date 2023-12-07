@@ -239,10 +239,61 @@ namespace CMPT
             return customerList.ToArray();
         }
 
-        public Customer[] GetCustomers(string customerName)
+        public Customer[] GetCustomersByAttribute(string customerIdentifier, string customerIdentity)
         {
-            myCommand.CommandText = string.Format("select * from Customer where firstName LIKE %'{0}'%", customerName);
+            string databaseColumn = "None";
+            switch(customerIdentifier)
+            {
+                case "Account Number":
+                    databaseColumn = "accountNo";
+                    break;
 
+                case "Last Name":
+                    databaseColumn = "lastName";
+                    break;
+
+                case "First Name":
+                    databaseColumn = "firstName";
+                    break;
+
+                case "Street Number":
+                    databaseColumn = "streetNo";
+                    break;
+
+                case "Street Name":
+                    databaseColumn = "streetName";
+                    break;
+
+                case "Apartment Number":
+                    databaseColumn = "aptNo";
+                    break;
+
+                case "City":
+                    databaseColumn = "city";
+                    break;
+
+                case "Postal Code":
+                    databaseColumn = "postalCode";
+                    break;
+
+                case "Phone Number":
+                    databaseColumn = "phoneNumber";
+                    break;
+
+                case "Email":
+                    databaseColumn = "email";
+                    break;
+
+                case "Credit Card Number":
+                    databaseColumn = "creditCard";
+                    break;
+
+                case "Rating":
+                    databaseColumn = "rating";
+                    break;
+
+            }
+            myCommand.CommandText = string.Format("select * from Customer where CAST({0} AS VARCHAR(20)) LIKE '%{1}%';", databaseColumn, customerIdentity);
             var customerList = new List<Customer>();
             try
             {
@@ -777,5 +828,75 @@ namespace CMPT
             return copies.ToArray();
 
         }
+
+        public void MakeCopy(string copyID, string movieID)
+        {
+            myCommand.CommandText = "insert into Copy values(" + copyID + ", " + movieID + ");\r\n" +
+                "Update Movies Set copies = copies + 1 Where movieID = " + movieID + ";";
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                myReader.Close();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void MakeCopyFromCreation(int copyAmount, string movieID)
+        {
+            for(int i = 0; i < copyAmount; i++)
+            {
+                myCommand.CommandText = "insert into Copy values(" + (i) + ", " + movieID + ");";
+                try
+                {
+                    myReader = myCommand.ExecuteReader();
+                    myReader.Close();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message);
+                }
+            }
+        }
+
+        public int GetLowestAvailableCopyID(string movieID)
+        {
+            myCommand.CommandText =
+            "select\r\n" +
+            "case \r\n" +
+            "when exists (select copyID from Copy where movieID = " + movieID + ") then\r\n" +
+            "(select MIN(copyID) + 1 as lowestAvailableCopyID \r\n" +
+            "from Copy C1\r\n" +
+            "where C1.copyID + 1 not in (select C2.copyID from Copy C2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableCopyID\r\n" +
+            "from Copy";
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    int copyID = 1;
+
+                    int.TryParse(myReader["lowestAvailableCopyID"].ToString(), out copyID);
+
+                    myReader.Close();
+
+                    return copyID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return 1;
+        }
+
+
     }
 }
