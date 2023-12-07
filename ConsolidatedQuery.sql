@@ -60,8 +60,8 @@ CREATE TABLE "Order" (
     orderID int NOT NULL,
     "date" datetime,
     "status" varchar (50),
-    fromDate datetime,
-    toDate datetime,
+    fromDate date,
+    toDate date,
     employeeID int,
     copyID int,
     movieID int,
@@ -96,16 +96,27 @@ insert into "Login" values (0, '0B34583876036EE38FEBF28092396EE713CDFF6408AD3363
 insert into Employees values (1, '123-456-789', 'Quinn', 'Liam', '14', 'Road Street', '', 'Edmonton', 0, 'B0B 0B0', '(123)456-7890', '2023-12-06');
 insert into "Login" values (1, '7872AC4F64F1218CD4E58610B8EA46776AD08ED446C79F579FB53CC847A93AD9', 'p1ruVdxY8B');
 
+insert into Customer values (0, 'Higgins', 'Bill', '12', 'Street Road', '5b', 'Edmonton', 'T0B 0B0', '(321)654-0987', 'bigbill@bill.bill', '1234-5678-9012-3456', 6);
+insert into Customer values (1, 'Biggins', 'Hill', '21', 'Avenue Cres', '6b', 'Edmonton', 'T0B 0G0', '(420)694-4321', 'hillbig@hill.bill', '6543-2109-8765-4321', 9);
+
 insert into Movies values (0, 'Sweeney Todd', 'Thriller', 4.99, 5, 5);
+insert into Movies values (1, 'Blackhawk Down', 'Action', 5.99, 2, 9);
 
 insert into "Copy" values (0, 0);
 insert into "Copy" values (1, 0);
 insert into "Copy" values (2, 0);
 insert into "Copy" values (3, 0);
 insert into "Copy" values (4, 0);
+insert into "Copy" values (0, 1);
+insert into "Copy" values (1, 1);
 
-insert into Actor values (0, 'Depp', 'Johnny', 'M', '1963-7-9', 0, 5);
+insert into Actor values (0, 'Depp', 'Johnny', 'M', '1963-07-09', 0, 5);
 insert into Actor values (1, 'Bohnam Carter', 'Helena', 'F', '1966-05-26', 0, 5);
+insert into Actor values (2, 'Bloom', 'Orlando', 'M', '1977-01-13', 0, 5); 
 
 insert into "Cast" values (0, 0);
 insert into "Cast" values (1, 0);
+insert into "Cast" values (2, 1);
+
+insert into "Order" values (0, '2023-01-12 12:12:12', '', '2023-01-13', '2023-01-20', 0, 0, 0, 0);
+insert into "Order" values (1, '2023-05-25 12:12:12', '', '2023-05-26', '2023-07-08', 0, 0, 0, 1);
