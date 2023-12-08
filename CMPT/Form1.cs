@@ -2,7 +2,9 @@ using System;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CMPT
 {
@@ -292,35 +294,31 @@ namespace CMPT
                     
                     break;
 
+                //Movie this year that has the most copies ordered over christmas.
                 case "Report 2":
 
-                    query = "Select * from Movies";
+                    reportOutputText.Text = "Name of the movie this year that has the most copies ordered over christmas.\n";
+
+                    query = "Select movieName FROM Movies WHERE movieID = " +
+                        "(Select TOP 1 movieID From \"Order\" where((YEAR(fromDate) = YEAR(GETDATE()) " +
+                        "and MONTH(fromDate) = 12 and DAY(fromDate) < 25) OR(MONTH(fromDate) < 12)) " +
+                        "AND((MONTH(toDate) = 12 and Day(toDate) > 25) OR(YEAR(toDate) > YEAR(fromDate))) " +
+                        "group by movieID " +
+                        "order by count(*) DESC)";
 
                     break;
-
                 case "Report 3":
-
                     query = "Select * from Movies";
-
                     break;
-
                 case "Report 4":
-
                     query = "Select * from Movies";
-
                     break;
-
                 case "Report 5":
-
                     query = "Select * from Movies";
-
                     break;
             }
-
             RunReportQuery(query);
-
         }
-
         public void AddMovie(Movie movie)
         {
             try
