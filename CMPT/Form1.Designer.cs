@@ -69,6 +69,8 @@ namespace CMPT
             creditCard = new DataGridViewTextBoxColumn();
             rating = new DataGridViewTextBoxColumn();
             allMovies = new TabPage();
+            makeCopybox = new TextBox();
+            makeCopybutton = new Button();
             assignActorbox = new TextBox();
             assignActorbutton = new Button();
             addMoviebutton = new Button();
@@ -99,10 +101,11 @@ namespace CMPT
             movies.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             movies.Columns.AddRange(new DataGridViewColumn[] { movieIDs, movieTitles, movieGenres, moviePrices, movieCopies, movieRatings });
             movies.Location = new Point(0, 0);
+            movies.Margin = new Padding(3, 4, 3, 4);
             movies.Name = "movies";
             movies.RowHeadersWidth = 51;
             movies.RowTemplate.Height = 25;
-            movies.Size = new Size(1151, 333);
+            movies.Size = new Size(1315, 444);
             movies.TabIndex = 2;
             // 
             // movieIDs
@@ -153,11 +156,10 @@ namespace CMPT
             first_tab.Controls.Add(allCustomers);
             first_tab.Controls.Add(allMovies);
             first_tab.Controls.Add(runReports);
-            first_tab.Location = new Point(-1, 60);
-            first_tab.Margin = new Padding(3, 2, 3, 2);
+            first_tab.Location = new Point(-1, 80);
             first_tab.Name = "first_tab";
             first_tab.SelectedIndex = 0;
-            first_tab.Size = new Size(1159, 397);
+            first_tab.Size = new Size(1325, 529);
             first_tab.TabIndex = 3;
             // 
             // rentals
@@ -173,9 +175,10 @@ namespace CMPT
             rentals.Controls.Add(addCustomerButton);
             rentals.Controls.Add(label1);
             rentals.Controls.Add(customerDropdown);
-            rentals.Location = new Point(4, 24);
+            rentals.Location = new Point(4, 29);
+            rentals.Margin = new Padding(3, 4, 3, 4);
             rentals.Name = "rentals";
-            rentals.Size = new Size(1151, 369);
+            rentals.Size = new Size(1317, 496);
             rentals.TabIndex = 1;
             rentals.Text = "Rentals";
             rentals.UseVisualStyleBackColor = true;
@@ -183,9 +186,10 @@ namespace CMPT
             // button1
             // 
             button1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(8, 276);
+            button1.Location = new Point(9, 368);
+            button1.Margin = new Padding(3, 4, 3, 4);
             button1.Name = "button1";
-            button1.Size = new Size(116, 62);
+            button1.Size = new Size(133, 83);
             button1.TabIndex = 10;
             button1.Text = "Create Rental";
             button1.UseVisualStyleBackColor = true;
@@ -195,18 +199,19 @@ namespace CMPT
             // 
             dueDatePicker.CalendarFont = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             dueDatePicker.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dueDatePicker.Location = new Point(130, 182);
+            dueDatePicker.Location = new Point(149, 243);
+            dueDatePicker.Margin = new Padding(3, 4, 3, 4);
             dueDatePicker.Name = "dueDatePicker";
-            dueDatePicker.Size = new Size(200, 33);
+            dueDatePicker.Size = new Size(228, 39);
             dueDatePicker.TabIndex = 9;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(8, 188);
+            label4.Location = new Point(9, 251);
             label4.Name = "label4";
-            label4.Size = new Size(90, 25);
+            label4.Size = new Size(115, 32);
             label4.TabIndex = 8;
             label4.Text = "Due Date";
             // 
@@ -214,18 +219,19 @@ namespace CMPT
             // 
             retalDatePicker.CalendarFont = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             retalDatePicker.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            retalDatePicker.Location = new Point(130, 124);
+            retalDatePicker.Location = new Point(149, 165);
+            retalDatePicker.Margin = new Padding(3, 4, 3, 4);
             retalDatePicker.Name = "retalDatePicker";
-            retalDatePicker.Size = new Size(200, 33);
+            retalDatePicker.Size = new Size(228, 39);
             retalDatePicker.TabIndex = 7;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(8, 130);
+            label3.Location = new Point(9, 173);
             label3.Name = "label3";
-            label3.Size = new Size(108, 25);
+            label3.Size = new Size(137, 32);
             label3.TabIndex = 6;
             label3.Text = "Rental Date";
             // 
@@ -233,9 +239,9 @@ namespace CMPT
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(8, 73);
+            label2.Location = new Point(9, 97);
             label2.Name = "label2";
-            label2.Size = new Size(64, 25);
+            label2.Size = new Size(81, 32);
             label2.TabIndex = 5;
             label2.Text = "Movie";
             // 
@@ -243,16 +249,18 @@ namespace CMPT
             // 
             movieDropdown.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             movieDropdown.FormattingEnabled = true;
-            movieDropdown.Location = new Point(130, 70);
+            movieDropdown.Location = new Point(149, 93);
+            movieDropdown.Margin = new Padding(3, 4, 3, 4);
             movieDropdown.Name = "movieDropdown";
-            movieDropdown.Size = new Size(225, 33);
+            movieDropdown.Size = new Size(257, 40);
             movieDropdown.TabIndex = 4;
             // 
             // editCustomerButton
             // 
-            editCustomerButton.Location = new Point(410, 18);
+            editCustomerButton.Location = new Point(469, 24);
+            editCustomerButton.Margin = new Padding(3, 4, 3, 4);
             editCustomerButton.Name = "editCustomerButton";
-            editCustomerButton.Size = new Size(43, 25);
+            editCustomerButton.Size = new Size(49, 33);
             editCustomerButton.TabIndex = 3;
             editCustomerButton.Text = "Edit";
             editCustomerButton.UseVisualStyleBackColor = true;
@@ -261,9 +269,10 @@ namespace CMPT
             // 
             // addCustomerButton
             // 
-            addCustomerButton.Location = new Point(361, 18);
+            addCustomerButton.Location = new Point(413, 24);
+            addCustomerButton.Margin = new Padding(3, 4, 3, 4);
             addCustomerButton.Name = "addCustomerButton";
-            addCustomerButton.Size = new Size(43, 25);
+            addCustomerButton.Size = new Size(49, 33);
             addCustomerButton.TabIndex = 2;
             addCustomerButton.Text = "Add";
             addCustomerButton.UseVisualStyleBackColor = true;
@@ -273,9 +282,9 @@ namespace CMPT
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(8, 18);
+            label1.Location = new Point(9, 24);
             label1.Name = "label1";
-            label1.Size = new Size(116, 25);
+            label1.Size = new Size(147, 32);
             label1.TabIndex = 1;
             label1.Text = "Customer ID";
             // 
@@ -284,9 +293,10 @@ namespace CMPT
             customerDropdown.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             customerDropdown.FormattingEnabled = true;
             customerDropdown.Items.AddRange(new object[] { "Customer1" });
-            customerDropdown.Location = new Point(130, 15);
+            customerDropdown.Location = new Point(149, 20);
+            customerDropdown.Margin = new Padding(3, 4, 3, 4);
             customerDropdown.Name = "customerDropdown";
-            customerDropdown.Size = new Size(225, 33);
+            customerDropdown.Size = new Size(257, 40);
             customerDropdown.TabIndex = 0;
             customerDropdown.SelectedIndexChanged += customerDropdown_SelectedIndexChanged;
             customerDropdown.KeyUp += customerDropdown_KeyUp;
@@ -300,9 +310,10 @@ namespace CMPT
             allCustomers.Controls.Add(SearchCustomerButton);
             allCustomers.Controls.Add(SearchCustomerBox);
             allCustomers.Controls.Add(CustomersGridView);
-            allCustomers.Location = new Point(4, 24);
+            allCustomers.Location = new Point(4, 29);
+            allCustomers.Margin = new Padding(3, 4, 3, 4);
             allCustomers.Name = "allCustomers";
-            allCustomers.Size = new Size(1151, 369);
+            allCustomers.Size = new Size(1317, 496);
             allCustomers.TabIndex = 3;
             allCustomers.Text = "Customers";
             allCustomers.UseVisualStyleBackColor = true;
@@ -310,27 +321,25 @@ namespace CMPT
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(785, 344);
+            label5.Location = new Point(897, 459);
             label5.Name = "label5";
-            label5.Size = new Size(61, 15);
+            label5.Size = new Size(76, 20);
             label5.TabIndex = 13;
             label5.Text = "Search By:";
             // 
             // SearchByComboBox
             // 
             SearchByComboBox.FormattingEnabled = true;
-            SearchByComboBox.Location = new Point(852, 340);
-            SearchByComboBox.Margin = new Padding(3, 2, 3, 2);
+            SearchByComboBox.Location = new Point(974, 453);
             SearchByComboBox.Name = "SearchByComboBox";
-            SearchByComboBox.Size = new Size(106, 23);
+            SearchByComboBox.Size = new Size(121, 28);
             SearchByComboBox.TabIndex = 12;
             // 
             // button2
             // 
-            button2.Location = new Point(9, 338);
-            button2.Margin = new Padding(3, 2, 3, 2);
+            button2.Location = new Point(10, 451);
             button2.Name = "button2";
-            button2.Size = new Size(72, 24);
+            button2.Size = new Size(82, 32);
             button2.TabIndex = 11;
             button2.Text = "Add";
             button2.UseVisualStyleBackColor = true;
@@ -338,10 +347,9 @@ namespace CMPT
             // 
             // CustomerDeleteButton
             // 
-            CustomerDeleteButton.Location = new Point(87, 338);
-            CustomerDeleteButton.Margin = new Padding(3, 2, 3, 2);
+            CustomerDeleteButton.Location = new Point(99, 451);
             CustomerDeleteButton.Name = "CustomerDeleteButton";
-            CustomerDeleteButton.Size = new Size(72, 24);
+            CustomerDeleteButton.Size = new Size(82, 32);
             CustomerDeleteButton.TabIndex = 10;
             CustomerDeleteButton.Text = "Delete";
             CustomerDeleteButton.UseVisualStyleBackColor = true;
@@ -349,20 +357,19 @@ namespace CMPT
             // 
             // SearchCustomerButton
             // 
-            SearchCustomerButton.Location = new Point(964, 340);
-            SearchCustomerButton.Margin = new Padding(3, 2, 3, 2);
+            SearchCustomerButton.Location = new Point(1102, 453);
             SearchCustomerButton.Name = "SearchCustomerButton";
-            SearchCustomerButton.Size = new Size(72, 24);
+            SearchCustomerButton.Size = new Size(82, 32);
             SearchCustomerButton.TabIndex = 8;
             SearchCustomerButton.Text = "Search";
             SearchCustomerButton.UseVisualStyleBackColor = true;
+            SearchCustomerButton.Click += SearchCustomerButton_Click;
             // 
             // SearchCustomerBox
             // 
-            SearchCustomerBox.Location = new Point(1042, 341);
-            SearchCustomerBox.Margin = new Padding(3, 2, 3, 2);
+            SearchCustomerBox.Location = new Point(1191, 455);
             SearchCustomerBox.Name = "SearchCustomerBox";
-            SearchCustomerBox.Size = new Size(97, 23);
+            SearchCustomerBox.Size = new Size(110, 27);
             SearchCustomerBox.TabIndex = 7;
             // 
             // CustomersGridView
@@ -372,89 +379,102 @@ namespace CMPT
             CustomersGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             CustomersGridView.Columns.AddRange(new DataGridViewColumn[] { accountNo, lastName, firstName, streetNumber, streetName, aptNumber, city, postalCode, phoneNumber, email, creditCard, rating });
             CustomersGridView.Location = new Point(0, 0);
-            CustomersGridView.Margin = new Padding(3, 2, 3, 2);
             CustomersGridView.Name = "CustomersGridView";
             CustomersGridView.ReadOnly = true;
             CustomersGridView.RowHeadersWidth = 51;
             CustomersGridView.RowTemplate.Height = 25;
-            CustomersGridView.Size = new Size(1151, 334);
+            CustomersGridView.Size = new Size(1315, 445);
             CustomersGridView.TabIndex = 3;
             CustomersGridView.CellDoubleClick += Customers_CellDoubleClick;
             // 
             // accountNo
             // 
             accountNo.HeaderText = "Account Number";
+            accountNo.MinimumWidth = 6;
             accountNo.Name = "accountNo";
             accountNo.ReadOnly = true;
             // 
             // lastName
             // 
             lastName.HeaderText = "Last Name";
+            lastName.MinimumWidth = 6;
             lastName.Name = "lastName";
             lastName.ReadOnly = true;
             // 
             // firstName
             // 
             firstName.HeaderText = "First Name";
+            firstName.MinimumWidth = 6;
             firstName.Name = "firstName";
             firstName.ReadOnly = true;
             // 
             // streetNumber
             // 
             streetNumber.HeaderText = "Street Number";
+            streetNumber.MinimumWidth = 6;
             streetNumber.Name = "streetNumber";
             streetNumber.ReadOnly = true;
             // 
             // streetName
             // 
             streetName.HeaderText = "Street Name";
+            streetName.MinimumWidth = 6;
             streetName.Name = "streetName";
             streetName.ReadOnly = true;
             // 
             // aptNumber
             // 
             aptNumber.HeaderText = "Apartment Number";
+            aptNumber.MinimumWidth = 6;
             aptNumber.Name = "aptNumber";
             aptNumber.ReadOnly = true;
             // 
             // city
             // 
             city.HeaderText = "City";
+            city.MinimumWidth = 6;
             city.Name = "city";
             city.ReadOnly = true;
             // 
             // postalCode
             // 
             postalCode.HeaderText = "Postal Code";
+            postalCode.MinimumWidth = 6;
             postalCode.Name = "postalCode";
             postalCode.ReadOnly = true;
             // 
             // phoneNumber
             // 
             phoneNumber.HeaderText = "Phone Number";
+            phoneNumber.MinimumWidth = 6;
             phoneNumber.Name = "phoneNumber";
             phoneNumber.ReadOnly = true;
             // 
             // email
             // 
             email.HeaderText = "Email";
+            email.MinimumWidth = 6;
             email.Name = "email";
             email.ReadOnly = true;
             // 
             // creditCard
             // 
             creditCard.HeaderText = "Credit Card Number";
+            creditCard.MinimumWidth = 6;
             creditCard.Name = "creditCard";
             creditCard.ReadOnly = true;
             // 
             // rating
             // 
             rating.HeaderText = "Rating";
+            rating.MinimumWidth = 6;
             rating.Name = "rating";
             rating.ReadOnly = true;
             // 
             // allMovies
             // 
+            allMovies.Controls.Add(makeCopybox);
+            allMovies.Controls.Add(makeCopybutton);
             allMovies.Controls.Add(assignActorbox);
             allMovies.Controls.Add(assignActorbutton);
             allMovies.Controls.Add(addMoviebutton);
@@ -463,31 +483,48 @@ namespace CMPT
             allMovies.Controls.Add(searchMoviebutton);
             allMovies.Controls.Add(searchMoviebox);
             allMovies.Controls.Add(movies);
-            allMovies.Location = new Point(4, 24);
-            allMovies.Margin = new Padding(3, 2, 3, 2);
+            allMovies.Location = new Point(4, 29);
             allMovies.Name = "allMovies";
-            allMovies.Padding = new Padding(3, 2, 3, 2);
-            allMovies.Size = new Size(1151, 369);
+            allMovies.Padding = new Padding(3);
+            allMovies.Size = new Size(1317, 496);
             allMovies.TabIndex = 0;
             allMovies.Text = "Movies";
             allMovies.UseVisualStyleBackColor = true;
             // 
+            // makeCopybox
+            // 
+            makeCopybox.Location = new Point(370, 451);
+            makeCopybox.Name = "makeCopybox";
+            makeCopybox.Size = new Size(125, 27);
+            makeCopybox.TabIndex = 12;
+            makeCopybox.Text = "Enter Amount";
+            makeCopybox.Click += makeCopybox_Click;
+            // 
+            // makeCopybutton
+            // 
+            makeCopybutton.Location = new Point(251, 448);
+            makeCopybutton.Name = "makeCopybutton";
+            makeCopybutton.Size = new Size(113, 32);
+            makeCopybutton.TabIndex = 11;
+            makeCopybutton.Text = "Make Copy: ";
+            makeCopybutton.UseVisualStyleBackColor = true;
+            makeCopybutton.Click += makeCopybutton_Click;
+            // 
             // assignActorbox
             // 
-            assignActorbox.Location = new Point(106, 338);
-            assignActorbox.Margin = new Padding(3, 2, 3, 2);
+            assignActorbox.Location = new Point(120, 453);
             assignActorbox.Name = "assignActorbox";
-            assignActorbox.Size = new Size(110, 23);
+            assignActorbox.Size = new Size(125, 27);
             assignActorbox.TabIndex = 10;
             assignActorbox.Text = "Enter Actor ID";
             assignActorbox.Click += assignActorbox_Click;
+            assignActorbox.TextChanged += assignActorbox_TextChanged;
             // 
             // assignActorbutton
             // 
-            assignActorbutton.Location = new Point(3, 338);
-            assignActorbutton.Margin = new Padding(3, 2, 3, 2);
+            assignActorbutton.Location = new Point(3, 451);
             assignActorbutton.Name = "assignActorbutton";
-            assignActorbutton.Size = new Size(97, 24);
+            assignActorbutton.Size = new Size(111, 32);
             assignActorbutton.TabIndex = 9;
             assignActorbutton.Text = "Assign Actor:";
             assignActorbutton.UseVisualStyleBackColor = true;
@@ -495,10 +532,9 @@ namespace CMPT
             // 
             // addMoviebutton
             // 
-            addMoviebutton.Location = new Point(724, 339);
-            addMoviebutton.Margin = new Padding(3, 2, 3, 2);
+            addMoviebutton.Location = new Point(827, 452);
             addMoviebutton.Name = "addMoviebutton";
-            addMoviebutton.Size = new Size(72, 24);
+            addMoviebutton.Size = new Size(82, 32);
             addMoviebutton.TabIndex = 7;
             addMoviebutton.Text = "Add";
             addMoviebutton.UseVisualStyleBackColor = true;
@@ -506,10 +542,9 @@ namespace CMPT
             // 
             // movieDeletebutton
             // 
-            movieDeletebutton.Location = new Point(801, 339);
-            movieDeletebutton.Margin = new Padding(3, 2, 3, 2);
+            movieDeletebutton.Location = new Point(915, 452);
             movieDeletebutton.Name = "movieDeletebutton";
-            movieDeletebutton.Size = new Size(72, 24);
+            movieDeletebutton.Size = new Size(82, 32);
             movieDeletebutton.TabIndex = 6;
             movieDeletebutton.Text = "Delete";
             movieDeletebutton.UseVisualStyleBackColor = true;
@@ -517,10 +552,9 @@ namespace CMPT
             // 
             // updateMoviesbutton
             // 
-            updateMoviesbutton.Location = new Point(878, 339);
-            updateMoviesbutton.Margin = new Padding(3, 2, 3, 2);
+            updateMoviesbutton.Location = new Point(1003, 452);
             updateMoviesbutton.Name = "updateMoviesbutton";
-            updateMoviesbutton.Size = new Size(72, 24);
+            updateMoviesbutton.Size = new Size(82, 32);
             updateMoviesbutton.TabIndex = 5;
             updateMoviesbutton.Text = "Update";
             updateMoviesbutton.UseVisualStyleBackColor = true;
@@ -528,10 +562,9 @@ namespace CMPT
             // 
             // searchMoviebutton
             // 
-            searchMoviebutton.Location = new Point(955, 339);
-            searchMoviebutton.Margin = new Padding(3, 2, 3, 2);
+            searchMoviebutton.Location = new Point(1091, 452);
             searchMoviebutton.Name = "searchMoviebutton";
-            searchMoviebutton.Size = new Size(72, 24);
+            searchMoviebutton.Size = new Size(82, 32);
             searchMoviebutton.TabIndex = 4;
             searchMoviebutton.Text = "Search";
             searchMoviebutton.UseVisualStyleBackColor = true;
@@ -539,10 +572,9 @@ namespace CMPT
             // 
             // searchMoviebox
             // 
-            searchMoviebox.Location = new Point(1033, 340);
-            searchMoviebox.Margin = new Padding(3, 2, 3, 2);
+            searchMoviebox.Location = new Point(1181, 453);
             searchMoviebox.Name = "searchMoviebox";
-            searchMoviebox.Size = new Size(110, 23);
+            searchMoviebox.Size = new Size(125, 27);
             searchMoviebox.TabIndex = 3;
             // 
             // runReports
@@ -550,18 +582,20 @@ namespace CMPT
             runReports.Controls.Add(runReport);
             runReports.Controls.Add(reports);
             runReports.Controls.Add(reportOutputText);
-            runReports.Location = new Point(4, 24);
+            runReports.Location = new Point(4, 29);
+            runReports.Margin = new Padding(3, 4, 3, 4);
             runReports.Name = "runReports";
-            runReports.Size = new Size(1151, 369);
+            runReports.Size = new Size(1317, 496);
             runReports.TabIndex = 2;
             runReports.Text = "Reports";
             runReports.UseVisualStyleBackColor = true;
             // 
             // runReport
             // 
-            runReport.Location = new Point(927, 267);
+            runReport.Location = new Point(1059, 356);
+            runReport.Margin = new Padding(3, 4, 3, 4);
             runReport.Name = "runReport";
-            runReport.Size = new Size(75, 23);
+            runReport.Size = new Size(86, 31);
             runReport.TabIndex = 2;
             runReport.Text = "Run Report";
             runReport.UseVisualStyleBackColor = true;
@@ -570,18 +604,20 @@ namespace CMPT
             // reports
             // 
             reports.FormattingEnabled = true;
-            reports.ItemHeight = 15;
+            reports.ItemHeight = 20;
             reports.Items.AddRange(new object[] { "Report 1", "Report 2", "Report 3", "Report 4", "Report 5" });
-            reports.Location = new Point(888, 31);
+            reports.Location = new Point(1015, 41);
+            reports.Margin = new Padding(3, 4, 3, 4);
             reports.Name = "reports";
-            reports.Size = new Size(114, 169);
+            reports.Size = new Size(130, 224);
             reports.TabIndex = 1;
             // 
             // reportOutputText
             // 
-            reportOutputText.Location = new Point(3, 3);
+            reportOutputText.Location = new Point(3, 4);
+            reportOutputText.Margin = new Padding(3, 4, 3, 4);
             reportOutputText.Name = "reportOutputText";
-            reportOutputText.Size = new Size(837, 315);
+            reportOutputText.Size = new Size(956, 419);
             reportOutputText.TabIndex = 0;
             reportOutputText.Text = "";
             // 
@@ -589,18 +625,19 @@ namespace CMPT
             // 
             UserIDLabel.AutoSize = true;
             UserIDLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
-            UserIDLabel.Location = new Point(11, 9);
+            UserIDLabel.Location = new Point(13, 12);
             UserIDLabel.Name = "UserIDLabel";
-            UserIDLabel.Size = new Size(43, 37);
+            UserIDLabel.Size = new Size(53, 46);
             UserIDLabel.TabIndex = 4;
             UserIDLabel.Text = "ID";
             // 
             // LogoutButton
             // 
             LogoutButton.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LogoutButton.Location = new Point(1053, 12);
+            LogoutButton.Location = new Point(1203, 16);
+            LogoutButton.Margin = new Padding(3, 4, 3, 4);
             LogoutButton.Name = "LogoutButton";
-            LogoutButton.Size = new Size(89, 40);
+            LogoutButton.Size = new Size(102, 53);
             LogoutButton.TabIndex = 5;
             LogoutButton.Text = "Logout";
             LogoutButton.UseVisualStyleBackColor = true;
@@ -609,9 +646,10 @@ namespace CMPT
             // EmployeesButton
             // 
             EmployeesButton.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point);
-            EmployeesButton.Location = new Point(911, 12);
+            EmployeesButton.Location = new Point(1041, 16);
+            EmployeesButton.Margin = new Padding(3, 4, 3, 4);
             EmployeesButton.Name = "EmployeesButton";
-            EmployeesButton.Size = new Size(116, 40);
+            EmployeesButton.Size = new Size(133, 53);
             EmployeesButton.TabIndex = 6;
             EmployeesButton.Text = "Employees";
             EmployeesButton.UseMnemonic = false;
@@ -620,13 +658,14 @@ namespace CMPT
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1154, 457);
+            ClientSize = new Size(1319, 609);
             Controls.Add(EmployeesButton);
             Controls.Add(LogoutButton);
             Controls.Add(UserIDLabel);
             Controls.Add(first_tab);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
@@ -703,6 +742,7 @@ namespace CMPT
         private DataGridViewTextBoxColumn moviePrices;
         private DataGridViewTextBoxColumn movieCopies;
         private DataGridViewTextBoxColumn movieRatings;
-
+        private TextBox makeCopybox;
+        private Button makeCopybutton;
     }
 }
