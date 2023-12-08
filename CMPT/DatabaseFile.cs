@@ -542,6 +542,40 @@ namespace CMPT
                 throw new Exception(ex.Message);
             }
         }
+        public int GetLowestAvailableActorID()
+        {
+            myCommand.CommandText =
+            "select distinct\r\n" +
+            "case\r\n" +
+            "when exists (select actorID from Actor where actorID = 1) then\r\n" +
+            "(select MIN(actorID) + 1 as lowestAvailableActorID\r\n" +
+            "from Actor E1\r\n" +
+            "where E1.actorID + 1 not in (select E2.actorID from Actor E2))\r\n" +
+            "else\r\n" +
+            "1\r\n" +
+            "end as lowestAvailableActorID\r\n" +
+            "from Actor";
+
+            try
+            {
+                int employeeID = 1;
+
+                myReader = myCommand.ExecuteReader();
+
+                if (myReader.Read())
+                {
+                    int.TryParse(myReader["lowestAvailableActorID"].ToString(), out employeeID);
+                }
+
+                myReader.Close();
+
+                return employeeID;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public void AddCustomer(Customer customer)
         {
@@ -897,6 +931,51 @@ namespace CMPT
             return 1;
         }
 
+        public Actor[] GetAllActors ()
+        {
+            myCommand.CommandText = "select * from Actor";
+            var actorList = new List<Actor>();
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    ActorStruct actorStruct = new(int.Parse(myReader[0].ToString()))
+                    {
+                        lastName = myReader[1].ToString(),
+                        firstName = myReader[2].ToString(),
+                        gender = myReader[3].ToString(),
+                        dateOfBirth = DateTime.Parse(myReader[4].ToString()),
+                        rating = int.Parse(myReader[6].ToString())
+                    };
 
+                    actorStruct.age = new DateTime(DateTime.Now.Subtract(actorStruct.dateOfBirth).Ticks).Year - 1;
+
+                    actorList.Add(new(actorStruct));
+                }
+                myReader.Close();
+
+                return actorList.ToArray();
+            } catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void AddActor(Actor actor)
+        {
+            myCommand.CommandText = string.Format("insert into Actor values({0}, '{1}', '{2}', '{3}', '{4}', {5}, {6})",
+                actor.Id, actor.LastName, actor.FirstName, actor.Gender, actor.DateOfBirth, actor.Age, actor.Rating);
+
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

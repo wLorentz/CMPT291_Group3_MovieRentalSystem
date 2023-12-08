@@ -80,6 +80,10 @@ namespace CMPT
             populateCustomerList(customerList);
 
             populateCustomerSearchDropdown();
+
+            Actor[] actors = database.GetAllActors();
+
+            populateActorList(actors);
         }
 
         public Movie[] getMovies()
@@ -115,6 +119,23 @@ namespace CMPT
             foreach (Movie movie in movieList)
             {
                 movieDropdown.Items.Add(movie.getName());
+            }
+        }
+
+        public void populateActorList(Actor[] actorList)
+        {
+            ActorGridView.Rows.Clear();
+            foreach (Actor actor in actorList)
+            {
+                ActorGridView.Rows.Add(
+                    actor.Id,
+                    actor.LastName,
+                    actor.FirstName,
+                    actor.Gender,
+                    actor.DateOfBirth.ToString("yyyy-MM-dd"),
+                    actor.Age,
+                    actor.Rating
+                );
             }
         }
 
@@ -323,23 +344,23 @@ namespace CMPT
                             "ORDER BY A3.rating DESC";
                     break;
 
-            
+
                 case "Report 4":
 
                     reportOutputText.Text = "List of movies that have been checked out by the same customer more than 3 times.\n";
-                    
+
                     query = "SELECT DISTINCT movieName FROM Movies M, " +
                         "(SELECT movieID, accountNo, count(*) num FROM \"Order\" " +
                         "GROUP BY movieID, accountNo HAVING count(*) >= 3) O " +
                         "Where(M.movieID = O.movieID) " +
                         "ORDER BY movieName ASC";
                     break;
-                
-                
+
+
                 case "Report 5":
-                    
+
                     reportOutputText.Text = "Employee who generated the most revenue this month.\n";
-                    
+
                     query = "select firstName, lastName, max(revenue) Revenue from employees, " +
                         "(Select employeeID, sum(price) revenue from \"Order\" O, Movies M " +
                         "where O.movieID = M.movieID and MONTH(GETDATE()) = MONTH(O.date) and YEAR(GETDATE()) = YEAR(O.date) " +
@@ -349,8 +370,8 @@ namespace CMPT
             }
             RunReportQuery(query);
         }
-        
-        
+
+
         public void AddMovie(Movie movie)
         {
             try
@@ -489,25 +510,6 @@ namespace CMPT
                 MessageBox.Show(ex.Message);
             }
 
-        }
-
-        private void assignActorbox_Click(object sender, EventArgs e)
-        {
-            assignActorbox.Text = string.Empty;
-        }
-
-        private void assignActorbutton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int rowIdx = movies.CurrentCell.RowIndex;
-                string movieID = movies.Rows[rowIdx].Cells[0].Value.ToString();
-                database.AssignActor(assignActorbox.Text, movieID);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
         }
 
         private void Customers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -685,6 +687,34 @@ namespace CMPT
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public void AddActor(Actor actor)
+        {
+            try
+            {
+                database.AddActor(actor);
+                ActorGridView.Rows.Add(
+                    actor.Id,
+                    actor.LastName,
+                    actor.FirstName,
+                    actor.Gender,
+                    actor.DateOfBirth.ToString("yyyy-MM-dd"),
+                    actor.Age,
+                    actor.Rating
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void AddActorButton_Click(object sender, EventArgs e)
+        {
+            int newActorID = database.GetLowestAvailableActorID();
+            AddActorForm addActorForm = new(this, newActorID);
+            addActorForm.Show();
         }
     }
 }
