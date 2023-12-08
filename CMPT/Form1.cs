@@ -328,13 +328,11 @@ namespace CMPT
 
                     reportOutputText.Text = "List of movies that have been checked out by the same customer more than 3 times.\n";
                     
-                    query = "SELECT DISTINCT movieName FROM Movie M, " +
-                    "(SELECT movieID, accountNo, count(*) " +
-                    "FROM Order " +
-                    "GROUP BY movieID, accountNo " +
-                    "HAVING count(*) >= 3) O " +
-                    "Where (M.movieID = O.movieID) " +
-                    "ORDER BY movieName ASC";                       
+                    query = "SELECT DISTINCT movieName FROM Movies M, " +
+                        "(SELECT movieID, accountNo, count(*) num FROM \"Order\" " +
+                        "GROUP BY movieID, accountNo HAVING count(*) >= 3) O " +
+                        "Where(M.movieID = O.movieID) " +
+                        "ORDER BY movieName ASC";
                     break;
                 
                 // List of customers who rented a movie on the birthday of an actor that appears in the movie
