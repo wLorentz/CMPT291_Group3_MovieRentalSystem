@@ -71,13 +71,20 @@ namespace CMPT
             allMovies = new TabPage();
             makeCopybox = new TextBox();
             makeCopybutton = new Button();
-            assignActorbox = new TextBox();
-            assignActorbutton = new Button();
             addMoviebutton = new Button();
             movieDeletebutton = new Button();
             updateMoviesbutton = new Button();
             searchMoviebutton = new Button();
             searchMoviebox = new TextBox();
+            actorTab = new TabPage();
+            ActorGridView = new DataGridView();
+            actorID = new DataGridViewTextBoxColumn();
+            actorLastName = new DataGridViewTextBoxColumn();
+            actorFirstName = new DataGridViewTextBoxColumn();
+            actorGender = new DataGridViewTextBoxColumn();
+            actorDateOfBirth = new DataGridViewTextBoxColumn();
+            actorAge = new DataGridViewTextBoxColumn();
+            actorRating = new DataGridViewTextBoxColumn();
             runReports = new TabPage();
             runReport = new Button();
             reports = new ListBox();
@@ -85,12 +92,15 @@ namespace CMPT
             UserIDLabel = new Label();
             LogoutButton = new Button();
             EmployeesButton = new Button();
+            AddActorButton = new Button();
             ((System.ComponentModel.ISupportInitialize)movies).BeginInit();
             first_tab.SuspendLayout();
             rentals.SuspendLayout();
             allCustomers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CustomersGridView).BeginInit();
             allMovies.SuspendLayout();
+            actorTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ActorGridView).BeginInit();
             runReports.SuspendLayout();
             SuspendLayout();
             // 
@@ -155,6 +165,7 @@ namespace CMPT
             first_tab.Controls.Add(rentals);
             first_tab.Controls.Add(allCustomers);
             first_tab.Controls.Add(allMovies);
+            first_tab.Controls.Add(actorTab);
             first_tab.Controls.Add(runReports);
             first_tab.Location = new Point(-1, 80);
             first_tab.Name = "first_tab";
@@ -475,8 +486,6 @@ namespace CMPT
             // 
             allMovies.Controls.Add(makeCopybox);
             allMovies.Controls.Add(makeCopybutton);
-            allMovies.Controls.Add(assignActorbox);
-            allMovies.Controls.Add(assignActorbutton);
             allMovies.Controls.Add(addMoviebutton);
             allMovies.Controls.Add(movieDeletebutton);
             allMovies.Controls.Add(updateMoviesbutton);
@@ -493,7 +502,7 @@ namespace CMPT
             // 
             // makeCopybox
             // 
-            makeCopybox.Location = new Point(370, 451);
+            makeCopybox.Location = new Point(865, 455);
             makeCopybox.Name = "makeCopybox";
             makeCopybox.Size = new Size(125, 27);
             makeCopybox.TabIndex = 12;
@@ -502,7 +511,7 @@ namespace CMPT
             // 
             // makeCopybutton
             // 
-            makeCopybutton.Location = new Point(251, 448);
+            makeCopybutton.Location = new Point(746, 452);
             makeCopybutton.Name = "makeCopybutton";
             makeCopybutton.Size = new Size(113, 32);
             makeCopybutton.TabIndex = 11;
@@ -510,29 +519,9 @@ namespace CMPT
             makeCopybutton.UseVisualStyleBackColor = true;
             makeCopybutton.Click += makeCopybutton_Click;
             // 
-            // assignActorbox
-            // 
-            assignActorbox.Location = new Point(120, 453);
-            assignActorbox.Name = "assignActorbox";
-            assignActorbox.Size = new Size(125, 27);
-            assignActorbox.TabIndex = 10;
-            assignActorbox.Text = "Enter Actor ID";
-            assignActorbox.Click += assignActorbox_Click;
-            assignActorbox.TextChanged += assignActorbox_TextChanged;
-            // 
-            // assignActorbutton
-            // 
-            assignActorbutton.Location = new Point(3, 451);
-            assignActorbutton.Name = "assignActorbutton";
-            assignActorbutton.Size = new Size(111, 32);
-            assignActorbutton.TabIndex = 9;
-            assignActorbutton.Text = "Assign Actor:";
-            assignActorbutton.UseVisualStyleBackColor = true;
-            assignActorbutton.Click += assignActorbutton_Click;
-            // 
             // addMoviebutton
             // 
-            addMoviebutton.Location = new Point(827, 452);
+            addMoviebutton.Location = new Point(10, 452);
             addMoviebutton.Name = "addMoviebutton";
             addMoviebutton.Size = new Size(82, 32);
             addMoviebutton.TabIndex = 7;
@@ -542,7 +531,7 @@ namespace CMPT
             // 
             // movieDeletebutton
             // 
-            movieDeletebutton.Location = new Point(915, 452);
+            movieDeletebutton.Location = new Point(98, 452);
             movieDeletebutton.Name = "movieDeletebutton";
             movieDeletebutton.Size = new Size(82, 32);
             movieDeletebutton.TabIndex = 6;
@@ -576,6 +565,80 @@ namespace CMPT
             searchMoviebox.Name = "searchMoviebox";
             searchMoviebox.Size = new Size(125, 27);
             searchMoviebox.TabIndex = 3;
+            // 
+            // actorTab
+            // 
+            actorTab.Controls.Add(AddActorButton);
+            actorTab.Controls.Add(ActorGridView);
+            actorTab.Location = new Point(4, 29);
+            actorTab.Name = "actorTab";
+            actorTab.Size = new Size(1317, 496);
+            actorTab.TabIndex = 4;
+            actorTab.Text = "Actors";
+            actorTab.UseVisualStyleBackColor = true;
+            // 
+            // ActorGridView
+            // 
+            ActorGridView.AllowUserToAddRows = false;
+            ActorGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            ActorGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            ActorGridView.Columns.AddRange(new DataGridViewColumn[] { actorID, actorLastName, actorFirstName, actorGender, actorDateOfBirth, actorAge, actorRating });
+            ActorGridView.Location = new Point(1, 26);
+            ActorGridView.Name = "ActorGridView";
+            ActorGridView.ReadOnly = true;
+            ActorGridView.RowHeadersWidth = 51;
+            ActorGridView.RowTemplate.Height = 25;
+            ActorGridView.Size = new Size(1315, 426);
+            ActorGridView.TabIndex = 4;
+            // 
+            // actorID
+            // 
+            actorID.HeaderText = "Actor ID";
+            actorID.MinimumWidth = 6;
+            actorID.Name = "actorID";
+            actorID.ReadOnly = true;
+            // 
+            // actorLastName
+            // 
+            actorLastName.HeaderText = "Last Name";
+            actorLastName.MinimumWidth = 6;
+            actorLastName.Name = "actorLastName";
+            actorLastName.ReadOnly = true;
+            // 
+            // actorFirstName
+            // 
+            actorFirstName.HeaderText = "First Name";
+            actorFirstName.MinimumWidth = 6;
+            actorFirstName.Name = "actorFirstName";
+            actorFirstName.ReadOnly = true;
+            // 
+            // actorGender
+            // 
+            actorGender.HeaderText = "Gender";
+            actorGender.MinimumWidth = 6;
+            actorGender.Name = "actorGender";
+            actorGender.ReadOnly = true;
+            // 
+            // actorDateOfBirth
+            // 
+            actorDateOfBirth.HeaderText = "Date of Birth";
+            actorDateOfBirth.MinimumWidth = 6;
+            actorDateOfBirth.Name = "actorDateOfBirth";
+            actorDateOfBirth.ReadOnly = true;
+            // 
+            // actorAge
+            // 
+            actorAge.HeaderText = "Age";
+            actorAge.MinimumWidth = 6;
+            actorAge.Name = "actorAge";
+            actorAge.ReadOnly = true;
+            // 
+            // actorRating
+            // 
+            actorRating.HeaderText = "Rating";
+            actorRating.MinimumWidth = 6;
+            actorRating.Name = "actorRating";
+            actorRating.ReadOnly = true;
             // 
             // runReports
             // 
@@ -656,6 +719,16 @@ namespace CMPT
             EmployeesButton.UseVisualStyleBackColor = true;
             EmployeesButton.Click += EmployeesButton_Click;
             // 
+            // AddActorButton
+            // 
+            AddActorButton.Location = new Point(9, 458);
+            AddActorButton.Name = "AddActorButton";
+            AddActorButton.Size = new Size(94, 29);
+            AddActorButton.TabIndex = 5;
+            AddActorButton.Text = "Add";
+            AddActorButton.UseVisualStyleBackColor = true;
+            AddActorButton.Click += AddActorButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -679,6 +752,8 @@ namespace CMPT
             ((System.ComponentModel.ISupportInitialize)CustomersGridView).EndInit();
             allMovies.ResumeLayout(false);
             allMovies.PerformLayout();
+            actorTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ActorGridView).EndInit();
             runReports.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -711,8 +786,6 @@ namespace CMPT
         private Label label3;
         private Button button1;
         private Button addMoviebutton;
-        private TextBox assignActorbox;
-        private Button assignActorbutton;
         private TabPage allCustomers;
         private DataGridView CustomersGridView;
         private Label label5;
@@ -744,5 +817,15 @@ namespace CMPT
         private DataGridViewTextBoxColumn movieRatings;
         private TextBox makeCopybox;
         private Button makeCopybutton;
+        private TabPage actorTab;
+        private DataGridView ActorGridView;
+        private DataGridViewTextBoxColumn actorID;
+        private DataGridViewTextBoxColumn actorLastName;
+        private DataGridViewTextBoxColumn actorFirstName;
+        private DataGridViewTextBoxColumn actorGender;
+        private DataGridViewTextBoxColumn actorDateOfBirth;
+        private DataGridViewTextBoxColumn actorAge;
+        private DataGridViewTextBoxColumn actorRating;
+        private Button AddActorButton;
     }
 }
