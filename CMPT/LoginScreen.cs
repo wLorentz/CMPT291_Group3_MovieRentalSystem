@@ -14,23 +14,20 @@ namespace CMPT
 {
     public partial class LoginScreen : Form
     {
-        private SqlDataReader sqlDataReader;
-        private SqlCommand sqlCommand;
         private Form1 mainForm;
+        private bool loginSuccess;
 
-        public LoginScreen(SqlConnection connection, Form1 mainForm)
+        /**
+         * Constructor for the LoginScreen class
+         * 
+         * Parameters:
+         *      connect:    an SqlConnection to the database to be used
+         *      mainFrom:   The main form from which the login screen from is opened
+         */
+        public LoginScreen(Form1 mainForm)
         {
-            try
-            {
-                sqlCommand = new SqlCommand();
-                sqlCommand.Connection = connection;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString(), "Error");
-            }
-
             this.mainForm = mainForm;
+            loginSuccess = false;
 
             InitializeComponent();
         }
@@ -83,37 +80,30 @@ namespace CMPT
          */
         private void ValidateLogin()
         {
-            string userID = userId.Text;
+            string userIDText = userId.Text;
             string password = passwordText.Text;
             string salt = "";
             string passHash = "";
-
-            sqlCommand.CommandText = "select passHash, salt from Login where userID = " + "\'" + userID + "\'";
-
-            try
+            int userID = 0;
+            if(userIDText != "admin")
             {
-                sqlDataReader = sqlCommand.ExecuteReader();
-
-                sqlDataReader.Read();
-
-                salt = sqlDataReader["salt"].ToString().Trim();
-                passHash = sqlDataReader["passHash"].ToString().Trim();
-
-                sqlDataReader.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error");
+                int.TryParse(userIDText, out userID);
             }
 
-            string hashedPass = ComputeSha256Hash(password + salt);
+            string[] loginInfo = mainForm.GetDatabase().getLoginInfo(userID);
 
-            if (hashedPass != passHash)
+            salt = loginInfo[0];
+            passHash = loginInfo[1].ToLower();
+
+            string hashedPass = ComputeSha256Hash(password + salt).ToLower();
+
+            if (hashedPass != passHash || (userID == 0 && userIDText != "admin"))
             {
-                MessageBox.Show("Invalid Password!", "Invalid Password", MessageBoxButtons.OK);
+                MessageBox.Show("Invalid Login Information", "Invalid Login", MessageBoxButtons.OK);
             }
             else
             {
+                loginSuccess = true;
                 var result = MessageBox.Show("Success!", "Successful Login", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
@@ -123,6 +113,12 @@ namespace CMPT
             }
         }
 
-        
+        private void LoginScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (!loginSuccess)
+            {
+                this.mainForm.Close();
+            }
+        }
     }
 }
