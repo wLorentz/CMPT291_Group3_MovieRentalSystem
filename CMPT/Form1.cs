@@ -2,7 +2,11 @@ using System;
 using System.Data.SqlClient;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Numerics;
+using System.Security.Policy;
 using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CMPT
 {
@@ -11,9 +15,6 @@ namespace CMPT
         private DatabaseFile database;
 
         int employeeID;
-
-        //private Customer[] customers;
-        //private Movie[] movieList;
 
         public Form1()
         {
@@ -243,65 +244,116 @@ namespace CMPT
             }
         }
 
+        private void RunReportQuery(string query)
+        {
+            MessageBox.Show(reportOutputText.Text);
+
+            string output = "";
+
+            try
+            {
+                string[][] result = database.RunCustomQuery(query);
+
+                for (int i = 0; i < result.Length; i++)
+                {
+                    output += "\n";
+
+                    for (int j = 0; j < result[i].Length; j++)
+                    {
+                        output += result[i][j] + ' ';
+
+                    }
+                }
+
+                reportOutputText.Text += output;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void runReport_Click(object sender, EventArgs e)
         {
-            //reportOutputText.Clear();
+            reportOutputText.Clear();
 
-            //String report = reports.GetItemText(reports.SelectedItem);
-            //string output = "";
+            string report = reports.GetItemText(reports.SelectedItem);
 
-            //MessageBox.Show(report);
+            string query = "";
 
-            //switch (report)
-            //{
-            //    case "Report 1":
+            switch (report)
+            {
+                case "Report 1":
 
-            //        myCommand.CommandText = "select * from Movies";
-            //        myReader = myCommand.ExecuteReader();
+                    reportOutputText.Text = "List all customers who have rented a movie on the birthday of an actor who starred in the movie\n";
 
-            //        while (myReader.Read())
-            //        {
-            //            output += Convert.ToString((myReader["movieID"], myReader["movieName"], myReader["genre"], myReader["price"], myReader["copies"], myReader["rating"]));
-            //            output += "\n";
-            //        }
+                    query = "select distinct lastName, firstName from Customer C, \"Order\" O\r\n" +
+                            "where O.accountNo = C.accountNo and\r\n" +
+                            "MONTH(O.fromDate) in \r\n" +
+                            "(select MONTH(dateOfBirth) from Actor A, \"Cast\" T where A.actorID = T.actorID and T.movieID = O.movieID) and\r\n" +
+                            "DAY(O.fromDate) in \r\n" +
+                            "(select DAY(dateOfBirth) from Actor A, \"Cast\" T where A.actorID = T.actorID and T.movieID = O.movieID);";
 
-            //        reportOutputText.Text = output;
-            //        myReader.Close();
-            //        break;
+                    break;
 
-            //    case "Report 2":
+                //Movie this year that has the most copies ordered over christmas.
+                case "Report 2":
 
-            //        myReader.Close();
-            //        break;
+                    reportOutputText.Text = "Name of the movie this year that has the most copies ordered over christmas.\n";
 
-            //    case "Report 3":
+                    query = "Select movieName FROM Movies WHERE movieID = " +
+                        "(Select TOP 1 movieID From \"Order\" where((YEAR(fromDate) = YEAR(GETDATE()) " +
+                        "and MONTH(fromDate) = 12 and DAY(fromDate) < 25) OR(MONTH(fromDate) < 12)) " +
+                        "AND((MONTH(toDate) = 12 and Day(toDate) > 25) OR(YEAR(toDate) > YEAR(fromDate))) " +
+                        "group by movieID " +
+                        "order by count(*) DESC)";
 
-            //        myReader.Close();
-            //        break;
+                    break;
 
-            //    case "Report 4":
+                // Top three actors that star in a movie with a rating greater than 2
+                case "Report 3":
 
-            //        myReader.Close();
-            //        break;
+                    reportOutputText.Text = "List the three highest-rated actors that starred in movies with a rating greater than 2.\n";
 
-                case "Report 5":
+                    query = "SELECT CONCAT(firstName+' ', lastName) AS 'Actor Name' FROM Actor as A3 WHERE A3.rating IN" +
+                            "(SELECT TOP 3 A2.rating FROM Actor as A2, Movies as M2 WHERE A2.actorID IN" +
+                            "(SELECT C1.actorID from Actor A1, Movies M1, \"Cast\" C1 WHERE M1.movieID " +
+                            "= C1.movieID and A1.actorID = C1.actorID and M1.rating > 2)" +
+                            "GROUP BY A2.rating\r\n)\r\n\r\n" +
+                            "ORDER BY A3.rating DESC";
+                    break;
+
+                // List of customers who rented a movie on the birthday of an actor that appears in the movie
+                case "Report 4":
 
                     reportOutputText.Text = "List of movies that have been checked out by the same customer more than 3 times.\n";
+                    
                     query = "SELECT DISTINCT movieName FROM Movie M, " +
                     "(SELECT movieID, accountNo, count(*) " +
                     "FROM Order " +
                     "GROUP BY movieID, accountNo " +
                     "HAVING count(*) >= 3) O " +
                     "Where (M.movieID = O.movieID) " +
-                    "ORDER BY movieName ASC";
+                    "ORDER BY movieName ASC";                       
+                    break;
+                
+                // List of customers who rented a movie on the birthday of an actor that appears in the movie
+                case "Report 5":
                     
-
-            //     
-            //        break;
-            //}
-
+                    reportOutputText.Text = "List of customers who rented a movie on the birthday of an actor that appears in the movie.\n";
+                    
+                    query = "SELECT CONCAT(firstName+' ', lastName) AS \"Name\" FROM Customer C2 WHERE accountNo IN" +
+                            "\r\n\r\n(SELECT accountNo FROM Customer C1 WHERE EXISTS" +
+                            "\r\n\r\n(\r\nSELECT M.movieID \r\nFROM Movies M, \"Cast\" C, Actor A, \"Order\" O1 " +
+                            "\r\nWHERE A.actorID = C.actorID and M.movieID = C.movieID and " +
+                            "((DAY(O1.fromDate) = DAY(A.dateOfBirth))) and ((MONTH(O1.fromDate) = MONTH(A.dateOfBirth)))\r\n)" +
+                            "\r\n)\r\nORDER BY accountNo";
+                    break;
+            }
+            RunReportQuery(query);
         }
-
+        
+        
         public void AddMovie(Movie movie)
         {
             try
@@ -318,7 +370,7 @@ namespace CMPT
                     movie.getCopies(),
                     movie.getRating()
                 );
-               int copyAmount;
+                int copyAmount;
                 int.TryParse(movie.getCopies().ToString(), out copyAmount);
                 database.MakeCopyFromCreation(copyAmount, movie.getId());
             }
@@ -523,6 +575,18 @@ namespace CMPT
 
             try
             {
+                if (customerDropdown.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select a customer.");
+                    return;
+                }
+
+                else if (movieDropdown.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select a movie.");
+                    return;
+                }
+
                 customerID = customerDropdown.SelectedItem.ToString();
                 movie = movieDropdown.SelectedItem.ToString();
                 fromDate = retalDatePicker.Value;
@@ -537,6 +601,13 @@ namespace CMPT
                     MessageBox.Show("No available movie copies in this date range.");
                     return;
                 }
+
+                else if (fromDate == toDate || fromDate > toDate)
+                {
+                    MessageBox.Show("Invalid date range. Please try again.");
+                    return;
+                }
+
                 else
                 {
                     int orderID = database.GetLatestOrderNumber() + 1;
@@ -594,7 +665,7 @@ namespace CMPT
             int value;
             try
             {
-                if(int.TryParse(makeCopybox.Text, out value))
+                if (int.TryParse(makeCopybox.Text, out value))
                 {
                     int rowIdx = movies.CurrentCell.RowIndex;
 
@@ -606,11 +677,11 @@ namespace CMPT
 
                         database.MakeCopy(lowestCopyID.ToString(), movieID);
                     }
-                    int previousCopies; 
+                    int previousCopies;
                     int.TryParse(movies.Rows[rowIdx].Cells[4].Value.ToString(), out previousCopies);
                     movies.Rows[rowIdx].Cells[4].Value = value + previousCopies;
                 }
-                
+
 
             }
             catch (Exception ex)
