@@ -323,7 +323,7 @@ namespace CMPT
                             "ORDER BY A3.rating DESC";
                     break;
 
-                // List of customers who rented a movie on the birthday of an actor that appears in the movie
+            
                 case "Report 4":
 
                     reportOutputText.Text = "List of movies that have been checked out by the same customer more than 3 times.\n";
@@ -335,17 +335,16 @@ namespace CMPT
                         "ORDER BY movieName ASC";
                     break;
                 
-                // List of customers who rented a movie on the birthday of an actor that appears in the movie
+                
                 case "Report 5":
                     
-                    reportOutputText.Text = "List of customers who rented a movie on the birthday of an actor that appears in the movie.\n";
+                    reportOutputText.Text = "Employee who generated the most revenue this month.\n";
                     
-                    query = "SELECT CONCAT(firstName+' ', lastName) AS \"Name\" FROM Customer C2 WHERE accountNo IN" +
-                            "\r\n\r\n(SELECT accountNo FROM Customer C1 WHERE EXISTS" +
-                            "\r\n\r\n(\r\nSELECT M.movieID \r\nFROM Movies M, \"Cast\" C, Actor A, \"Order\" O1 " +
-                            "\r\nWHERE A.actorID = C.actorID and M.movieID = C.movieID and " +
-                            "((DAY(O1.fromDate) = DAY(A.dateOfBirth))) and ((MONTH(O1.fromDate) = MONTH(A.dateOfBirth)))\r\n)" +
-                            "\r\n)\r\nORDER BY accountNo";
+                    query = "select firstName, lastName, max(revenue) Revenue from employees, " +
+                        "(Select employeeID, sum(price) revenue from \"Order\" O, Movies M " +
+                        "where O.movieID = M.movieID and MONTH(GETDATE()) = MONTH(O.date) and YEAR(GETDATE()) = YEAR(O.date) " +
+                        "group by employeeID) Temp " +
+                        "where employees.employeeID = temp.employeeID group by firstName, lastName";
                     break;
             }
             RunReportQuery(query);
