@@ -326,23 +326,34 @@ namespace CMPT
                 // List of customers who rented a movie on the birthday of an actor that appears in the movie
                 case "Report 4":
 
+                    reportOutputText.Text = "List of movies that have been checked out by the same customer more than 3 times.\n";
+                    
+                    query = "SELECT DISTINCT movieName FROM Movie M, " +
+                    "(SELECT movieID, accountNo, count(*) " +
+                    "FROM Order " +
+                    "GROUP BY movieID, accountNo " +
+                    "HAVING count(*) >= 3) O " +
+                    "Where (M.movieID = O.movieID) " +
+                    "ORDER BY movieName ASC";                       
+                    break;
+                
+                // List of customers who rented a movie on the birthday of an actor that appears in the movie
+                case "Report 5":
+                    
                     reportOutputText.Text = "List of customers who rented a movie on the birthday of an actor that appears in the movie.\n";
-
+                    
                     query = "SELECT CONCAT(firstName+' ', lastName) AS \"Name\" FROM Customer C2 WHERE accountNo IN" +
                             "\r\n\r\n(SELECT accountNo FROM Customer C1 WHERE EXISTS" +
                             "\r\n\r\n(\r\nSELECT M.movieID \r\nFROM Movies M, \"Cast\" C, Actor A, \"Order\" O1 " +
                             "\r\nWHERE A.actorID = C.actorID and M.movieID = C.movieID and " +
                             "((DAY(O1.fromDate) = DAY(A.dateOfBirth))) and ((MONTH(O1.fromDate) = MONTH(A.dateOfBirth)))\r\n)" +
                             "\r\n)\r\nORDER BY accountNo";
-
-                    break;
-
-                case "Report 5":
-                    query = "Select * from Movies";
                     break;
             }
             RunReportQuery(query);
         }
+        
+        
         public void AddMovie(Movie movie)
         {
             try
